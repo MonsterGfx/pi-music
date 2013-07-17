@@ -1,5 +1,21 @@
 {
-    "require": {
-        "klein/klein": "2.0.x"
-    }
+	"name": "monstergfx/musix",
+	"type": "application",
+	"description": "Music Player for Raspberry Pi",
+	"keywords": ["multimedia","music","raspberry-pi"],
+	"homepage": "",
+	"license": "BSD-3-Clause",
+	"authors": [
+		{
+			"name": "Dave Thomas",
+			"email": "info@monstergfx.com",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"klein/klein": "2.0.x"
+	},
+	"require-dev": {
+		"raveren/kint": "dev-master"
+	}
 }
