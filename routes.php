@@ -1,7 +1,7 @@
 <?php
 
-// require_once __DIR__.'/vendor/autoload.php';
-
+// instantiate the router class
+//
 $klein = new \Klein\Klein;
 
 // Handle the routing for queries
@@ -16,6 +16,8 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	$args = array_filter($args);
 
 	Kint::dump($args);
+
+	// @todo do something with those arguments
 });
 
 
