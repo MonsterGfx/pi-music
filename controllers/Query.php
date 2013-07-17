@@ -3,9 +3,8 @@
 class Query
 {
 
-	public static function test($params)
+	public static function build($params)
 	{
-		echo "here";
-		Kint::dump($params);
+		return new ListView($params);
 	}
 }
