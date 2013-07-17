@@ -15,7 +15,7 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 	$args = array_filter($args);
 
-	Query::test($args);
+	return Query::build($args)->render();
 
 	// @todo do something with those arguments
 });
