@@ -1,5 +1,8 @@
 {
     "require": {
         "klein/klein": "2.0.x"
+    },
+    "require-dev": {
+    	"raveren/kint": "dev-master"
     }
 }
