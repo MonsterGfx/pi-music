@@ -19,5 +19,11 @@
 	},
 	"require-dev": {
 		"raveren/kint": "dev-master"
+	},
+	"autoload": {
+		"classmap": [
+			"controllers",
+			"views"
+		]
 	}
 }
