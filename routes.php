@@ -24,12 +24,10 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 $klein->respond('GET','/test-route', function($request,$response){
 
-Database::execute("INSERT INTO test VALUES (null, 'alpha', 'alpha');");
-Database::execute("INSERT INTO test VALUES (null, 'bravo', 'bravo');");
-Database::execute("INSERT INTO test VALUES (null, 'charlie', 'charlie');");
-Database::execute("INSERT INTO test VALUES (null, 'delta', 'delta');");
+Database::execute("DELETE FROM test;");
 
 	$q = Database::query("SELECT * FROM test;");
+	Kint::dump($q);
 	die;
 
 
