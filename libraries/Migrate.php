@@ -2,8 +2,17 @@
 
 class Migrate {
 
+	/**
+	 * The table name for the migrations.
+	 *
+	 * If the migration table does not exist the first time a migration is run,
+	 * it will be created.
+	 */
 	private static $table_name = 'sys_migrations';
 
+	/**
+	 * Migrate the database up to the greatest defined value
+	 */
 	public static function up()
 	{
 		// check to see if the "migration" table exists
@@ -82,6 +91,12 @@ class Migrate {
 		$migration->save();
 	}
 
+	/**
+	 * Migrate the database down to the specified value (or 0 if no value given)
+	 *
+	 * @param int $down_to
+	 * The database version to migrate down to (default 0)
+	 */
 	public static function down($down_to=0)
 	{
 		// get the "migration" model

@@ -2,6 +2,9 @@
 
 class Migration_add_songs_table extends MigrationBase {
 
+	/**
+	 * Migrate the database up to this version
+	 */
 	public static function up()
 	{
 		// create the table
@@ -37,9 +40,14 @@ CREATE TABLE songs (
 
 QUERY;
 
+		// execute the query
 		Database::execute($query);
 	}
 
+	/**
+	 * Revert the database to the previous version by reversing the effects of
+	 * the up method.
+	 */
 	public static function down()
 	{
 		// drop the table
