@@ -12,9 +12,7 @@ return array(
 	 */
 	'migrations' => array(
 
-		'1' => 'Migration_001_add_songs_table',
-
-		'2' => 'Migration_002_add_songs_table_fields',
+		'1' => 'Migration_001_add_initial_scheme',
 
 	),
 
