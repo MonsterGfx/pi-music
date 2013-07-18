@@ -78,9 +78,10 @@ class Database {
 		if($parameters)
 		{
 			foreach($parameters as $key=>$value)
-				$stmt->bindParam($key,$value);
+			{
+				$stmt->bindValue($key, $value);
+			}
 		}
-
 		// execute & return the result
 		return $stmt->execute();
 	}
@@ -106,7 +107,7 @@ class Database {
 		if($parameters)
 		{
 			foreach($parameters as $key=>$value)
-				$stmt->bindParam($key,$value);
+				$stmt->bindValue($key,$value);
 		}
 
 		$success = $stmt->execute();
