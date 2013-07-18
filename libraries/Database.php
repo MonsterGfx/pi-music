@@ -51,10 +51,10 @@ class Database {
 	public static function tableExists($table)
 	{
 		// the query to run
-		$query = "SELECT name FROM sqlite_master WHERE type='table' AND name='table_name';";
+		$query = "SELECT name FROM sqlite_master WHERE type='table' AND name=:name;";
 
 		// run the query
-		return Database::pdo()->query($query)->rowCount() ? true : false;
+		return count(Database::query($query, array(':name'=>$table)))>0 ? true : false;
 	}
 
 	/**
