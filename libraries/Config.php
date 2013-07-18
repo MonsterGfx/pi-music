@@ -1,15 +1,15 @@
 <?php
 
 class Config {
-	
+
 	/**
 	 * Get a configuration value
-	 * 
+	 *
 	 * The configuration key is a string of the form "file.key" where the "file"
 	 * part is the name (minus the .php extension) of a file in the "config"
 	 * folder.
-	 * 
-	 * @param type $key 
+	 *
+	 * @param type $key
 	 * @return type
 	 */
 	public static function get($key)
@@ -24,7 +24,7 @@ class Config {
 		$key = implode(',',$parts);
 
 		// load the appropriate config file
-		$values = include "../config/{$file}.php";
+		$values = include dirname(__FILE__)."/../config/{$file}.php";
 
 		// check to see if the key exists
 		$value = false;
