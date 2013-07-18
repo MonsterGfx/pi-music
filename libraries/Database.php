@@ -38,4 +38,22 @@ class Database {
 
 		return Database::$voodORM;
 	}
+
+	/**
+	 * Check to see if a table exists in the database
+	 *
+	 * @param string $table
+	 * The table name to check
+	 *
+	 * @return bool
+	 * True if the table exists, false otherwise
+	 */
+	public static function tableExists($table)
+	{
+		// the query to run
+		$query = "SELECT name FROM sqlite_master WHERE type='table' AND name='table_name';";
+
+		// run the query
+		return Database::pdo()->query($query)->rowCount() ? true : false;
+	}
 }
