@@ -56,4 +56,32 @@ class Database {
 		// run the query
 		return Database::pdo()->query($query)->rowCount() ? true : false;
 	}
+
+	/**
+	 * Execute an arbitrary query with (optional) named parameters
+	 *
+	 * @param string $query
+	 * The query to execute
+	 *
+	 * @param array $parameters
+	 * The parameters, as an associative array of parameter names=>values
+	 *
+	 * @return bool
+	 * True on success, false on failure
+	 */
+	public static function execute($query, $parameters=null)
+	{
+		// prepare the statement
+		$stmt = Database::pdo()->prepare($query);
+
+		// bind the parameters
+		if($parameters)
+		{
+			foreach($parameters as $key=>$value)
+				$stmt->bindParam($key,$value);
+		}
+
+		// execute & return the result
+		return $stmt->execute();
+	}
 }
