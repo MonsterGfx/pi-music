@@ -1,6 +1,6 @@
 <?php
 
-class Migration_001_add_songs_table extends MigrationBase {
+class Migration_001_add_initial_scheme extends MigrationBase {
 
 	/**
 	 * Migrate the database up to this version
