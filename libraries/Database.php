@@ -102,7 +102,6 @@ class Database {
 	{
 		// prepare the statement
 		$stmt = Database::pdo()->prepare($query);
-
 		// bind the parameters
 		if($parameters)
 		{

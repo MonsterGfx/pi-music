@@ -30,7 +30,6 @@ Database::execute("DELETE FROM test;");
 	Kint::dump($q);
 	die;
 
-
 	// Kint::dump(Database::voodORM()); die;
 
 	// attempt to use get_id3 to scan an MP3 file
