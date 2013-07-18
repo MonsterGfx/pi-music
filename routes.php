@@ -24,10 +24,13 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 $klein->respond('GET','/test-route', function($request,$response){
 
-	Kint::dump(Database::voodORM()); die;
+	// Kint::dump(Database::voodORM()); die;
 
 	// attempt to use get_id3 to scan an MP3 file
-	$filename = '/media/music/Abba/The Albums/18 Dance (While The Music Still Goes.mp3';
+	$filename = '/home/local/STARKART/dthomas/Music/James Keelaghan - Princes of the Clouds.m4a';
+	// $filename = '/home/local/STARKART/dthomas/Music/James Keelaghan - Cold Missouri Waters.mp3';
+
+	// $filename = '/media/music/Abba/The Albums/18 Dance (While The Music Still Goes.mp3';
 
 	$getID3 = new getID3;
 
