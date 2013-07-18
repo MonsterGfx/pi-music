@@ -24,7 +24,8 @@
 		"classmap": [
 			"libraries",
 			"controllers",
-			"views"
+			"views",
+			"migrations"
 		]
 	}
 }
