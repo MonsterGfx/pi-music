@@ -22,7 +22,11 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 
 
+$klein->respond('GET','/test-route', function($request,$response){
 
+	Kint::dump(Config::get('app.sample'));
+
+});
 
 
 
