@@ -1,11 +1,19 @@
 <?php
 
+/**
+ * The database connection and utility class
+ */
 class Database {
 
-	// the PDO database connection
+
+	/**
+	 * The PDO database connection object
+	 */
 	private static $db = null;
 
-	// the VoodOrm object
+	/**
+	 * the VoodOrm object
+	 */
 	private static $voodORM = null;
 
 	/**
