@@ -24,14 +24,7 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 $klein->respond('GET','/test-route', function($request,$response){
 
-	try {
-
-		Kint::dump(Database::voodORM()); die;
-	}
-	catch(Exception $e)
-	{
-		Kint::dump($e); die;
-	}
+	Kint::dump(Database::voodORM()); die;
 
 	// attempt to use get_id3 to scan an MP3 file
 	$filename = '/media/music/Abba/The Albums/18 Dance (While The Music Still Goes.mp3';
