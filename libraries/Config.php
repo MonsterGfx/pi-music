@@ -24,7 +24,7 @@ class Config {
 		$key = implode(',',$parts);
 
 		// load the appropriate config file
-		$values = include "../config/{$file}.php";
+		$values = include dirname(__FILE__)."/../config/{$file}.php";
 
 		// check to see if the key exists
 		$value = false;
