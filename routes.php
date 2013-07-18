@@ -54,8 +54,8 @@ $klein->respond('GET','/test-route', function($request,$response){
 	// Analyze file and store returned data in $ThisFileInfo
 	$file_info = $getID3->analyze($filename);
 
-	return "<pre>".print_r($file_info,true)."</pre>";
-	// Kint::dump($file_info);
+	// return "<pre>".print_r($file_info,true)."</pre>";
+	Kint::dump($file_info['tags']);
 
 });
 
