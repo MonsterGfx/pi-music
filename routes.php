@@ -24,10 +24,15 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 $klein->respond('GET','/test-route', function($request,$response){
 
-Database::execute("DELETE FROM test;");
+	// Database::execute("DROP TABLE sys_migrations;");
 
-	$q = Database::query("SELECT * FROM test;");
-	Kint::dump($q);
+	Kint::dump(Database::query("SELECT name FROM sqlite_master WHERE type='table';"));
+
+	Migrate::up();
+
+	Kint::dump(Database::query("SELECT name FROM sqlite_master WHERE type='table';"));
+
+
 	die;
 
 	// Kint::dump(Database::voodORM()); die;
