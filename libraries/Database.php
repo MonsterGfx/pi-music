@@ -1,7 +1,7 @@
 <?php
 
 class Database {
-	
+
 	// the PDO database connection
 	private static $db = null;
 
