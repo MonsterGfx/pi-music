@@ -84,4 +84,37 @@ class Database {
 		// execute & return the result
 		return $stmt->execute();
 	}
+
+	/**
+	 * Execute a query and return the result set as an array of rows
+	 *
+	 * @param string $query
+	 * The query to execute
+	 *
+	 * @param array $parameters
+	 * The parameters, as an associative array of parameter names=>values
+	 *
+	 * @return array|bool
+	 * The array of rows returned or false if the query fails
+	 */
+	public static function query($query, $parameters=null)
+	{
+		// prepare the statement
+		$stmt = Database::pdo()->prepare($query);
+
+		// bind the parameters
+		if($parameters)
+		{
+			foreach($parameters as $key=>$value)
+				$stmt->bindParam($key,$value);
+		}
+
+		$success = $stmt->execute();
+
+		if(!$success)
+			return false;
+
+		// get the result set
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
 }
