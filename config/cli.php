@@ -15,6 +15,8 @@ return array(
 		'migrate:up'	=> 'Migrate::up',
 
 		'migrate:down' 	=> 'Migrate::down',
+
+		'music:scan'	=> 'Scan::scanAll',
 	),
 
 );
