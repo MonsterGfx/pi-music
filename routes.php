@@ -15,7 +15,17 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 	$args = array_filter($args);
 
-	return Query::build($args)->render();
+	// imagine a query like this:
+	// artist/1/album/3
+
+	$artist = Database::voodORM()->table('artists')->where('id',1)->findOne();
+	$album = Database::voodORM()->table('albums')->where('id',3)->_and()->where('artist_id',$artist->id)->findOne();
+	$songs = Database::voodORM()->table('songs')->where('artist_id',$artist->id)->_and()->where('album_id',$album->id)->find();
+	Kint::dump($songs);
+	die;
+
+
+	// return ListView::render($album, $songs);
 
 	// @todo do something with those arguments
 });
@@ -41,17 +51,6 @@ $klein->respond('GET','/empty-db', function(){
 
 $klein->respond('GET','/test-route', function($request,$response){
 
-	// Database::execute("drop table sys_migrations;");
-	// Database::execute("drop table artists;");
-	// Database::execute("drop table albums;");
-	// Database::execute("drop table genres;");
-	// Database::execute("drop table songs;");
-
-	// Database::execute("delete from artists;");
-	// Database::execute("delete from albums;");
-	// Database::execute("delete from genres;");
-	// Database::execute("delete from songs;");
-	// die;
 
 
 	Kint::dump(Database::query("SELECT * FROM songs;"));
@@ -62,17 +61,17 @@ $klein->respond('GET','/test-route', function($request,$response){
 
 	// attempt to use get_id3 to scan an MP3 file
 	// $filename = '/home/local/STARKART/dthomas/Music/James Keelaghan - Princes of the Clouds.m4a';
-	$filename = '/home/local/STARKART/dthomas/Music/James Keelaghan - Cold Missouri Waters.mp3';
+	// $filename = '/home/local/STARKART/dthomas/Music/James Keelaghan - Cold Missouri Waters.mp3';
 
-	// $filename = '/media/music/Abba/The Albums/18 Dance (While The Music Still Goes.mp3';
+	$filename = '/media/music/Abba/The Albums/18 Dance (While The Music Still Goes.mp3';
 
 	$getID3 = new getID3;
 
 	// Analyze file and store returned data in $ThisFileInfo
 	$file_info = $getID3->analyze($filename);
 
-	// return "<pre>".print_r($file_info,true)."</pre>";
-	Kint::dump($file_info['tags']);
+	return "<pre>".print_r($file_info,true)."</pre>";
+	// Kint::dump($file_info['tags']);
 
 });
 
