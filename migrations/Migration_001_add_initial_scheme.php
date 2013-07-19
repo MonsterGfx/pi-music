@@ -24,15 +24,15 @@ QUERY;
 
 CREATE TABLE albums (
 	id INTEGER PRIMARY KEY ASC,
-	artist_id INTEGER,
 	name TEXT,
+	artists_id INTEGER,
 	year INTEGER
 );
 
 QUERY;
 		Database::execute($query);
-		Database::execute("CREATE INDEX idx_albums_artist_id ON albums( artist_id );");
 		Database::execute("CREATE INDEX idx_albums_name ON albums( name );");
+		Database::execute("CREATE INDEX idx_albums_artist_id ON albums( artists_id );");
 
 		// create the genres table
 		$query = <<<QUERY
@@ -66,11 +66,11 @@ CREATE TABLE songs (
 	bitrate REAL,
 	playtime_seconds REAL,
 
-	title TEXT,
-	artist_id INTEGER,
+	name TEXT,
+	artists_id INTEGER,
 	album_artist TEXT,
-	album_id INTEGER,
-	genre_id INTEGER,
+	albums_id INTEGER,
+	genres_id INTEGER,
 	track_number TEXT,
 	disc_number TEXT,
 	compilation TEXT,
@@ -92,11 +92,11 @@ QUERY;
 			"CREATE UNIQUE INDEX idx_songs_filenamepath ON songs ( filenamepath );",
 
 			// indices on important values
-			"CREATE INDEX idx_songs_title ON songs ( title );",
-			"CREATE INDEX idx_songs_artist_id ON songs ( artist_id );",
+			"CREATE INDEX idx_songs_name ON songs ( name );",
+			"CREATE INDEX idx_songs_artists_id ON songs ( artists_id );",
 			"CREATE INDEX idx_songs_album_artist ON songs ( album_artist );",
-			"CREATE INDEX idx_songs_album_id ON songs ( album_id );",
-			"CREATE INDEX idx_songs_genre_id ON songs ( genre_id );",
+			"CREATE INDEX idx_songs_albums_id ON songs ( albums_id );",
+			"CREATE INDEX idx_songs_genres_id ON songs ( genres_id );",
 		);
 		foreach($indexes as $i)
 			Database::execute($i);	}
