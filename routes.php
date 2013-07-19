@@ -17,38 +17,56 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 
 	// queries look like this:
+	//
 	//		playlist 			- list of playlists
 	//				ph='Playlist', lh=null
+	//
 	//		playlist/1/song			- list of songs for playlist=1
 	//				ph=playlist.name, lh=null
+	//
 	//		playlist/1/song/2 	- load all songs for playlist=1, start playing song=2, go to nowplaying
+	//
 	//
 	//		artist 					- list of artists
 	//				ph='Artists', lh=null
+	//
 	//		artist/1/album			- list of albums for artist=1
 	//				ph=artist.artist, lh=null
+	//
 	//		artist/1/album/2/song	- list of songs for artist=1, album=2
 	//				ph=artist.artist, lh=album+stats
+	//
 	//		artist/1/album/2/song/3	- load all songs for artist=1, album=2, play song=3, go to nowplaying
+	//
 	//
 	//		song 	- list of all songs
 	//				ph='Songs', lh=null
+	//
 	//		song/1 	- load ALL songs, play song=1, go to nowplaying
+	//
 	//
 	//		album 			- list all albums
 	//				ph='Albums', lh=null
+	//
 	//		album/1/song	- list of songs for album=1
 	//				ph=album.title, lh=album+stats
+	//
 	//		album/1/song/2	- load all songs for album=1, play song=2, go to nowplaying
+	//
 	//
 	//		genre 		- list all genres
 	//				ph='Genres', lh=null
+	//
 	//		genre/1/artist 	- list of artists for genre=1
 	//				ph=genre.name, lh=null
+	//
 	//		genre/1/artist/2/album 	- list of albums for genre=1, artist=2
 	//				ph=artist.artist, lh=null
+	//
 	//		genre/1/artist/2/album/3/song	- list of songs for genre=1, artist=2, album=3
 	//				ph=artist.artist, lh=album+stats
+	//
+	//
 	//		genre/1/artist/2/album/3/song/4	- load all songs for genre=1, artist=2, album=3, play song=4, go to nowplaying
 
 
