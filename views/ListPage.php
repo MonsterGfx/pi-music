@@ -23,11 +23,15 @@ class ListPage
 	{
 		// instantiate the template engine
 		$tpl = new Rain\Tpl;
-// Kint::dump($tpl); die;
+
 		// assign some values
+		// the values provided are objects. These need to be converted to array
+		$list = (array)$list_items;
+		array_walk($list, function(&$v, $k){ $v = $v->toArray(); });
+
 		$tpl->assign(array(
 			'head' => (array)$header_object,
-			'list' => (array)$list_items,
+			'list' => $list,
 		));
 
 		// return the HTML
