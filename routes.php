@@ -20,7 +20,24 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	// @todo do something with those arguments
 });
 
+$klein->respond('GET','/nuke-db', function(){
+	Database::execute("drop table sys_migrations;");
+	Database::execute("drop table artists;");
+	Database::execute("drop table albums;");
+	Database::execute("drop table genres;");
+	Database::execute("drop table songs;");
 
+	Kint::dump("database nuked");
+});
+
+$klein->respond('GET','/empty-db', function(){
+	Database::execute("delete from artists;");
+	Database::execute("delete from albums;");
+	Database::execute("delete from genres;");
+	Database::execute("delete from songs;");
+
+	Kint::dump("database emptied");
+});
 
 $klein->respond('GET','/test-route', function($request,$response){
 
