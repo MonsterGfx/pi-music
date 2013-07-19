@@ -2,14 +2,8 @@
 
 class Scan {
 
-	public static function scanAll()
+	private static function scanFolder($path)
 	{
-		// get the file path
-		$path = Config::get('app.music-path');
-
-		if(!$path)
-			throw new Exception("Invalid music path");
-
 		// make sure there's a trailing '/' on the path
 		$x = strrev($path);
 		if($x[0]!='/')
@@ -18,7 +12,7 @@ class Scan {
 		// iterate through the folders
 		$dirhandle = opendir($path);
 
-		echo "starting";
+		echo "starting ($path)\n";
 
 		while(false!==($entry=readdir($dirhandle)))
 		{
@@ -27,6 +21,15 @@ class Scan {
 				continue;
 
 			$filename = "{$path}{$entry}";
+
+			// if it's a folder, then scan it recursively
+			if(is_dir($filename))
+			{
+				Scan::scanFolder($filename);
+				continue;
+			}
+
+			// otherwise, it's a file & we need to scan it
 
 			// get the last update time
 			$file_updated = filemtime($filename);
@@ -38,6 +41,11 @@ class Scan {
 			$file_info = $getID3->analyze($filename);
 
 			// get the tags
+if(!isset($file_info['tags']))
+{
+	print_r($file_info);
+	die;
+}
 			$tags = $file_info['tags'];
 			if(isset($tags['id3v2']))
 				$tags = $tags['id3v2'];
@@ -118,6 +126,7 @@ class Scan {
 			$song->lossless			= isset($file_info['audio']['lossless']) ? $file_info['audio']['lossless'] : null;
 			$song->channelmode		= isset($file_info['audio']['channelmode']) ? $file_info['audio']['channelmode'] : null;
 			$song->bitrate			= isset($file_info['audio']['bitrate']) ? $file_info['audio']['bitrate'] : null;
+			$song->playtime_seconds			= isset($file_info['playtime_seconds']) ? $file_info['playtime_seconds'] : null;
 
 			$song->title		= isset($tags['title']) ? $tags['title'][0] : null;
 			$song->artist_id	= $artist ? $artist->id : null;
@@ -135,8 +144,19 @@ class Scan {
 			// save
 			$song->save();
 
-			echo '.';
 		}
-		echo "done.\n\n";
+		echo "done ($path).\n\n\n";
+
+	}
+
+	public static function scanAll()
+	{
+		// get the file path
+		$path = Config::get('app.music-path');
+
+		if(!$path)
+			throw new Exception("Invalid music path");
+
+		Scan::scanFolder($path);
 	}
 }
