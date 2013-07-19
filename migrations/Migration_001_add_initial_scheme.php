@@ -12,39 +12,39 @@ class Migration_001_add_initial_scheme extends MigrationBase {
 
 CREATE TABLE artists (
 	id INTEGER PRIMARY KEY ASC,
-	artist TEXT
+	name TEXT
 );
 
 QUERY;
 		Database::execute($query);
-		Database::execute("CREATE INDEX idx_artists_artist ON artists( artist );");
+		Database::execute("CREATE INDEX idx_artists_name ON artists( name );");
 
 		// create the albums table
 		$query = <<<QUERY
 
 CREATE TABLE albums (
 	id INTEGER PRIMARY KEY ASC,
-	album TEXT,
 	artist_id INTEGER,
+	name TEXT,
 	year INTEGER
 );
 
 QUERY;
 		Database::execute($query);
-		Database::execute("CREATE INDEX idx_albums_album ON albums( album );");
 		Database::execute("CREATE INDEX idx_albums_artist_id ON albums( artist_id );");
+		Database::execute("CREATE INDEX idx_albums_name ON albums( name );");
 
 		// create the genres table
 		$query = <<<QUERY
 
 CREATE TABLE genres (
 	id INTEGER PRIMARY KEY ASC,
-	genre TEXT
+	name TEXT
 );
 
 QUERY;
 		Database::execute($query);
-		Database::execute("CREATE INDEX idx_genres_genre ON genres( genre );");
+		Database::execute("CREATE INDEX idx_genres_name ON genres( name );");
 
 		// create the songs table
 		$query = <<<QUERY
