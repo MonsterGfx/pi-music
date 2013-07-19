@@ -6,6 +6,10 @@ try {
 	//
 	require_once __DIR__.'/../vendor/autoload.php';
 
+	// handle any "bootstrapping" - application-wide configuration tasks
+	//
+	require_once __DIR__.'/../bootstrap.php';
+
 	// start the route processor
 	//
 	require_once __DIR__.'/../routes.php';
