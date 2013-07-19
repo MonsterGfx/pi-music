@@ -131,9 +131,18 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 	}
 
-
-	return ListPage::render($page_title, $album_stats, $songs);
-
+	// check if the final object is a song
+	if($obj && get_class($obj)=='Song')
+	{
+		return "It looks like you want '".$obj->name."'' to start playing.";
+	}
+	else if(is_array($obj))
+	{
+		// otherwise, render the list
+		return ListPage::render($page_title, $album_stats, $obj);
+	}
+	else
+		throw new Exception("Oops! I don't know what went wrong!");
 });
 
 $klein->respond('GET','/nuke-db', function(){
