@@ -15,6 +15,42 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 	$args = array_filter($args);
 
+
+	// queries look like this:
+	//		playlist 			- list of playlists
+	//		playlist/1 			- list of songs for playlist=1
+	//		playlist/1/song/2 	- load all songs for playlist=1, start playing song=2, go to nowplaying
+	//
+	//		artist 				- list of artists
+	//		artist/1 			- list of albums for artist=1
+	//		artist/1/album/2	- list of songs for artist=1, album=2
+	//		artist/1/album/2/song/3 	- load all songs for artist=1, album=2, play song=3, go to nowplaying
+	//
+	//		song 	- list of all songs
+	//		song/1 	- load ALL songs, play song=1, go to nowplaying
+	//
+	//		album 		- list all albums
+	//		album/1 	- list of songs for album=1
+	//		album/1/song/2	- load all songs for album=1, play song=2, go to nowplaying
+	//
+	//		genre 		- list all genres
+	//		genre/1 	- list of artists for genre=1
+	//		genre/1/artist/2 	- list of albums for genre=1, artist=2
+	//		genre/1/artist/2/album/3	- list of songs for genre=1, artist=2, album=3
+	//		genre/1/artist/2/album/3/song/4	- load all songs for genre=1, artist=2, album=3, play song=4, go to nowplaying
+
+
+
+
+
+
+
+
+
+
+
+
+
 	// imagine a query like this:
 	// artist/1/album/3
 
