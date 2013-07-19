@@ -18,74 +18,19 @@
 
 class ListPage
 {
-	private $data = null;
-
-	public function __construct($data)
-	{
-		$this->data = $data;
-	}
 
 	public static function render($header_object, $list_items)
 	{
-		// build the page
-		$html = '';
+		// instantiate the template engine
+		$tpl = new Rain\Tpl;
+// Kint::dump($tpl); die;
+		// assign some values
+		$tpl->assign(array(
+			'head' => (array)$header_object,
+			'list' => (array)$list_items,
+		));
 
-		// output the page header
-
-		// output the header
-		$html .= ListPage::outputHeader($header_object);
-
-		// output the body of the list
-
-		// output the page footer
-
-		// and return the result
-		return $html;
-	}
-
-	private static function outputHeader($obj)
-	{
-		// if it's a scalar value, then simply output it
-		if(is_scalar($obj))
-			return $obj;
-
-		// if it's a Voodoo ORM object, then render it appropriately
-		if(get_class($obj)=='Voodoo\VoodOrm')
-		{
-			// render it based on the type of object
-			switch($obj->getTableName())
-			{
-				case 'albums':
-					// get the artist info
-					$artist = Database::voodORM()->table('artists')->where('id',$obj->artist_id)->findOne();
-					$count = Database::voodORM()->table('songs')->where('album_id',$obj->id)->count();
-					$length = Database::voodORM()->table('songs')->where('album_id',$obj->id)->sum('playtime_seconds');
-
-					// render an album description
-					$html = "{$artist->artist}<br />{$obj->album}<br />";
-					if($obj->year)
-						$html .= "Released {$obj->year}<br />";
-					$a = array();
-					if($count)
-						$a[] = "$count songs";
-					if($length)
-						$a[] = round($length/60)." mins.";
-					if(count($a))
-						$html .= implode(', ',$a)."<br />";
-
-					return $html;
-
-					break;
-				case 'artists':
-				case 'genres':
-				case 'songs':
-					throw new Exception("Table ".$obj->getTableName()." is not yet implemented");
-					break;
-				default:
-					throw new Exception("Unrecognized table name: ".$obj->getTableName());
-			}
-		}
-		else
-			throw new Exception("Unrecognized header type: ".get_class($obj));
+		// return the HTML
+		return $tpl->draw( "list-page", true );
 	}
 }
