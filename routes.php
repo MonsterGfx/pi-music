@@ -73,7 +73,7 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	// die;
 
 
-	return ListPage::render($album, $songs);
+	return ListPage::render($artist, $album, $songs);
 
 	// @todo do something with those arguments
 });
