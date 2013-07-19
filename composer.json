@@ -25,6 +25,7 @@
 		"classmap": [
 			"libraries",
 			"controllers",
+			"models",
 			"views",
 			"migrations"
 		]
