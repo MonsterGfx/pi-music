@@ -5,7 +5,8 @@ class Genre extends Model {
 	public static $_table = 'genres';
 
 	// the primary key
-	// public static $id_column = 'id';
+	public static $_id_column = 'id';
+
 
 	/**
 	 * Get the songs linked to this genre
