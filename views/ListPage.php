@@ -16,7 +16,7 @@
  */
 
 
-class ListView
+class ListPage
 {
 	private $data = null;
 
@@ -33,7 +33,7 @@ class ListView
 		// output the page header
 
 		// output the header
-		$html .= ListView::outputHeader($header_object);
+		$html .= ListPage::outputHeader($header_object);
 
 		// output the body of the list
 
