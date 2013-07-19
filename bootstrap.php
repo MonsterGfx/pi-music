@@ -4,6 +4,7 @@
 
 // initialize the database connection
 ORM::configure(Config::get('database.dsn'));
+ORM::configure('logging', Config::get('database.logging'));
 
 // initialize the template folder
 Rain\Tpl::configure('tpl_dir', Config::get('app.template-path'));
