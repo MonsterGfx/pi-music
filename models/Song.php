@@ -5,7 +5,7 @@ class Song extends Model {
 	public static $_table = 'songs';
 
 	// the primary key
-	// public static $id_column = 'id';
+	public static $_id_column = 'id';
 
 	/**
 	 * Get the album for this song

@@ -5,7 +5,7 @@ class Artist extends Model {
 	public static $_table = 'artists';
 
 	// the primary key
-	// public static $id_column = 'id';
+	public static $_id_column = 'id';
 
 	/**
 	 * Get the list of albums by this artist
