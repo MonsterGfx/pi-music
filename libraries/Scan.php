@@ -72,8 +72,9 @@ class Scan {
 				if(!$album)
 				{
 					$album = Database::voodORM()->table('albums');
-					$album->artist_id = $artist->id;
-					$album->album = $tags['album'][0];
+					$album->artist_id	= $artist->id;
+					$album->album		= $tags['album'][0];
+					$album->year		= isset($tags['year']) ? $tags['year'][0] : null;
 					$album = $album->save();
 				}
 			}
