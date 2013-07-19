@@ -5,6 +5,6 @@ class Query
 
 	public static function build($params)
 	{
-		return new ListView($params);
+		return new ListPage($params);
 	}
 }

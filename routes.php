@@ -25,7 +25,7 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	// die;
 
 
-	return ListView::render($album, $songs);
+	return ListPage::render($album, $songs);
 
 	// @todo do something with those arguments
 });
