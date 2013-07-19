@@ -63,6 +63,7 @@ CREATE TABLE songs (
 	lossless TEXT,
 	channelmode TEXT,
 	bitrate REAL,
+	playtime_seconds REAL,
 
 	title TEXT,
 	artist_id INTEGER,
