@@ -130,17 +130,11 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 	}
 
-Kint::dump($obj);
+// Kint::dump($page_title);
+// Kint::dump($album);
+// Kint::dump($obj);
 
-
-
-
-
-
-
-
-
-	die;
+// die;
 
 
 	return ListPage::render($artist, $album, $songs);
