@@ -5,9 +5,6 @@
  */
 class ListPage extends View {
 
-{
-
-	public static function render($page_head, $list_head, $list_items)
 	/**
 	 * Render a list page
 	 * 
@@ -23,6 +20,7 @@ class ListPage extends View {
 	 * @return string
 	 * The HTML of the rendered page
 	 */
+	public static function render($page_title, $album_stats, $list_items)
 	{
 
 		// instantiate the template engine
