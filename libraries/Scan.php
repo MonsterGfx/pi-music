@@ -55,11 +55,11 @@ class Scan {
 			$artist = null;
 			if(isset($tags['artist']))
 			{
-				$artist = Database::voodORM()->table('artists')->where('artist',$tags['artist'][0])->findOne();
+				$artist = Database::voodORM()->table('artists')->where('name',$tags['artist'][0])->findOne();
 				if(!$artist)
 				{
 					$artist = Database::voodORM()->table('artists');
-					$artist->artist = $tags['artist'][0];
+					$artist->name = $tags['artist'][0];
 					$artist = $artist->save();
 				}
 			}
@@ -68,12 +68,12 @@ class Scan {
 			$album = null;
 			if(isset($tags['album']))
 			{
-				$album = Database::voodORM()->table('albums')->where('album',$tags['album'][0])->_and()->where('artist_id',$artist->id)->findOne();
+				$album = Database::voodORM()->table('albums')->where('name',$tags['album'][0])->_and()->where('artists_id',$artist->id)->findOne();
 				if(!$album)
 				{
 					$album = Database::voodORM()->table('albums');
-					$album->artist_id	= $artist->id;
-					$album->album		= $tags['album'][0];
+					$album->artists_id	= $artist->id;
+					$album->name		= $tags['album'][0];
 					$album->year		= isset($tags['year']) ? $tags['year'][0] : null;
 					$album = $album->save();
 				}
@@ -83,11 +83,11 @@ class Scan {
 			$genre = null;
 			if(isset($tags['genre']))
 			{
-				$genre = Database::voodORM()->table('genres')->where('genre',$tags['genre'][0])->findOne();
+				$genre = Database::voodORM()->table('genres')->where('name',$tags['genre'][0])->findOne();
 				if(!$genre)
 				{
 					$genre = Database::voodORM()->table('genres');
-					$genre->genre = $tags['genre'][0];
+					$genre->name = $tags['genre'][0];
 					$genre = $genre->save();
 				}
 			}
@@ -124,11 +124,11 @@ class Scan {
 			$song->bitrate			= isset($file_info['audio']['bitrate']) ? $file_info['audio']['bitrate'] : null;
 			$song->playtime_seconds			= isset($file_info['playtime_seconds']) ? $file_info['playtime_seconds'] : null;
 
-			$song->title		= isset($tags['title']) ? $tags['title'][0] : null;
-			$song->artist_id	= $artist ? $artist->id : null;
+			$song->name			= isset($tags['title']) ? $tags['title'][0] : null;
+			$song->artists_id	= $artist ? $artist->id : null;
 			$song->album_artist	= isset($tags['album_artist']) ? $tags['album_artist'][0] : null;
-			$song->album_id		= $album ? $album->id : null;
-			$song->genre_id		= $genre ? $genre->id : null;
+			$song->albums_id		= $album ? $album->id : null;
+			$song->genres_id		= $genre ? $genre->id : null;
 			$song->track_number	= isset($tags['track_number']) ? $tags['track_number'][0] : null;
 			$song->disc_number	= isset($tags['disc_number']) ? $tags['disc_number'][0] : null;
 			$song->compilation	= isset($tags['compilation']) ? $tags['compilation'][0] : null;
