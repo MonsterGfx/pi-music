@@ -3,9 +3,8 @@
 /**
  * The view class for a page containing a list of items.
  */
+class ListPage extends View {
 
-
-class ListPage
 {
 
 	public static function render($page_head, $list_head, $list_items)
