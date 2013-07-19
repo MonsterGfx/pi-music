@@ -25,7 +25,8 @@ QUERY;
 CREATE TABLE albums (
 	id INTEGER PRIMARY KEY ASC,
 	album TEXT,
-	artist_id INTEGER
+	artist_id INTEGER,
+	year INTEGER
 );
 
 QUERY;
