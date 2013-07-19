@@ -75,6 +75,9 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	// instantiate the query object
 	$obj = null;
 
+	// the page title
+	$page_title = '';
+
 	// loop through the arguments
 	while(count($args))
 	{
@@ -87,6 +90,9 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 		{
 			// instantiate a new object
 			$obj = Model::factory(ucfirst(strtolower($a)));
+
+			// set the page title
+			$page_title = ucfirst(strtolower($a)).'s';
 		}
 		else
 		{
@@ -104,6 +110,9 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 			// find the single object corresponding to that ID
 			$obj = $obj->find_one($id);
+
+			// update the page title
+			$page_title = $obj->name;
 		}
 		else
 		{
