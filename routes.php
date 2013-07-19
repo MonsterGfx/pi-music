@@ -70,8 +70,6 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	//		genre/1/artist/2/album/3/song/4	- load all songs for genre=1, artist=2, album=3, play song=4, go to nowplaying
 
 
-
-
 	// instantiate the query object
 	$obj = null;
 
@@ -130,16 +128,9 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 	}
 
-// Kint::dump($page_title);
-// Kint::dump($album);
-// Kint::dump($obj);
-
-// die;
-
 
 	return ListPage::render($page_title, $album_stats, $songs);
 
-	// @todo do something with those arguments
 });
 
 $klein->respond('GET','/nuke-db', function(){
