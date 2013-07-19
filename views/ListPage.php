@@ -30,8 +30,14 @@ class ListPage
 		$list = (array)$list_items;
 		array_walk($list, function(&$v, $k){ $v = $v->toArray(); });
 
+		$page_head = $page_head->toArray();
+
+		$list_head = $list_head->toArray();
+
+Kint::dump($list_head); die;
 		$tpl->assign(array(
-			'head' => (array)$header_object,
+			'page_head' => $page_head,
+			'list_head' => $list_head,
 			'list' => $list,
 		));
 
