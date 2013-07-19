@@ -137,7 +137,7 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 // die;
 
 
-	return ListPage::render($artist, $album, $songs);
+	return ListPage::render($page_title, $album_stats, $songs);
 
 	// @todo do something with those arguments
 });
