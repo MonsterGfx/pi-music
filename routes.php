@@ -1,5 +1,48 @@
 <?php
 
+/**
+ * The router for the application
+ * 
+ * This looks like a good spot to write some TODOs
+ * 
+ * currently at version 0.0.1-alpha
+ * @todo list page: fix toolbar at bottom
+ * @todo list page: add buttons to bottom toolbar
+ * @todo list page: add "back" button in upper left
+ * @todo list page: render album details when appropriate
+ * 
+ * @todo ******************** bump version 0.0.2-alpha
+ * 
+ * @todo implement playlists
+ * 
+ * @todo ******************** bump version 0.0.3-alpha
+ * 
+ * @todo install MPD
+ * @todo implement MPD interface
+ * 
+ * @todo ******************** bump version 0.0.4-alpha
+ * 
+ * that will get us to a point where the player works!
+ * 
+ * @todo album artwork
+ * 
+ * @todo ******************** bump version 0.0.5-alpha
+ * 
+ * @todo playlist editor
+ * 
+ * @todo ******************** bump version 0.0.6-alpha
+ * 
+ * @todo desktop pc layout
+ * 
+ * @todo ******************** bump version 0.0.7-alpha
+ * 
+ * @todo testing
+ * 
+ * @todo ******************** bump version 0.1.0-beta
+ * 
+ */
+
+
 // instantiate the router class
 //
 $klein = new \Klein\Klein;
