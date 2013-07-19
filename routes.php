@@ -54,6 +54,58 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 
 
+	// instantiate the query object
+	$obj = null;
+
+	// loop through the arguments
+	while(count($args))
+	{
+
+		// get the next argument
+		$a = array_shift($args);
+
+		// check to see if the object has been created yet
+		if(!$obj)
+		{
+			// instantiate a new object
+			$obj = Model::factory(ucfirst(strtolower($a)));
+		}
+		else
+		{
+			//otherwise, we're looking for a relationship
+			// $a currently is something like "album"; the relationship looks
+			// something like $obj->albums(). Fix up $a
+			$a = $a.'s';
+			$obj = $obj->$a();
+		}
+
+		// if we have more arguments, then the next one must be an ID value
+		if(count($args)) {
+			// get the ID
+			$id = array_shift($args);
+
+			// find the single object corresponding to that ID
+			$obj = $obj->find_one($id);
+		}
+		else
+		{
+			// no more arguments, so we want to find the "many" elements at this
+			// point
+			$obj = $obj->find_many();
+		}
+
+	}
+
+Kint::dump($obj);
+
+
+
+
+
+
+
+
+
 	die;
 
 
