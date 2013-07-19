@@ -1,47 +1,71 @@
 <?php
 
 /**
- * The idea here is that the controller will do the work (whatever that amounts
- * to) and will instantiate a new View of the appropriate type. That view will
- * have a render method which will render the page appropriately.
- *
- * In this way we have some separation of concerns:
- *
- * - the controller marshalls the data and passes it to a view
- *
- * - the view massages that data into the presentation form (using templates)
- *
- * The routes.php file decides which controller to use; the controller decides
- * which view class to use; the view class decides which template(s) to use.
+ * The view class for a page containing a list of items.
  */
+class ListPage extends View {
 
-
-class ListPage
-{
-
-	public static function render($page_head, $list_head, $list_items)
+	/**
+	 * Render a list page
+	 * 
+	 * @param string $page_title 
+	 * The page title (displayed in the top bar)
+	 * 
+	 * @param array|null $album_stats 
+	 * The album stats, if this is a list of songs from an album
+	 * 
+	 * @param array $list_items 
+	 * The list of items to display
+	 * 
+	 * @return string
+	 * The HTML of the rendered page
+	 */
+	public static function render($page_title, $album_stats, $list_items)
 	{
 
 		// instantiate the template engine
-		$tpl = new Rain\Tpl;
+		$parser = new Rain\Tpl;
 
 		// assign some values
-		// the values provided are objects. These need to be converted to array
+		// the list of items is an array of objects. These need to be converted
+		// to an array.
 		$list = (array)$list_items;
 		array_walk($list, function(&$v, $k){ $v = $v->toArray(); });
 
-		$page_head = $page_head->toArray();
+		// calculate the type of the next item
+		$type = '';
+		if(count($list_items))
+		{
+			$class = get_class($list_items[0]);
+			switch($class)
+			{
+				case 'Genre':
+					$type = 'artist';
+					break;
+				case 'Artist':
+					$type = 'album';
+					break;
+				case 'Playlist':
+				case 'Album':
+					$type = 'song';
+					break;
+				case 'Song':
+					break;
+				default:
+					throw new Exception("Unrecognized object class");
 
-		$list_head = $list_head->toArray();
-
-Kint::dump($list_head); die;
-		$tpl->assign(array(
-			'page_head' => $page_head,
-			'list_head' => $list_head,
-			'list' => $list,
+			}
+		}
+		// assign the values to the template parser
+		$parser->assign(array(
+			'base_uri'		=> static::$base_uri,
+			'object_type'	=> $type,
+			'page_title'	=> $page_title,
+			'album_stats'	=> $album_stats,
+			'list'			=> $list,
 		));
 
 		// return the HTML
-		return $tpl->draw( "list-page", true );
+		return $parser->draw( "list-page", true );
 	}
 }
