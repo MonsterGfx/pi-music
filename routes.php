@@ -78,6 +78,9 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	// the page title
 	$page_title = '';
 
+	// the album (if any)
+	$album = null;
+
 	// loop through the arguments
 	while(count($args))
 	{
@@ -110,6 +113,10 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 			// find the single object corresponding to that ID
 			$obj = $obj->find_one($id);
+
+			// if $obj is an Album, then collect the album stats
+			if(get_class($obj)=='Album')
+				$album_stats = $obj->getStats();
 
 			// update the page title
 			$page_title = $obj->name;
