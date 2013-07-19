@@ -14,7 +14,7 @@ class Album extends Model {
 	 */
 	public function artist()
 	{
-		return $this->has_one('Artist');
+		return $this->belongs_to('Artist');
 	}
 
 	/**
