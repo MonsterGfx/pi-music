@@ -1,6 +1,6 @@
 <?php
 
-class Album extends Model {
+class Album extends BaseModel {
 	// the table
 	public static $_table = 'albums';
 
@@ -52,5 +52,15 @@ class Album extends Model {
 			'total_time' => $time ?: null,
 		);
 
+	}
+
+	public function toArray()
+	{
+		return array(
+			'id'			=> $this->id,
+			'name'			=> $this->name,
+			'artists_id'	=> $this->artists_id,
+			'year'			=> $this->year,
+		);
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-class Genre extends Model {
+class Genre extends BaseModel {
 	// the table
 	public static $_table = 'genres';
 
@@ -38,5 +38,13 @@ class Genre extends Model {
 	public function songs()
 	{
 		return $this->has_many('Song');
+	}
+
+	public function toArray()
+	{
+		return array(
+			'id'	=> $this->id,
+			'name'	=> $this->name,
+		);
 	}
 }
