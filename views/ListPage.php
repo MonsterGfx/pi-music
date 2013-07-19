@@ -19,8 +19,9 @@
 class ListPage
 {
 
-	public static function render($header_object, $list_items)
+	public static function render($page_head, $list_head, $list_items)
 	{
+
 		// instantiate the template engine
 		$tpl = new Rain\Tpl;
 
