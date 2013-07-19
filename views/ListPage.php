@@ -8,6 +8,21 @@ class ListPage extends View {
 {
 
 	public static function render($page_head, $list_head, $list_items)
+	/**
+	 * Render a list page
+	 * 
+	 * @param string $page_title 
+	 * The page title (displayed in the top bar)
+	 * 
+	 * @param array|null $album_stats 
+	 * The album stats, if this is a list of songs from an album
+	 * 
+	 * @param array $list_items 
+	 * The list of items to display
+	 * 
+	 * @return string
+	 * The HTML of the rendered page
+	 */
 	{
 
 		// instantiate the template engine
