@@ -13,7 +13,10 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 	$args = explode('/', $request->uri());
 
-	$args = array_filter($args);
+	$args = array_values(array_filter($args));
+
+	// set the base URI
+	ListPage::setBaseUri(implode('/',$args));
 
 
 	// queries look like this:
