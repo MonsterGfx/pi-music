@@ -15,7 +15,7 @@
 <div data-role="page">
 
 	<div data-role="header">
-		<h1>{$page_head.artist}</h1>
+		<h1>{$page_title}</h1>
 	</div><!-- /header -->
 
 	<div data-role="content">
