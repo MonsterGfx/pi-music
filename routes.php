@@ -53,6 +53,12 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 
 
+	$s = Model::factory('Song')->find_one(1);
+	Kint::dump($s);
+
+	$albums = $s->album()->find_many();
+	Kint::dump($albums);
+	die;
 
 
 
@@ -62,13 +68,6 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 
 
-
-	// imagine a query like this:
-	// artist/1/album/3
-
-	$artist = Database::voodORM()->table('artists')->where('id',1)->findOne();
-	$album = Database::voodORM()->table('albums')->where('id',1)->_and()->where('artist_id',$artist->id)->findOne();
-	$songs = Database::voodORM()->table('songs')->where('artist_id',$artist->id)->_and()->where('album_id',$album->id)->find();
 	// Kint::dump($album);
 	// die;
 
