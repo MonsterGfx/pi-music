@@ -53,23 +53,8 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 
 
-	$s = Model::factory('Song')->find_one(1);
-	Kint::dump($s);
 
-	$albums = $s->album()->find_many();
-	Kint::dump($albums);
 	die;
-
-
-
-
-
-
-
-
-
-	// Kint::dump($album);
-	// die;
 
 
 	return ListPage::render($artist, $album, $songs);
