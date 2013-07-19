@@ -41,11 +41,6 @@ class Scan {
 			$file_info = $getID3->analyze($filename);
 
 			// get the tags
-if(!isset($file_info['tags']))
-{
-	print_r($file_info);
-	die;
-}
 			$tags = $file_info['tags'];
 			if(isset($tags['id3v2']))
 				$tags = $tags['id3v2'];
