@@ -19,7 +19,7 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	// artist/1/album/3
 
 	$artist = Database::voodORM()->table('artists')->where('id',1)->findOne();
-	$album = Database::voodORM()->table('albums')->where('id',2)->_and()->where('artist_id',$artist->id)->findOne();
+	$album = Database::voodORM()->table('albums')->where('id',1)->_and()->where('artist_id',$artist->id)->findOne();
 	$songs = Database::voodORM()->table('songs')->where('artist_id',$artist->id)->_and()->where('album_id',$album->id)->find();
 	// Kint::dump($album);
 	// die;
