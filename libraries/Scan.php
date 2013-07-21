@@ -55,12 +55,12 @@ class Scan {
 			$artist = null;
 			if(isset($tags['artist']))
 			{
-				$artist = Database::voodORM()->table('artists')->where('name',$tags['artist'][0])->findOne();
+				$artist = Model::factory('Artist')->where('name',$tags['artist'][0])->find_one();
 				if(!$artist)
 				{
-					$artist = Database::voodORM()->table('artists');
+					$artist = Model::factory('Artist')->create();
 					$artist->name = $tags['artist'][0];
-					$artist = $artist->save();
+					$artist->save();
 				}
 			}
 
@@ -68,14 +68,14 @@ class Scan {
 			$album = null;
 			if(isset($tags['album']))
 			{
-				$album = Database::voodORM()->table('albums')->where('name',$tags['album'][0])->_and()->where('artists_id',$artist->id)->findOne();
+				$album = Model::factory('Album')->where('name',$tags['album'][0])->where('artists_id',$artist->id)->find_one();
 				if(!$album)
 				{
-					$album = Database::voodORM()->table('albums');
+					$album = Model::factory('Album')->create();
 					$album->artists_id	= $artist->id;
 					$album->name		= $tags['album'][0];
 					$album->year		= isset($tags['year']) ? $tags['year'][0] : null;
-					$album = $album->save();
+					$album->save();
 				}
 			}
 
@@ -83,18 +83,18 @@ class Scan {
 			$genre = null;
 			if(isset($tags['genre']))
 			{
-				$genre = Database::voodORM()->table('genres')->where('name',$tags['genre'][0])->findOne();
+				$genre = Model::factory('Genre')->where('name',$tags['genre'][0])->find_one();
 				if(!$genre)
 				{
-					$genre = Database::voodORM()->table('genres');
+					$genre = Model::factory('Genre')->create();
 					$genre->name = $tags['genre'][0];
-					$genre = $genre->save();
+					$genre->save();
 				}
 			}
 
 
 			// try to load the entry for this song
-			$song = Database::voodORM()->table('songs')->where('filenamepath', $file_info['filenamepath'])->findOne();
+			$song = Model::factory('Song')->where('filenamepath', $file_info['filenamepath'])->find_one();
 
 			// if the song exists and the last file modification time is BEFORE the
 			// database "updated_at" value, then there's no reason to continue since
@@ -105,7 +105,7 @@ class Scan {
 			// if the song wasn't found, then create it
 			if(!$song)
 			{
-				$song = Database::voodORM()->table('songs');
+				$song = Model::factory('Song')->create();
 				$song->created_at = time();
 			}
 
