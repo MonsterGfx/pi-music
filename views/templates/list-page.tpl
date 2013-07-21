@@ -14,7 +14,7 @@
 
 <div data-role="page">
 
-	<div data-role="header">
+	<div data-role="header" data-position="fixed">
 		<h1>{$page_title}</h1>
 	</div><!-- /header -->
 
