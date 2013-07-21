@@ -15,6 +15,9 @@
 <div data-role="page">
 
 	<div data-role="header" data-position="fixed">
+		{if="$previous"}
+		<a href="{$previous.path}" data-role="button" data-inline="true">{$previous.text}</a>
+		{/if}
 		<h1>{$page_title}</h1>
 	</div><!-- /header -->
 
@@ -31,11 +34,11 @@
 	<div data-role="footer" data-id="list-footer" data-position="fixed">
 		<div data-role="navbar">
 			<ul>
-				<li><a href="a.html">Playlists</a></li>
-				<li><a href="b.html">Artists</a></li>
-				<li><a href="c.html">Songs</a></li>
-				<li><a href="d.html">Albums</a></li>
-				<li><a href="e.html">More</a></li>
+				<li><a href="#">Playlists</a></li>
+				<li><a href="/artist">Artists</a></li>
+				<li><a href="#">Songs</a></li>
+				<li><a href="/album">Albums</a></li>
+				<li><a href="#">More</a></li>
 			</ul>
 		</div><!-- /navbar -->
 	</div><!-- /footer -->

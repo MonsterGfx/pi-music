@@ -20,7 +20,7 @@ class ListPage extends View {
 	 * @return string
 	 * The HTML of the rendered page
 	 */
-	public static function render($page_title, $album_stats, $list_items)
+	public static function render($page_title, $previous, $album_stats, $list_items)
 	{
 
 		// instantiate the template engine
@@ -56,11 +56,13 @@ class ListPage extends View {
 
 			}
 		}
+
 		// assign the values to the template parser
 		$parser->assign(array(
 			'base_uri'		=> static::$base_uri,
 			'object_type'	=> $type,
 			'page_title'	=> $page_title,
+			'previous'		=> $previous,
 			'album_stats'	=> $album_stats,
 			'list'			=> $list,
 		));

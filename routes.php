@@ -8,8 +8,8 @@
  * currently at version 0.0.1-alpha
  * * list page: fix toolbar at bottom
  * * list page: fix toolbar at top
- * @todo list page: add buttons to bottom toolbar
- * @todo list page: add "back" button in upper left
+ * * list page: add "back" button in upper left
+ * * list page: add buttons to bottom toolbar
  * @todo list page: render album details when appropriate
  * 
  * @todo ******************** bump version 0.0.2-alpha
@@ -57,7 +57,13 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 	$args = explode('/', $request->uri());
 
+	// get the values - the array filter function preserves array keys, even in
+	// non-associative arrays; therefore, to make sure we don't have holes in
+	// our numeric keys, I'm going to pull out the list of values
 	$args = array_values(array_filter($args));
+
+	// save the original arguments for later
+	$original_args = $args;
 
 	// set the base URI
 	ListPage::setBaseUri(implode('/',$args));
@@ -126,6 +132,9 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	// the album (if any)
 	$album = null;
 
+	// the list of pages
+	$pages = array();
+
 	// loop through the arguments
 	while(count($args))
 	{
@@ -147,9 +156,11 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 			//otherwise, we're looking for a relationship
 			// $a currently is something like "album"; the relationship looks
 			// something like $obj->albums(). Fix up $a
-			$a = $a.'s';
-			$obj = $obj->$a();
+			$func = $a.'s';
+			$obj = $obj->$func();
 		}
+
+		$pages[] = ucfirst(strtolower($a)).'s';
 
 		// if we have more arguments, then the next one must be an ID value
 		if(count($args)) {
@@ -173,8 +184,36 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 			$obj = $obj->find_many();
 		}
 
+		if(isset($obj->name))
+		{
+			array_pop($pages);
+			$pages[] = $obj->name;
+		}
+
 	}
 
+	// add the first argument back onto the list of pages
+	array_unshift($pages, ucfirst(strtolower($original_args[0])).'s');
+
+	// the base index to work from
+	$i = count($original_args)-1;
+
+	// the page
+	$previous_page = $i/2-1;
+	$previous_page = $previous_page>=0 ? $pages[$previous_page] : null;
+
+	// the path
+	$previous_path = $i-2;
+	$previous_path = $previous_path>=0 ? '/'.implode('/',array_chunk($original_args,$previous_path+1)[0]) : null;
+
+	// finally, put the previous info together
+	$previous = null;
+	if($previous_page && $previous_path)
+		$previous = array(
+				'text' => $previous_page,
+				'path' => $previous_path,
+			);
+	
 	// check if the final object is a song
 	if($obj && get_class($obj)=='Song')
 	{
@@ -183,7 +222,7 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	else if(is_array($obj))
 	{
 		// otherwise, render the list
-		return ListPage::render($page_title, $album_stats, $obj);
+		return ListPage::render($page_title, $previous, $album_stats, $obj);
 	}
 	else
 		throw new Exception("Oops! I don't know what went wrong!");
