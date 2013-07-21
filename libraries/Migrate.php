@@ -16,13 +16,13 @@ class Migrate {
 	public static function up()
 	{
 		// check to see if the "migration" table exists
-		if(!Database::tableExists(Migrate::$table_name))
+		if(!Database::tableExists(static::$table_name))
 		{
 			// if not, create it
-			Database::execute("CREATE TABLE ".Migrate::$table_name." (id INTEGER PRIMARY KEY ASC, last INTEGER);");
+			Database::execute("CREATE TABLE ".static::$table_name." (id INTEGER PRIMARY KEY ASC, last INTEGER);");
 
 			// initialize the value
-			Database::execute("INSERT INTO ".Migrate::$table_name." VALUES ( 1, 0 );");
+			Database::execute("INSERT INTO ".static::$table_name." VALUES ( 1, 0 );");
 		}
 
 		// get the "migration" model
