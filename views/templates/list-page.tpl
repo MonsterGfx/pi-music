@@ -28,13 +28,14 @@
 
 	</div><!-- /content -->
 
-	<div data-role="footer" data-id="foo1" data-position="fixed">
+	<div data-role="footer" data-id="list-footer" data-position="fixed">
 		<div data-role="navbar">
 			<ul>
-				<li><a href="a.html">Info</a></li>
-				<li><a href="b.html">Friends</a></li>
-				<li><a href="c.html">Albums</a></li>
-				<li><a href="d.html">Emails</a></li>
+				<li><a href="a.html">Playlists</a></li>
+				<li><a href="b.html">Artists</a></li>
+				<li><a href="c.html">Songs</a></li>
+				<li><a href="d.html">Albums</a></li>
+				<li><a href="e.html">More</a></li>
 			</ul>
 		</div><!-- /navbar -->
 	</div><!-- /footer -->
