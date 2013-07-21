@@ -22,7 +22,7 @@
 
 		<ul data-role="listview">
 {loop="$list"}
-		    <li><a href="/{$base_uri}/{$value.id}/{$object_type}">{$value.name}</a></li>
+			<li><a href="/{$base_uri}/{$value.id}/{$object_type}">{$value.name}</a></li>
 {/loop}
 		</ul>
 
