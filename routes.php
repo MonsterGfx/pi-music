@@ -6,7 +6,7 @@
  * This looks like a good spot to write some TODOs
  * 
  * currently at version 0.0.1-alpha
- * @todo list page: fix toolbar at bottom
+ * * list page: fix toolbar at bottom
  * @todo list page: fix toolbar at top
  * @todo list page: add buttons to bottom toolbar
  * @todo list page: add "back" button in upper left
