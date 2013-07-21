@@ -29,20 +29,6 @@ class Database {
 	}
 
 	/**
-	 * Get the VoodOrm object, initializing it if necessary
-	 *
-	 * @return VoodOrm
-	 */
-	public static function voodORM()
-	{
-		// check & see if the object already exists
-		if(!Database::$voodORM)
-			Database::$voodORM = new Voodoo\VoodOrm(Database::pdo());
-
-		return Database::$voodORM;
-	}
-
-	/**
 	 * Check to see if a table exists in the database
 	 *
 	 * @param string $table
