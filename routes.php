@@ -57,6 +57,9 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 	$args = explode('/', $request->uri());
 
+	// get the values - the array filter function preserves array keys, even in
+	// non-associative arrays; therefore, to make sure we don't have holes in
+	// our numeric keys, I'm going to pull out the list of values
 	$args = array_values(array_filter($args));
 
 	// set the base URI
