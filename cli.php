@@ -3,6 +3,8 @@
 // load the autoloader
 require_once 'vendor/autoload.php';
 
+require_once 'bootstrap.php';
+
 // get the arguments from the command line
 $args = $argv;
 
