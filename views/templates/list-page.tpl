@@ -22,16 +22,24 @@
 
 		<ul data-role="listview">
 {loop="$list"}
-		    <li><a href="/{$base_uri}/{$value.id}/{$object_type}">{$value.name}</a></li>
+			<li><a href="/{$base_uri}/{$value.id}/{$object_type}">{$value.name}</a></li>
 {/loop}
 		</ul>
 
 	</div><!-- /content -->
-	
-	<div data-role="footer">
-		<h4>Footer content</h4>
+
+	<div data-role="footer" data-id="list-footer" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="a.html">Playlists</a></li>
+				<li><a href="b.html">Artists</a></li>
+				<li><a href="c.html">Songs</a></li>
+				<li><a href="d.html">Albums</a></li>
+				<li><a href="e.html">More</a></li>
+			</ul>
+		</div><!-- /navbar -->
 	</div><!-- /footer -->
-	
+
 </div><!-- /page -->
 
 </body>
