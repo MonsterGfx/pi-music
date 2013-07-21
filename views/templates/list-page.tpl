@@ -27,11 +27,18 @@
 		</ul>
 
 	</div><!-- /content -->
-	
-	<div data-role="footer">
-		<h4>Footer content</h4>
+
+	<div data-role="footer" data-id="foo1" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="a.html">Info</a></li>
+				<li><a href="b.html">Friends</a></li>
+				<li><a href="c.html">Albums</a></li>
+				<li><a href="d.html">Emails</a></li>
+			</ul>
+		</div><!-- /navbar -->
 	</div><!-- /footer -->
-	
+
 </div><!-- /page -->
 
 </body>
