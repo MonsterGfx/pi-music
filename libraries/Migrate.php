@@ -25,11 +25,10 @@ class Migrate {
 			Database::execute("INSERT INTO ".static::$table_name." VALUES ( 1, 0 );");
 		}
 
-		// get the "migration" model
-		$migration = Database::voodORM()->table(Migrate::$table_name)->where('id', 1)->findOne();
-
 		// get the current migration counter
-		$value = $migration->last;
+		$value = Database::query("SELECT last FROM ".static::$table_name." WHERE id=1;");
+		$value = $value[0]['last'];
+
 		// get the list of migration classes from the config
 		$migrations = Config::get('migrations.migrations');
 
@@ -85,10 +84,7 @@ class Migrate {
 
 		// if we get here, then everything succeeded
 		// save the last migration counter
-		$migration->last = $value;
-
-		// and save the value
-		$migration->save();
+		Database::execute("UPDATE ".static::$table_name." SET last=:last WHERE id=1;", array(':last'=>$value));
 	}
 
 	/**
@@ -99,11 +95,9 @@ class Migrate {
 	 */
 	public static function down($down_to=0)
 	{
-		// get the "migration" model
-		$migration = Database::voodORM()->table(Migrate::$table_name)->where('id', 1)->findOne();
-
 		// get the current migration counter
-		$value = $migration->last;
+		$value = Database::query("SELECT last FROM ".static::$table_name." WHERE id=1;");
+		$value = $value[0]['last'];
 
 		// get the list of migration classes from the config
 		$migrations = Config::get('migrations.migrations');
@@ -158,9 +152,6 @@ class Migrate {
 
 		// if we get here, then everything succeeded
 		// save the last migration counter
-		$migration->last = $value;
-
-		// and save the value
-		$migration->save();
+		Database::execute("UPDATE ".static::$table_name." SET last=:last WHERE id=1;", array(':last'=>$value));
 	}
 }
