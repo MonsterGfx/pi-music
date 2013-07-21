@@ -12,11 +12,6 @@ class Database {
 	private static $db = null;
 
 	/**
-	 * the VoodOrm object
-	 */
-	private static $voodORM = null;
-
-	/**
 	 * Get the PDO object, initializing it if necessary
 	 *
 	 * @return PDO
