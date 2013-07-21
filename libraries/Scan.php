@@ -153,6 +153,12 @@ class Scan {
 		if(!$path)
 			throw new Exception("Invalid music path");
 
-		Scan::scanFolder($path);
+		// if it's not an array, then make it one
+		if(!is_array($path))
+			$path = array($path);
+
+		// step through the paths in the array
+		foreach($path as $p)
+			Scan::scanFolder($p);
 	}
 }
