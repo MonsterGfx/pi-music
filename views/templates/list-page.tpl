@@ -24,6 +24,22 @@
 	<div data-role="content">
 
 		<ul data-role="listview">
+{* add the album stats (if any) *}
+	{if="$album_stats"}
+			<li>
+				<p>{$album_stats.artist}</p>
+				<h1>{$album_stats.name}</h1>
+				<p>{if="$album_stats.year"}Released {$album_stats.year}{/if}</p>
+		{if="$album_stats.song_count && $album_stats.total_time"}
+				<p>
+					{if="$album_stats.song_count>0"}{$album_stats.song_count} songs. {/if}
+					{if="$album_stats.total_time"}{$album_stats.total_time} minutes.{/if}
+				</p>
+		{/if}
+			</li>
+	{/if}
+
+
 {loop="$list"}
 			<li><a href="/{$base_uri}/{$value.id}/{$object_type}">{$value.name}</a></li>
 {/loop}
