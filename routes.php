@@ -206,13 +206,6 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	$previous_path = $i-2;
 	$previous_path = $previous_path>=0 ? '/'.implode('/',array_chunk($original_args,$previous_path+1)[0]) : null;
 
-// Kint::dump($original_args);
-// Kint::dump($pages);
-// Kint::dump($i);
-// Kint::dump($previous_page);
-// Kint::dump($previous_path);
-// die;
-
 	// finally, put the previous info together
 	$previous = null;
 	if($previous_page && $previous_path)
