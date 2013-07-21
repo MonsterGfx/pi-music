@@ -5,7 +5,8 @@
  * 
  * This looks like a good spot to write some TODOs
  * 
- * currently at version 0.0.1-alpha
+ * currently at version 0.0.2-alpha
+ * 
  * * list page: fix toolbar at bottom
  * * list page: fix toolbar at top
  * * list page: add "back" button in upper left
