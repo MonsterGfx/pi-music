@@ -207,6 +207,16 @@ $klein->respond('GET','/empty-db', function(){
 	Kint::dump("database emptied");
 });
 
+$klein->respond('GET','/view-db', function($request,$response){
+
+	Kint::dump(Database::query("SELECT * FROM songs;"));
+	Kint::dump(Database::query("SELECT * FROM artists;"));
+	Kint::dump(Database::query("SELECT * FROM albums;"));
+	Kint::dump(Database::query("SELECT * FROM genres;"));
+	die;
+
+});
+
 $klein->respond('GET','/test-route', function($request,$response){
 
 
