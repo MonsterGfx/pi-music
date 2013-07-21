@@ -15,6 +15,9 @@
 <div data-role="page">
 
 	<div data-role="header" data-position="fixed">
+		{if="$previous"}
+		<a href="{$previous.path}" data-role="button" data-inline="true">{$previous.text}</a>
+		{/if}
 		<h1>{$page_title}</h1>
 	</div><!-- /header -->
 
