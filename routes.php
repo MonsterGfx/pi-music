@@ -252,8 +252,6 @@ $klein->respond('GET','/nuke-db', function(){
 		Kint::dump("dropping {$t['name']}");
 		Database::execute("drop table if exists {$t['name']};");
 	}
-	
-
 	Kint::dump("database nuked");
 });
 
