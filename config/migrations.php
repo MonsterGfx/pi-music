@@ -16,6 +16,8 @@ return array(
 
 		'2' => 'Migration_002_add_playlist_tables',
 
+		'3' => 'Migration_003_add_artwork_filename_to_songs',
+
 	),
 
 );
