@@ -263,11 +263,8 @@ $klein->respond('GET','/view-db', function($request,$response){
 
 $klein->respond('GET','/test-route', function($request,$response){
 
-	$playlist = Model::factory('Playlist')->find_one(1);
 
-	$newsong = Model::factory('Song')->find_one(rand(1,170));
-
-	$playlist->addSong($newsong);
+	Kint::dump(Model::factory('Song')->find_one(23)->playlists()->find_one()->as_array());
 
 
 });
