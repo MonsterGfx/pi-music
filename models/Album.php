@@ -43,9 +43,18 @@ class Album extends BaseModel {
 			$time += $s->playtime_seconds;
 		$time = round($time/60);
 
+		// load the image data
+		$img = file_get_contents(Config::get('app.music-artwork-path').$songs[0]->artwork.'-180.jpg');
+		if($img)
+		{
+			$img = base64_encode($img);
+			$img = "data:image/png;base64,{$img}";
+		}
+
 		// return the results
 		return array(
 			'artist' => $this->artist()->find_one()->name,
+			'artwork' => $img,
 			'name' => $this->name,
 			'year' => $this->year ?: null,
 			'song_count' => count($songs) ?: null,

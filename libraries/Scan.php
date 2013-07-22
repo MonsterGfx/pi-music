@@ -92,6 +92,60 @@ class Scan {
 				}
 			}
 
+			// try to extract the album artwork (if any)
+			// find the artwork in the $file_info structure
+			$artwork = null;
+			$artwork_type = null;
+			$image_filename = null;
+
+			// try the different places in which I've found artwork
+			if(isset($file_info['comments']['picture'][0]['data']))
+			{
+				$artwork = $file_info['comments']['picture'][0]['data'];
+				$artwork_type = $file_info['comments']['picture'][0]['image_mime'];
+			}
+			else if(isset($file_info['id3v2']['APIC'][0]['data']))
+			{
+				$artwork = $file_info['id3v2']['APIC'][0]['data'];
+				$artwork_type = $file_info['id3v2']['APIC'][0]['image_mime'];
+			}
+
+			// did we find some artwork?
+			if($artwork)
+			{
+				// the function names to be used in resizing
+				$image_function = null;
+
+				// build the artwork path
+				$image_path = Config::get('app.music-artwork-path');
+				$image_filename = sha1($artist->name.'-'.$album->name);
+
+				// create the image object
+				$img = imagecreatefromstring($artwork);
+
+				// did we get a valid image object?
+				if($img)
+				{
+					// save the original as a JPEG
+					imagejpeg($img, Config::get('app.music-artwork-path').$image_filename.".jpg", 100);
+
+					// resize to the resolutions in the array below
+					$res = array(640,180);
+
+					foreach( $res as $r )
+					{
+						// create a resized image
+						$cpy = imagecreatetruecolor($r, $r);
+
+						// copy the image
+						imagecopyresampled($cpy, $img, 0, 0, 0, 0, $r, $r, imagesx($img), imagesy($img));
+
+						// save the image
+						imagejpeg($cpy, Config::get('app.music-artwork-path').$image_filename."-{$r}.jpg", 80);
+					}
+
+				}
+			}
 
 			// try to load the entry for this song
 			$song = Model::factory('Song')->where('filenamepath', $file_info['filenamepath'])->find_one();
@@ -134,6 +188,8 @@ class Scan {
 			$song->compilation	= isset($tags['compilation']) ? $tags['compilation'][0] : null;
 			$song->bpm			= isset($tags['bpm']) ? $tags['bpm'][0] : null;
 			$song->rating		= isset($tags['rating']) ? $tags['rating'][0] : null;
+
+			$song->artwork		= $image_filename;
 
 			$song->updated_at = time();
 
