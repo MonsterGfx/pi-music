@@ -19,9 +19,9 @@
  * 
  * * ******************** bump version 0.0.3-alpha
  * 
- * @todo scan music: remove missing files
+ * * scan music: remove missing files
  * 
- * @todo ******************** bump version 0.0.4-alpha
+ * * ******************** bump version 0.0.4-alpha
  * 
  * @todo install MPD
  * @todo implement MPD interface
