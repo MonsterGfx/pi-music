@@ -18,7 +18,7 @@ class QueryCache {
 			return false;
 
 		// attempt to load the query file
-		$filename = Config::get('app.query-cache-path').implode('-',$args);
+		$filename = Config::get('app.query-cache-path').implode('-',$args).'.qcache';
 
 		if(file_exists($filename))
 			return unserialize(file_get_contents($filename));
@@ -36,7 +36,7 @@ class QueryCache {
 	public static function save($args, $value)
 	{
 		// create the filename
-		$filename = Config::get('app.query-cache-path').implode('-',$args);
+		$filename = Config::get('app.query-cache-path').implode('-',$args).'.qcache';
 
 		// write the value
 		file_put_contents($filename, serialize($value));
