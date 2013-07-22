@@ -22,6 +22,8 @@ class QueryCache {
 
 		if(file_exists($filename))
 			return unserialize(file_get_contents($filename));
+
+		return false;
 	}
 
 	/**
