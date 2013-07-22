@@ -23,16 +23,16 @@
  * 
  * * ******************** bump version 0.0.4-alpha
  * 
- * @todo install MPD
- * @todo implement MPD interface
+ * @todo album artwork
  * 
  * @todo ******************** bump version 0.0.5-alpha
  * 
- * ------------------------- this will get us to a point where the player works!
- * 
- * @todo album artwork
+ * @todo install MPD
+ * @todo implement MPD interface
  * 
  * @todo ******************** bump version 0.0.6-alpha
+ * 
+ * ------------------------- this will get us to a point where the player works!
  * 
  * @todo query caching system
  * 
