@@ -19,24 +19,28 @@
  * 
  * * ******************** bump version 0.0.3-alpha
  * 
+ * @todo scan music: remove missing files
+ * 
+ * @todo ******************** bump version 0.0.4-alpha
+ * 
  * @todo install MPD
  * @todo implement MPD interface
  * 
- * @todo ******************** bump version 0.0.4-alpha
+ * @todo ******************** bump version 0.0.5-alpha
  * 
  * that will get us to a point where the player works!
  * 
  * @todo album artwork
  * 
- * @todo ******************** bump version 0.0.5-alpha
+ * @todo ******************** bump version 0.0.6-alpha
  * 
  * @todo playlist editor
  * 
- * @todo ******************** bump version 0.0.6-alpha
+ * @todo ******************** bump version 0.0.7-alpha
  * 
  * @todo desktop pc layout
  * 
- * @todo ******************** bump version 0.0.7-alpha
+ * @todo ******************** bump version 0.0.8-alpha
  * 
  * @todo testing
  * 
