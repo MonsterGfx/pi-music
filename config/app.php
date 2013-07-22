@@ -14,4 +14,6 @@ return array(
 	'template-path' => dirname(__FILE__).'/../views/templates/',
 
 	'template-cache-path' => dirname(__FILE__).'/../storage/cache/',
+
+	'query-cache-path' => dirname(__FILE__).'/../storage/cache/',
 );
