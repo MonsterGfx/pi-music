@@ -140,6 +140,53 @@ class Scan {
 			// save
 			$song->save();
 
+			// now extract the album artwork (if any)
+
+			// find the artwork in the $file_info structure
+			$artwork = null;
+			$artwork_type = null;
+			if(isset($file_info['comments']['picture'][0]['data']))
+			{
+				$artwork = $file_info['comments']['picture'][0]['data'];
+				$artwork_type = $file_info['comments']['picture'][0]['image_mime'];
+			}
+			else if(isset($file_info['id3v2']['APIC'][0]['data']))
+			{
+				$artwork = $file_info['id3v2']['APIC'][0]['data'];
+				$artwork_type = $file_info['id3v2']['APIC'][0]['image_mime'];
+			}
+
+			// did we find some artwork?
+			if($artwork)
+			{
+				// build the artwork path
+				$image_path = Config::get('app.music-artwork-path').'album-'.$album->id;
+				switch($artwork_type)
+				{
+					case 'image/jpeg':
+						$image_path .= '.jpg';
+						break;
+					case 'image/png':
+						$image_path .= '.png';
+						break;
+					case 'image/gif':
+						$image_path .= '.gif';
+						break;
+					case 'image/tiff':
+						$image_path .= '.tiff';
+						break;
+					default:
+						$image_path .= '.dat';
+						break;
+				}
+
+				// check to see if the file already exists
+				if(!file_exists($image_path))
+				{
+					// save the artwork
+					file_put_contents($image_path, $artwork);
+				}
+			}
 		}
 		echo "done ($path).\n\n\n";
 
