@@ -238,7 +238,15 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	}
 	else if(is_array($obj))
 	{
-		// otherwise, render the list
+		// otherwise, save the results in the cache
+		QueryCache::save($original_args, array(
+			'page_title' => $page_title,
+			'previous' => $previous,
+			'album_stats' => $album_stats,
+			'results' => $obj,
+		));
+
+		// and render the list
 		return ListPage::render($page_title, $previous, $album_stats, $obj);
 	}
 	else
