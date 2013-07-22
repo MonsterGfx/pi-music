@@ -22,10 +22,10 @@ QUERY;
 		Database::execute($query);
 		Database::execute("CREATE INDEX idx_playlists_name ON playlists( name );");
 
-		// create the playlistssongs table
+		// create the playlists_songs table
 		$query = <<<QUERY
 
-CREATE TABLE playlistssongs (
+CREATE TABLE playlists_songs (
 	id INTEGER PRIMARY KEY ASC,
 	playlists_id INTEGER,
 	songs_id INTEGER,
@@ -34,9 +34,9 @@ CREATE TABLE playlistssongs (
 
 QUERY;
 		Database::execute($query);
-		Database::execute("CREATE INDEX idx_playlistssongs_playlists_id ON playlistssongs( playlists_id );");
-		Database::execute("CREATE INDEX idx_playlistssongs_songs_id ON playlistssongs( songs_id );");
-		Database::execute("CREATE INDEX idx_playlistssongs_sort_order ON playlistssongs( sort_order );");
+		Database::execute("CREATE INDEX idx_playlists_songs_playlists_id ON playlists_songs( playlists_id );");
+		Database::execute("CREATE INDEX idx_playlists_songs_songs_id ON playlists_songs( songs_id );");
+		Database::execute("CREATE INDEX idx_playlists_songs_sort_order ON playlists_songs( sort_order );");
 
 	}
 
@@ -47,7 +47,7 @@ QUERY;
 	public static function down()
 	{
 		// drop the table
-		Database::execute("DROP TABLE playlistssongs;");
+		Database::execute("DROP TABLE playlists_songs;");
 		Database::execute("DROP TABLE playlists;");
 	}
 }
