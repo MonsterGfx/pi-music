@@ -169,7 +169,7 @@ class Scan {
 							imagecopyresampled($cpy, $img,0,0,0,0,$r,$r,imagesx($img),imagesy($img));
 
 							// save the image
-							$image_save($cpy, Config::get('app.music-artwork-path').$image_filename."-$r".$image_extension);
+							imagejpeg($cpy, Config::get('app.music-artwork-path').$image_filename."-{$r}.jpg");
 						}
 						
 					}
