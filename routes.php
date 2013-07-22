@@ -27,16 +27,16 @@
  * 
  * * ******************** bump version 0.0.5-alpha
  * 
+ * * query caching system
+ * 
+ * * ******************** bump version 0.0.6-alpha
+ * 
  * @todo install MPD
  * @todo implement MPD interface
  * 
- * @todo ******************** bump version 0.0.6-alpha
+ * @todo ******************** bump version 0.0.7-alpha
  * 
  * ------------------------- this will get us to a point where the player works!
- * 
- * @todo query caching system
- * 
- * @todo ******************** bump version 0.0.7-alpha
  * 
  * @todo playlist editor
  * 
