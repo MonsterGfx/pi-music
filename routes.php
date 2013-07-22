@@ -238,13 +238,18 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 		throw new Exception("Oops! I don't know what went wrong!");
 });
 
-$klein->respond('GET','/nuke-db', function(){
-	Database::execute("drop table sys_migrations;");
-	Database::execute("drop table artists;");
-	Database::execute("drop table albums;");
-	Database::execute("drop table genres;");
-	Database::execute("drop table songs;");
+$klein->respond('GET','/show-tables', function(){
+	Kint::dump(Database::query("SELECT name FROM sqlite_master WHERE type='table';"));
+});
 
+$klein->respond('GET','/nuke-db', function(){
+	$tables = Database::query("SELECT name FROM sqlite_master WHERE type='table';");
+	Kint::dump($tables);
+	foreach($tables as $t)
+	{
+		Kint::dump("dropping {$t['name']}");
+		Database::execute("drop table if exists {$t['name']};");
+	}
 	Kint::dump("database nuked");
 });
 
@@ -253,21 +258,18 @@ $klein->respond('GET','/empty-db', function(){
 	Database::execute("delete from albums;");
 	Database::execute("delete from genres;");
 	Database::execute("delete from songs;");
+	Database::execute("delete from playlists;");
+	Database::execute("delete from playlists_songs;");
 
 	Kint::dump("database emptied");
 });
 
 $klein->respond('GET','/view-db', function($request,$response){
-
-	Kint::dump(Database::query("SELECT * FROM songs;"));
-	Kint::dump(Database::query("SELECT * FROM artists;"));
-	Kint::dump(Database::query("SELECT * FROM albums;"));
-	Kint::dump(Database::query("SELECT * FROM genres;"));
-	Kint::dump(Database::query("SELECT * FROM playlists;"));
-	Kint::dump(Database::query("SELECT * FROM playlists_songs;"));
-	Kint::dump(Database::query("SELECT * FROM sys_migrations;"));
-	die;
-
+	$tables = Database::query("SELECT name FROM sqlite_master WHERE type='table';");
+	foreach($tables as $t)
+	{
+		Kint::dump(Database::query("SELECT * FROM {$t['name']};"));
+	}
 });
 
 $klein->respond('GET','/test-route', function($request,$response){
