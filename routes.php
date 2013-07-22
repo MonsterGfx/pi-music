@@ -5,7 +5,8 @@
  * 
  * This looks like a good spot to write some TODOs
  * 
- * currently at version 0.0.1-alpha
+ * currently at version 0.0.2-alpha
+ * 
  * * list page: fix toolbar at bottom
  * * list page: fix toolbar at top
  * * list page: add "back" button in upper left
@@ -14,7 +15,7 @@
  * 
  * * ******************** bump version 0.0.2-alpha
  * 
- * @todo implement playlists
+ * * implement playlists
  * 
  * @todo ******************** bump version 0.0.3-alpha
  * 
@@ -253,33 +254,21 @@ $klein->respond('GET','/view-db', function($request,$response){
 	Kint::dump(Database::query("SELECT * FROM artists;"));
 	Kint::dump(Database::query("SELECT * FROM albums;"));
 	Kint::dump(Database::query("SELECT * FROM genres;"));
+	Kint::dump(Database::query("SELECT * FROM playlists;"));
+	Kint::dump(Database::query("SELECT * FROM playlists_songs;"));
+	Kint::dump(Database::query("SELECT * FROM sys_migrations;"));
 	die;
 
 });
 
 $klein->respond('GET','/test-route', function($request,$response){
 
+	$playlist = Model::factory('Playlist')->find_one(1);
 
+	$newsong = Model::factory('Song')->find_one(rand(1,170));
 
-	Kint::dump(Database::query("SELECT * FROM songs;"));
-	Kint::dump(Database::query("SELECT * FROM artists;"));
-	Kint::dump(Database::query("SELECT * FROM albums;"));
-	Kint::dump(Database::query("SELECT * FROM genres;"));
-	die;
+	$playlist->addSong($newsong);
 
-	// attempt to use get_id3 to scan an MP3 file
-	// $filename = '/home/local/STARKART/dthomas/Music/James Keelaghan - Princes of the Clouds.m4a';
-	// $filename = '/home/local/STARKART/dthomas/Music/James Keelaghan - Cold Missouri Waters.mp3';
-
-	$filename = '/media/music/Abba/The Albums/18 Dance (While The Music Still Goes.mp3';
-
-	$getID3 = new getID3;
-
-	// Analyze file and store returned data in $ThisFileInfo
-	$file_info = $getID3->analyze($filename);
-
-	return "<pre>".print_r($file_info,true)."</pre>";
-	// Kint::dump($file_info['tags']);
 
 });
 
