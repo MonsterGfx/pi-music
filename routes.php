@@ -34,13 +34,17 @@
  * 
  * @todo ******************** bump version 0.0.6-alpha
  * 
- * @todo playlist editor
+ * @todo query caching system
  * 
  * @todo ******************** bump version 0.0.7-alpha
  * 
- * @todo desktop pc layout
+ * @todo playlist editor
  * 
  * @todo ******************** bump version 0.0.8-alpha
+ * 
+ * @todo desktop pc layout
+ * 
+ * @todo ******************** bump version 0.0.9-alpha
  * 
  * @todo testing
  * 
