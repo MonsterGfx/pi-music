@@ -2,3 +2,8 @@
 composer.lock
 /database
 /storage/cache
+/storage/artwork/*.jpg
+/storage/artwork/*.png
+/storage/artwork/*.gif
+/storage/artwork/*.tiff
+/storage/artwork/*.dat
