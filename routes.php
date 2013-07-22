@@ -243,10 +243,8 @@ $klein->respond('GET','/show-tables', function(){
 });
 
 $klein->respond('GET','/nuke-db', function(){
-
 	$tables = Database::query("SELECT name FROM sqlite_master WHERE type='table';");
 	Kint::dump($tables);
-
 	foreach($tables as $t)
 	{
 		Kint::dump("dropping {$t['name']}");
