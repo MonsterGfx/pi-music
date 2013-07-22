@@ -156,15 +156,6 @@ class Scan {
 				}
 			}
 
-			// try to load the entry for this song
-			$song = Model::factory('Song')->where('filenamepath', $file_info['filenamepath'])->find_one();
-
-			// if the song exists and the last file modification time is BEFORE the
-			// database "updated_at" value, then there's no reason to continue since
-			// the file is still current
-			if($song && $file_updated<$song->updated_at)
-				continue;
-
 			// if the song wasn't found, then create it
 			if(!$song)
 			{
