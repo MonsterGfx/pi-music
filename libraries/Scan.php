@@ -160,5 +160,15 @@ class Scan {
 		// step through the paths in the array
 		foreach($path as $p)
 			Scan::scanFolder($p);
+
+		// now scan ALL music and remove any that entries do not exist
+		$songs = Model::factory('Song')->find_many();
+		foreach($songs as $s)
+		{
+			if(!file_exists($s->filenamepath))
+			{
+				$s->delete();
+			}
+		}
 	}
 }
