@@ -9,6 +9,8 @@ return array(
 	// 		'/media/music/Dar Williams/',
 	// 	),
 
+	'music-artwork-path'  => dirname(__FILE__).'/../storage/artwork/',
+
 	'template-path' => dirname(__FILE__).'/../views/templates/',
 
 	'template-cache-path' => dirname(__FILE__).'/../storage/cache/',
