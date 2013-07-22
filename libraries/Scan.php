@@ -14,7 +14,8 @@ class Scan {
 
 		echo "starting ($path)\n";
 
-		// @todo instantiate a list to hold songs/albums/artists/etc. that have changed
+		// instantiate a list to hold songs/albums/artists/etc. that have changed
+		$dirty = array();
 
 		while(false!==($entry=readdir($dirhandle)))
 		{
@@ -52,8 +53,10 @@ class Scan {
 			if($song && $file_updated<$song->updated_at)
 				continue;
 
-			// if we get here, that means that the song has changed
-			// @todo add the song to the "dirty" list
+			// if we get here, that means that the song (if it exists) has
+			// changed
+			if($song)
+				$dirty[] = 'song/'.$song->id;
 
 			// get the tags
 			$tags = $file_info['tags'];
@@ -78,7 +81,9 @@ class Scan {
 					$artist->save();
 				}
 			}
-			// @todo add the artist to the "dirty" list
+			// add the artist to the "dirty" list
+			if($artist->id)
+				$dirty[] = 'artist/'.$artist->id;
 
 			// create/update the album record
 			$album = null;
@@ -94,7 +99,9 @@ class Scan {
 					$album->save();
 				}
 			}
-			// @todo add the album to the "dirty" list
+			// add the album to the "dirty" list
+			if($album->id)
+				$dirty[] = 'album/'.$album->id;
 
 			// create/update the genre record
 			$genre = null;
@@ -108,7 +115,9 @@ class Scan {
 					$genre->save();
 				}
 			}
-			// @todo add the genre to the "dirty" list
+			// add the genre to the "dirty" list
+			if($genre->id)
+				$dirty[] = 'genre/'.$genre->id;
 
 			// try to extract the album artwork (if any)
 			// find the artwork in the $file_info structure
