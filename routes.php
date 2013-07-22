@@ -243,11 +243,13 @@ $klein->respond('GET','/show-tables', function(){
 });
 
 $klein->respond('GET','/nuke-db', function(){
-	Database::execute("drop table sys_migrations;");
-	Database::execute("drop table artists;");
-	Database::execute("drop table albums;");
-	Database::execute("drop table genres;");
-	Database::execute("drop table songs;");
+	Database::execute("drop table if exists sys_migrations;");
+	Database::execute("drop table if exists playlists_songs;");
+	Database::execute("drop table if exists playlists;");
+	Database::execute("drop table if exists artists;");
+	Database::execute("drop table if exists albums;");
+	Database::execute("drop table if exists genres;");
+	Database::execute("drop table if exists songs;");
 
 	Kint::dump("database nuked");
 });
