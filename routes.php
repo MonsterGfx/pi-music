@@ -27,16 +27,16 @@
  * 
  * * ******************** bump version 0.0.5-alpha
  * 
+ * * query caching system
+ * 
+ * * ******************** bump version 0.0.6-alpha
+ * 
  * @todo install MPD
  * @todo implement MPD interface
  * 
- * @todo ******************** bump version 0.0.6-alpha
+ * @todo ******************** bump version 0.0.7-alpha
  * 
  * ------------------------- this will get us to a point where the player works!
- * 
- * @todo query caching system
- * 
- * @todo ******************** bump version 0.0.7-alpha
  * 
  * @todo playlist editor
  * 
@@ -72,6 +72,14 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	// our numeric keys, I'm going to pull out the list of values
 	$args = array_values(array_filter($args));
 
+	// attempt to get the value from the cache
+	$html = QueryCache::get($args);
+
+	if($html!==false)
+	{
+		// got something from the cache!
+		return $html;
+	}
 	// save the original arguments for later
 	$original_args = $args;
 
@@ -231,8 +239,14 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	}
 	else if(is_array($obj))
 	{
-		// otherwise, render the list
-		return ListPage::render($page_title, $previous, $album_stats, $obj);
+		// and render the list
+		$html = ListPage::render($page_title, $previous, $album_stats, $obj);
+
+		// otherwise, save the results in the cache
+		QueryCache::save($original_args, $html);
+
+		// and return the result
+		return $html;
 	}
 	else
 		throw new Exception("Oops! I don't know what went wrong!");
