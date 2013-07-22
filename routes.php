@@ -253,6 +253,8 @@ $klein->respond('GET','/empty-db', function(){
 	Database::execute("delete from albums;");
 	Database::execute("delete from genres;");
 	Database::execute("delete from songs;");
+	Database::execute("delete from playlists;");
+	Database::execute("delete from playlists_songs;");
 
 	Kint::dump("database emptied");
 });
