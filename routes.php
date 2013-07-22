@@ -254,6 +254,8 @@ $klein->respond('GET','/view-db', function($request,$response){
 	Kint::dump(Database::query("SELECT * FROM artists;"));
 	Kint::dump(Database::query("SELECT * FROM albums;"));
 	Kint::dump(Database::query("SELECT * FROM genres;"));
+	Kint::dump(Database::query("SELECT * FROM playlists;"));
+	Kint::dump(Database::query("SELECT * FROM playlists_songs;"));
 	die;
 
 });
