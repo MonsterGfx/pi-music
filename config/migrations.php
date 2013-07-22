@@ -14,6 +14,8 @@ return array(
 
 		'1' => 'Migration_001_add_initial_scheme',
 
+		'2' => 'Migration_002_add_playlist_tables',
+
 	),
 
 );
