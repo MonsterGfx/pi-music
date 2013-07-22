@@ -14,6 +14,8 @@ class Scan {
 
 		echo "starting ($path)\n";
 
+		// @todo instantiate a list to hold songs/albums/artists/etc. that have changed
+
 		while(false!==($entry=readdir($dirhandle)))
 		{
 			// if we have '.' or '..' then skip
@@ -34,6 +36,7 @@ class Scan {
 			// get the last update time
 			$file_updated = filemtime($filename);
 
+
 			// scan the file
 			$getID3 = new getID3;
 
@@ -48,6 +51,9 @@ class Scan {
 			// the file is still current
 			if($song && $file_updated<$song->updated_at)
 				continue;
+
+			// if we get here, that means that the song has changed
+			// @todo add the song to the "dirty" list
 
 			// get the tags
 			$tags = $file_info['tags'];
@@ -72,6 +78,7 @@ class Scan {
 					$artist->save();
 				}
 			}
+			// @todo add the artist to the "dirty" list
 
 			// create/update the album record
 			$album = null;
@@ -87,6 +94,7 @@ class Scan {
 					$album->save();
 				}
 			}
+			// @todo add the album to the "dirty" list
 
 			// create/update the genre record
 			$genre = null;
@@ -100,6 +108,7 @@ class Scan {
 					$genre->save();
 				}
 			}
+			// @todo add the genre to the "dirty" list
 
 			// try to extract the album artwork (if any)
 			// find the artwork in the $file_info structure
@@ -197,6 +206,12 @@ class Scan {
 			$song->save();
 
 		}
+
+		// we now have a "dirty" list - songs, artists, albums, etc. that have
+		// (probably) changed since the last update. We need to delete any
+		// entries in the cache that refer to those items
+		// @todo clean up cache
+
 		echo "done ($path).\n\n\n";
 
 	}
