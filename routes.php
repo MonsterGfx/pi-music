@@ -73,11 +73,12 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	$args = array_values(array_filter($args));
 
 	// attempt to get the value from the cache
-	$values = QueryCache::get($args);
-	if($values!==false)
+	$html = QueryCache::get($args);
+
+	if($html!==false)
 	{
 		// got something from the cache!
-		return ListPage::render($values['page_title'], $values['previous'], $values['album_stats'], $values['results']);
+		return $html;
 	}
 	// save the original arguments for later
 	$original_args = $args;
@@ -238,16 +239,14 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	}
 	else if(is_array($obj))
 	{
-		// otherwise, save the results in the cache
-		QueryCache::save($original_args, array(
-			'page_title' => $page_title,
-			'previous' => $previous,
-			'album_stats' => $album_stats,
-			'results' => $obj,
-		));
-
 		// and render the list
-		return ListPage::render($page_title, $previous, $album_stats, $obj);
+		$html = ListPage::render($page_title, $previous, $album_stats, $obj);
+
+		// otherwise, save the results in the cache
+		QueryCache::save($original_args, $html);
+
+		// and return the result
+		return $html;
 	}
 	else
 		throw new Exception("Oops! I don't know what went wrong!");
