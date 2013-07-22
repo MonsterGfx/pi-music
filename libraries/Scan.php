@@ -14,6 +14,9 @@ class Scan {
 
 		echo "starting ($path)\n";
 
+		// instantiate a list to hold songs/albums/artists/etc. that have changed
+		$dirty = array();
+
 		while(false!==($entry=readdir($dirhandle)))
 		{
 			// if we have '.' or '..' then skip
@@ -34,11 +37,26 @@ class Scan {
 			// get the last update time
 			$file_updated = filemtime($filename);
 
+
 			// scan the file
 			$getID3 = new getID3;
 
 			// Analyze file and store returned data in $ThisFileInfo
 			$file_info = $getID3->analyze($filename);
+
+			// try to load the entry for this song
+			$song = Model::factory('Song')->where('filenamepath', $file_info['filenamepath'])->find_one();
+
+			// if the song exists and the last file modification time is BEFORE the
+			// database "updated_at" value, then there's no reason to continue since
+			// the file is still current
+			if($song && $file_updated<$song->updated_at)
+				continue;
+
+			// if we get here, that means that the song (if it exists) has
+			// changed
+			if($song)
+				$dirty[] = 'song/'.$song->id;
 
 			// get the tags
 			$tags = $file_info['tags'];
@@ -63,6 +81,9 @@ class Scan {
 					$artist->save();
 				}
 			}
+			// add the artist to the "dirty" list
+			if($artist->id)
+				$dirty[] = 'artist/'.$artist->id;
 
 			// create/update the album record
 			$album = null;
@@ -78,6 +99,9 @@ class Scan {
 					$album->save();
 				}
 			}
+			// add the album to the "dirty" list
+			if($album->id)
+				$dirty[] = 'album/'.$album->id;
 
 			// create/update the genre record
 			$genre = null;
@@ -91,6 +115,9 @@ class Scan {
 					$genre->save();
 				}
 			}
+			// add the genre to the "dirty" list
+			if($genre->id)
+				$dirty[] = 'genre/'.$genre->id;
 
 			// try to extract the album artwork (if any)
 			// find the artwork in the $file_info structure
@@ -147,15 +174,6 @@ class Scan {
 				}
 			}
 
-			// try to load the entry for this song
-			$song = Model::factory('Song')->where('filenamepath', $file_info['filenamepath'])->find_one();
-
-			// if the song exists and the last file modification time is BEFORE the
-			// database "updated_at" value, then there's no reason to continue since
-			// the file is still current
-			if($song && $file_updated<$song->updated_at)
-				continue;
-
 			// if the song wasn't found, then create it
 			if(!$song)
 			{
@@ -197,6 +215,13 @@ class Scan {
 			$song->save();
 
 		}
+
+		// we now have a "dirty" list - songs, artists, albums, etc. that have
+		// (probably) changed since the last update. We need to delete any
+		// entries in the cache that refer to those items
+		// clean up cache
+		QueryCache::cleanup($dirty);
+
 		echo "done ($path).\n\n\n";
 
 	}
