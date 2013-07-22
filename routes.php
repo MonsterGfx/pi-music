@@ -243,13 +243,16 @@ $klein->respond('GET','/show-tables', function(){
 });
 
 $klein->respond('GET','/nuke-db', function(){
-	Database::execute("drop table if exists sys_migrations;");
-	Database::execute("drop table if exists playlists_songs;");
-	Database::execute("drop table if exists playlists;");
-	Database::execute("drop table if exists artists;");
-	Database::execute("drop table if exists albums;");
-	Database::execute("drop table if exists genres;");
-	Database::execute("drop table if exists songs;");
+
+	$tables = Database::query("SELECT name FROM sqlite_master WHERE type='table';");
+	Kint::dump($tables);
+
+	foreach($tables as $t)
+	{
+		Kint::dump("dropping {$t['name']}");
+		Database::execute("drop table if exists {$t['name']};");
+	}
+	
 
 	Kint::dump("database nuked");
 });
