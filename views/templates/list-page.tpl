@@ -27,6 +27,7 @@
 {* add the album stats (if any) *}
 	{if="$album_stats"}
 			<li>
+		{if="$album_stats.artwork"}<img src='{$album_stats.artwork}' />{/if}
 				<p>{$album_stats.artist}</p>
 				<h1>{$album_stats.name}</h1>
 				<p>{if="$album_stats.year"}Released {$album_stats.year}{/if}</p>
