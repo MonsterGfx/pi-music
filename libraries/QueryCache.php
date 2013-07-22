@@ -41,4 +41,49 @@ class QueryCache {
 		// write the value
 		file_put_contents($filename, serialize($value));
 	}
+
+	public static function cleanup($dirty)
+	{
+		// replace the '/'' character in $d with a '-'
+		$dirty = str_replace('/','-',$dirty);
+
+		// get the cache folder
+		$folder = Config::get('app.query-cache-path');
+
+		// build a list of files
+		$files = scandir($folder);
+
+		// step through the items in the cache folder
+		foreach($files as $f)
+		{
+			// ignore any that do not end in '.qcache'
+			if(!preg_match('/^.*\.qcache$/',$f))
+				continue;
+
+			// check each of the items in the dirty list
+			foreach($dirty as $d)
+			{
+				if(strstr($f, $d))
+				{
+					if(file_exists($folder.$f))
+						unlink($folder.$f);
+				}
+			}
+		}
+
+		// if there are any items in the dirty array, that means that there is
+		// at least one song that has changed. We need to remove the cached
+		// 'song', 'artist', 'album', and 'genre' queries if that's the case
+		if(count($dirty))
+		{
+			if(file_exists($folder.'song.qcache'))
+				unlink($folder.'song.qcache');
+			if(file_exists($folder.'artist.qcache'))
+				unlink($folder.'artist.qcache');
+			if(file_exists($folder.'album.qcache'))
+				unlink($folder.'album.qcache');
+			if(file_exists($folder.'genre.qcache'))
+				unlink($folder.'genre.qcache');
+		}
+	}
 }
