@@ -219,7 +219,8 @@ class Scan {
 		// we now have a "dirty" list - songs, artists, albums, etc. that have
 		// (probably) changed since the last update. We need to delete any
 		// entries in the cache that refer to those items
-		// @todo clean up cache
+		// clean up cache
+		QueryCache::cleanup($dirty);
 
 		echo "done ($path).\n\n\n";
 
