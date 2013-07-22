@@ -72,6 +72,13 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	// our numeric keys, I'm going to pull out the list of values
 	$args = array_values(array_filter($args));
 
+	// attempt to get the value from the cache
+	$values = QueryCache::get($args);
+	if($values!==false)
+	{
+		// got something from the cache!
+		return ListPage::render($values['page_title'], $values['previous'], $values['album_stats'], $values['results']);
+	}
 	// save the original arguments for later
 	$original_args = $args;
 
