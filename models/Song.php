@@ -17,6 +17,16 @@ class Song extends BaseModel {
 		return $this->has_one('Album');
 	}
 
+	/**
+	 * Get the playlists to which this song belongs
+	 *
+	 * @return ORMWrapper
+	 */
+	public function playlists()
+	{
+		return $this->has_many_through('Playlist');
+	}
+
 	public function toArray()
 	{
 		return array(
