@@ -265,16 +265,11 @@ $klein->respond('GET','/empty-db', function(){
 });
 
 $klein->respond('GET','/view-db', function($request,$response){
-
-	Kint::dump(Database::query("SELECT * FROM songs;"));
-	Kint::dump(Database::query("SELECT * FROM artists;"));
-	Kint::dump(Database::query("SELECT * FROM albums;"));
-	Kint::dump(Database::query("SELECT * FROM genres;"));
-	Kint::dump(Database::query("SELECT * FROM playlists;"));
-	Kint::dump(Database::query("SELECT * FROM playlists_songs;"));
-	Kint::dump(Database::query("SELECT * FROM sys_migrations;"));
-	die;
-
+	$tables = Database::query("SELECT name FROM sqlite_master WHERE type='table';");
+	foreach($tables as $t)
+	{
+		Kint::dump(Database::query("SELECT * FROM {$t['name']};"));
+	}
 });
 
 $klein->respond('GET','/test-route', function($request,$response){
