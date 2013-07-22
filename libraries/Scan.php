@@ -113,33 +113,66 @@ class Scan {
 			// did we find some artwork?
 			if($artwork)
 			{
+				// the function names to be used in resizing
+				$image_function = null;
+				$image_save = null;
+
 				// build the artwork path
 				$image_filename = sha1($artist->name.'-'.$album->name);
+				$image_extension = '';
+
 				switch($artwork_type)
 				{
 					case 'image/jpeg':
-						$image_filename .= '.jpg';
+						$image_extension = '.jpg';
+						$image_function = 'imagecreatefromjpeg';
+						$image_save = 'imagejpeg';
 						break;
 					case 'image/png':
-						$image_filename .= '.png';
+						$image_extension = '.png';
+						$image_function = 'imagecreatefrompng';
+						$image_save = 'imagepng';
 						break;
 					case 'image/gif':
-						$image_filename .= '.gif';
+						$image_extension = '.gif';
+						$image_function = 'imagecreatefromgif';
+						$image_save = 'imagegif';
 						break;
 					case 'image/tiff':
-						$image_filename .= '.tiff';
+						$image_extension = '.tif';
 						break;
 					default:
-						$image_filename .= '.dat';
+						$image_extension = '.dat';
 						break;
 				}
-				$image_path = Config::get('app.music-artwork-path').$image_filename;
+				$image_path = Config::get('app.music-artwork-path');
 
 				// check to see if the file already exists
-				if(!file_exists($image_path))
+				if(!file_exists(Config::get('app.music-artwork-path').$image_filename.$image_extension))
 				{
 					// save the artwork
-					file_put_contents($image_path, $artwork);
+					file_put_contents(Config::get('app.music-artwork-path').$image_filename.$image_extension, $artwork);
+
+					// now resize to two sizes: 180x180 and 640x640
+					if($image_function)
+					{
+						$res = array(640,180);
+						foreach( $res as $r )
+						{
+							// load the image
+							$img = $image_function(Config::get('app.music-artwork-path').$image_filename.$image_extension);
+
+							// create a resized image
+							$cpy = imagecreatetruecolor($r, $r);
+
+							// copy the image
+							imagecopyresampled($cpy, $img,0,0,0,0,$r,$r,imagesx($img),imagesy($img));
+
+							// save the image
+							$image_save($cpy, Config::get('app.music-artwork-path').$image_filename."-$r".$image_extension);
+						}
+						
+					}
 				}
 			}
 
