@@ -15,7 +15,7 @@
  * 
  * * ******************** bump version 0.0.2-alpha
  * 
- * @todo implement playlists
+ * * implement playlists
  * 
  * @todo ******************** bump version 0.0.3-alpha
  * 
