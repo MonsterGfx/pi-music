@@ -238,6 +238,10 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 		throw new Exception("Oops! I don't know what went wrong!");
 });
 
+$klein->respond('GET','/show-tables', function(){
+	Kint::dump(Database::query("SELECT name FROM sqlite_master WHERE type='table';"));
+});
+
 $klein->respond('GET','/nuke-db', function(){
 	Database::execute("drop table sys_migrations;");
 	Database::execute("drop table artists;");
