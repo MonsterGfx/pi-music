@@ -17,7 +17,7 @@
  * 
  * * implement playlists
  * 
- * @todo ******************** bump version 0.0.3-alpha
+ * * ******************** bump version 0.0.3-alpha
  * 
  * @todo install MPD
  * @todo implement MPD interface
