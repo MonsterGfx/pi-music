@@ -50,7 +50,7 @@
 	<div data-role="footer" data-id="list-footer" data-position="fixed">
 		<div data-role="navbar">
 			<ul>
-				<li><a href="#">Playlists</a></li>
+				<li><a href="/playlist">Playlists</a></li>
 				<li><a href="/artist">Artists</a></li>
 				<li><a href="#">Songs</a></li>
 				<li><a href="/album">Albums</a></li>
