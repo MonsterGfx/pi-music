@@ -28,7 +28,7 @@
  * 
  * @todo ******************** bump version 0.0.5-alpha
  * 
- * that will get us to a point where the player works!
+ * ------------------------- this will get us to a point where the player works!
  * 
  * @todo album artwork
  * 
@@ -61,6 +61,7 @@ $klein = new \Klein\Klein;
 //
 // a regular expression for parsing queries
 $query_regex = "^(/([a-zA-Z]+)/([0-9]+)){0,5}(/([a-zA-Z]+)(/[0-9]+)?)[/]?$";
+
 // set up the route
 $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
