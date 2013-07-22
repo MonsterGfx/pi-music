@@ -115,64 +115,35 @@ class Scan {
 			{
 				// the function names to be used in resizing
 				$image_function = null;
-				$image_save = null;
 
 				// build the artwork path
-				$image_filename = sha1($artist->name.'-'.$album->name);
-				$image_extension = '';
-
-				switch($artwork_type)
-				{
-					case 'image/jpeg':
-						$image_extension = '.jpg';
-						$image_function = 'imagecreatefromjpeg';
-						$image_save = 'imagejpeg';
-						break;
-					case 'image/png':
-						$image_extension = '.png';
-						$image_function = 'imagecreatefrompng';
-						$image_save = 'imagepng';
-						break;
-					case 'image/gif':
-						$image_extension = '.gif';
-						$image_function = 'imagecreatefromgif';
-						$image_save = 'imagegif';
-						break;
-					case 'image/tiff':
-						$image_extension = '.tif';
-						break;
-					default:
-						$image_extension = '.dat';
-						break;
-				}
 				$image_path = Config::get('app.music-artwork-path');
+				$image_filename = sha1($artist->name.'-'.$album->name);
 
-				// check to see if the file already exists
-				if(!file_exists(Config::get('app.music-artwork-path').$image_filename.$image_extension))
+				// create the image object
+				$img = imagecreatefromstring($artwork);
+
+				// did we get a valid image object?
+				if($img)
 				{
-					// save the artwork
-					file_put_contents(Config::get('app.music-artwork-path').$image_filename.$image_extension, $artwork);
+					// save the original as a JPEG
+					imagejpeg($img, Config::get('app.music-artwork-path').$image_filename.".jpg", 100);
 
-					// now resize to two sizes: 180x180 and 640x640
-					if($image_function)
+					// resize to the resolutions in the array below
+					$res = array(640,180);
+
+					foreach( $res as $r )
 					{
-						$res = array(640,180);
-						foreach( $res as $r )
-						{
-							// load the image
-							$img = $image_function(Config::get('app.music-artwork-path').$image_filename.$image_extension);
+						// create a resized image
+						$cpy = imagecreatetruecolor($r, $r);
 
-							// create a resized image
-							$cpy = imagecreatetruecolor($r, $r);
+						// copy the image
+						imagecopyresampled($cpy, $img, 0, 0, 0, 0, $r, $r, imagesx($img), imagesy($img));
 
-							// copy the image
-							imagecopyresampled($cpy, $img,0,0,0,0,$r,$r,imagesx($img),imagesy($img));
-
-							// save the image
-							imagejpeg($cpy, Config::get('app.music-artwork-path').$image_filename."-{$r}.jpg");
-						}
-						
+						// save the image
+						imagejpeg($cpy, Config::get('app.music-artwork-path').$image_filename."-{$r}.jpg", 80);
 					}
+
 				}
 			}
 
