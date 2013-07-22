@@ -185,6 +185,8 @@ class Scan {
 			$song->bpm			= isset($tags['bpm']) ? $tags['bpm'][0] : null;
 			$song->rating		= isset($tags['rating']) ? $tags['rating'][0] : null;
 
+			$song->artwork		= $image_filename;
+
 			$song->updated_at = time();
 
 			// save
