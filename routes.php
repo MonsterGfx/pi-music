@@ -23,9 +23,9 @@
  * 
  * * ******************** bump version 0.0.4-alpha
  * 
- * @todo album artwork
+ * * album artwork
  * 
- * @todo ******************** bump version 0.0.5-alpha
+ * * ******************** bump version 0.0.5-alpha
  * 
  * @todo install MPD
  * @todo implement MPD interface
