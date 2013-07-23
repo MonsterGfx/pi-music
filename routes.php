@@ -233,7 +233,8 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	// check if the final object is a song
 	if($obj && get_class($obj)=='Song')
 	{
-		return "It looks like you want '".$obj->name."'' to start playing.";
+		// load the playlist with the current batch of songs & start playing
+		Music::replacePlaylist($args);
 	}
 	else if(is_array($obj))
 	{
