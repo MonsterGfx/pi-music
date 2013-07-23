@@ -29,7 +29,7 @@
  * 
  * * ******************** bump version 0.0.6-alpha
  * 
- * @todo install MPD
+ * * install MPD
  * @todo implement MPD interface
  * 
  * @todo ******************** bump version 0.0.7-alpha
@@ -233,7 +233,8 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	// check if the final object is a song
 	if($obj && get_class($obj)=='Song')
 	{
-		return "It looks like you want '".$obj->name."'' to start playing.";
+		// load the playlist with the current batch of songs & start playing
+		Music::replacePlaylist($args);
 	}
 	else if(is_array($obj))
 	{
@@ -286,10 +287,16 @@ $klein->respond('GET','/view-db', function($request,$response){
 
 $klein->respond('GET','/test-route', function($request,$response){
 
+	$args = array(
+		'artist',
+		'1',
+		'album',
+		'4',
+		'song',
+		'22',
+	);
 
-	Kint::dump(Model::factory('Song')->find_one(23)->playlists()->find_one()->as_array());
-
-
+	Music::replacePlaylist($args);
 });
 
 
