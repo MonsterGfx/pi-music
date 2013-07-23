@@ -29,7 +29,7 @@
  * 
  * * ******************** bump version 0.0.6-alpha
  * 
- * @todo install MPD
+ * * install MPD
  * @todo implement MPD interface
  * 
  * @todo ******************** bump version 0.0.7-alpha
