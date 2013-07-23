@@ -286,10 +286,16 @@ $klein->respond('GET','/view-db', function($request,$response){
 
 $klein->respond('GET','/test-route', function($request,$response){
 
+	$args = array(
+		'artist',
+		'1',
+		'album',
+		'4',
+		'song',
+		'22',
+	);
 
-	Kint::dump(Model::factory('Song')->find_one(23)->playlists()->find_one()->as_array());
-
-
+	Music::replacePlaylist($args);
 });
 
 
