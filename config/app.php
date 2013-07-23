@@ -16,4 +16,6 @@ return array(
 	'template-cache-path' => dirname(__FILE__).'/../storage/cache/',
 
 	'query-cache-path' => dirname(__FILE__).'/../storage/cache/',
+
+	'mpd-connection' => 'unix:///var/run/mpd/socket',
 );
