@@ -44,12 +44,9 @@ class Album extends BaseModel {
 		$time = round($time/60);
 
 		// load the image data
-		$img = file_get_contents(Config::get('app.music-artwork-path').$songs[0]->artwork.'-180.jpg');
-		if($img)
-		{
-			$img = base64_encode($img);
-			$img = "data:image/png;base64,{$img}";
-		}
+		$path = Config::get('app.music-artwork-path').$songs[0]->artwork.'-180.jpg';
+
+		$img = Image::toDataUrl($path);
 
 		// return the results
 		return array(

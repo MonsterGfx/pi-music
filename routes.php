@@ -274,6 +274,14 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 		throw new Exception("Oops! I don't know what went wrong!");
 });
 
+$klein->respond('GET','/now-playing', function(){
+		// get the song info
+		$currentsong = Music::getCurrentSong();
+
+		// return the message
+		return NowPlayingPage::render($currentsong);
+});
+
 $klein->respond('GET','/show-tables', function(){
 	Kint::dump(Database::query("SELECT name FROM sqlite_master WHERE type='table';"));
 });
