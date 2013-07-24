@@ -30,19 +30,27 @@
  * * ******************** bump version 0.0.6-alpha
  * 
  * * install MPD
- * @todo implement MPD interface
+ * * implement MPD interface
  * 
- * @todo ******************** bump version 0.0.7-alpha
+ * * ******************** bump version 0.0.7-alpha
+ * 
+ * @todo bugfix: correct song order in query
+ * 
+ * @todo ******************** bump version 0.0.8-alpha
+ * 
+ * @todo implement "now playing" page
+ * 
+ * @todo ******************** bump version 0.0.9-alpha
  * 
  * ------------------------- this will get us to a point where the player works!
  * 
  * @todo playlist editor
  * 
- * @todo ******************** bump version 0.0.8-alpha
+ * @todo ******************** bump version 0.0.10-alpha
  * 
  * @todo desktop pc layout
  * 
- * @todo ******************** bump version 0.0.9-alpha
+ * @todo ******************** bump version 0.0.11-alpha
  * 
  * @todo testing
  * 
