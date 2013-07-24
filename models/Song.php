@@ -17,6 +17,14 @@ class Song extends BaseModel {
 		return $this->belongs_to('Album');
 	}
 
+	/**
+	 * Get the artist for this song
+	 * 
+	 * @return ORMWrapper
+	 */
+	public function artist()
+	{
+		return $this->belongs_to('Artist');
 	}
 
 	/**
