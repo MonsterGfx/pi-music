@@ -14,7 +14,7 @@ class NowPlayingPage extends View {
 	 * @return string
 	 * The HTML of the rendered page
 	 */
-	public static function render($song)
+	public static function render($song, $request)
 	{
 		// get the extra info
 		$album = $song->album()->find_one();
