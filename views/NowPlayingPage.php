@@ -23,6 +23,8 @@ class NowPlayingPage extends View {
 		// instantiate the template engine
 		$parser = new Rain\Tpl;
 
+		// get the previous page address from the $request
+		$back_url = $request->server()['HTTP_REFERER'];
 
 		// get the path to the image file
 		$image_path = Config::get('app.music-artwork-path').$song->artwork.'-320.jpg';
@@ -34,6 +36,9 @@ class NowPlayingPage extends View {
 			'title'			=> $song->name,
 			'artist'		=> $artist->name,
 			'album'			=> $album->name,
+			'back'			=> $back_url,
+
+			// 'debug'			=> print_r($request,true),
 		));
 
 		// return the HTML
