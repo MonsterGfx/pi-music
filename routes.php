@@ -335,10 +335,7 @@ $klein->respond('GET','/view-db', function($request,$response){
 $klein->respond('GET','/test-route', function($request,$response){
 
 	// check to see if a song is currently playing
-	if(Music::isPlaying())
-		Kint::dump(Music::getStatus());
-	else
-		Kint::dump("wtf");
+	Kint::dump(Music::getStatus());
 
 });
 
