@@ -206,6 +206,7 @@ class Music {
 		// the status does not include "state: play"
 		return false;
 	}
+
 	/**
 	 * Jump to the previous song
 	 */
