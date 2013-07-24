@@ -39,7 +39,7 @@
  * * ******************** bump version 0.0.8-alpha
  * 
  * * implement "now playing" page
- * @todo redirect from query pay to now playing page
+ * * redirect from query page to now playing page
  * @todo add "back" button to now playing page
  * @todo add control buttons to now playing page
  * @todo add volume control to now playing page
