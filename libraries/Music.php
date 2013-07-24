@@ -168,4 +168,23 @@ class Music {
 		// the status does not include "state: play"
 		return false;
 	}
+
+	/**
+	 * Check to see if MPD is currently paused
+	 * 
+	 * @return bool
+	 * True if a song is playing, false otherwise
+	 */
+	public static function isPaused()
+	{
+		// get the status
+		$status = static::getStatus();
+
+		// do we have some status values?
+		if( isset($status['values']) && isset($status['values']['state']) && $status['values']['state']=='pause')
+			return true;
+
+		// the status does not include "state: play"
+		return false;
+	}
 }
