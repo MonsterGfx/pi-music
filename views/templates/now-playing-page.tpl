@@ -68,11 +68,13 @@ $(document).on('pageinit', function(){
 
 		if(action=='prev')
 		{
-			// submit request for "prev" action
+			// submit request for "previous" action
+			$.get('/action-prev');
 		}
 		else if(action=='next')
 		{
 			// submit request for "next" action
+			$.get('/action-next');
 		}
 		else if(action=="play")
 		{
