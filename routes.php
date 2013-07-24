@@ -303,7 +303,7 @@ $klein->respond('GET','/action-prev', function(){ Music::previous(); });
 
 $klein->respond('GET','/action-next', function(){ Music::next(); });
 
-$klein->respond('GET','/action-toggle-play', function(){ Music::togglePlay(); });
+$klein->respond('GET','/action-toggle-play', function(){ return Music::togglePlay(); });
 
 
 
