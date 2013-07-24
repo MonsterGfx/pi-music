@@ -40,6 +40,7 @@
  * 
  * * implement "now playing" page
  * * redirect from query page to now playing page
+ * * add "now playing" button to list page
  * @todo add "back" button to now playing page
  * @todo add control buttons to now playing page
  * @todo add volume control to now playing page
