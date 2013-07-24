@@ -79,6 +79,9 @@ $(document).on('pageinit', function(){
 		else if(action=="play")
 		{
 			// submit request for "play" action
+			$.get('/action-toggle-play', { }, function(data){
+				// @todo toggle the play button (once we have our custom icons)
+			});
 		}
 		else
 		{
