@@ -34,9 +34,9 @@
  * 
  * * ******************** bump version 0.0.7-alpha
  * 
- * @todo bugfix: correct song order in query
+ * * bugfix: correct song order in query
  * 
- * @todo ******************** bump version 0.0.8-alpha
+ * * ******************** bump version 0.0.8-alpha
  * 
  * @todo implement "now playing" page
  * 
