@@ -206,6 +206,12 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 		{
 			// no more arguments, so we want to find the "many" elements at this
 			// point
+
+			// if this is a song, then we want to orderBy the track number
+			if($a=='song')
+				$obj = $obj->order_by_asc('track_number');
+
+			// get the objects
 			$obj = $obj->find_many();
 		}
 
