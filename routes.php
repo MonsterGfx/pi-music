@@ -299,6 +299,26 @@ $klein->respond('GET','/now-playing', function($request){
 		return NowPlayingPage::render($currentsong, $request);
 });
 
+$klein->respond('GET','/action-prev', function(){ Music::previous(); });
+
+$klein->respond('GET','/action-next', function(){ Music::next(); });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 $klein->respond('GET','/show-tables', function(){
 	Kint::dump(Database::query("SELECT name FROM sqlite_master WHERE type='table';"));
 });
