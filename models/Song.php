@@ -14,7 +14,9 @@ class Song extends BaseModel {
 	 */
 	public function album()
 	{
-		return $this->has_one('Album');
+		return $this->belongs_to('Album');
+	}
+
 	}
 
 	/**
