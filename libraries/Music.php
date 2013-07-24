@@ -84,4 +84,20 @@ class Music {
 		if($mpd_id)
 			MPD::send('playid', $mpd_id);
 	}
+
+	public static function getCurrentSong()
+	{
+		// connect to MPD
+		MPD::connect('', Config::get('app.mpd-connection'), null);
+
+		// get the song info
+		$currentsong = MPD::send('currentsong');
+		$path = trim(substr($currentsong['values'][0],5));
+
+		// get it from the DB
+		$currentsong = Model::factory('Song')->where('filenamepath', $path)->find_one();
+
+		return $currentsong;
+	}
+
 }
