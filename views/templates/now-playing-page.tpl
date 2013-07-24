@@ -22,7 +22,8 @@
 
 	<div data-role="content">
 
-		<img src='{$image}' style='margin-left:-15px;margin-top:-15px;opacity:0.3;' />
+		<img src='{$image}' style='position:absolute; top:44px; left:0px; opacity:0.3;' />
+
 
 	</div><!-- /content -->
 
