@@ -290,11 +290,11 @@ $klein->respond('GET','/test-route', function($request,$response){
 
 	$args = array(
 		'artist',
-		'1',
+		'2',
 		'album',
-		'4',
+		'12',
 		'song',
-		'22',
+		'105',
 	);
 
 	Music::replacePlaylist($args);
