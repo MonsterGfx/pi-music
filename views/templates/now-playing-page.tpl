@@ -58,6 +58,35 @@
 // call the following as soon as the page is initialized
 $(document).on('pageinit', function(){
 
+	// bind events for the prev/play/next buttons
+	$('a.playback-control').on('vclick', function(e){
+		// stop event propagation
+		e.stopPropagation();
+
+		// get the ID of the item that was clicked/touched
+		var action = e.currentTarget.id;
+
+		if(action=='prev')
+		{
+			// submit request for "prev" action
+		}
+		else if(action=='next')
+		{
+			// submit request for "next" action
+		}
+		else if(action=="play")
+		{
+			// submit request for "play" action
+		}
+		else
+		{
+			// unrecognized action. Just bail out
+			return;
+		}
+
+		// some action has been submitted. Wait a brief moment and refresh this
+		// page
+	});
 
 });
 
