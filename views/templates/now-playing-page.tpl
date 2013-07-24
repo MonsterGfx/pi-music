@@ -44,11 +44,13 @@ div#volume-slider-div .ui-slider-track {
 
 		<img src='{$image}' style='position:absolute; top:44px; left:0px; opacity:0.3;' />
 
-{*
 		<div style='position:absolute; top:40px; left:0px; width:320px; height:320px; z-index:10;'>
-			<h1>Some Stuff</h1>
+
+			<div id='volume-slider-div' style='position:absolute; top: 270px; left: 0px; width: 320px;'>
+				<input type="range" name="volume-slider" id="volume-slider" data-highlight="true" min="0" max="100" value="50">
+			</div>
+
 		</div>
-*}
 
 	</div><!-- /content -->
 
