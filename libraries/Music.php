@@ -206,4 +206,39 @@ class Music {
 		// the status does not include "state: play"
 		return false;
 	}
+
+	/**
+	 * Jump to the previous song
+	 */
+	public static function previous()
+	{
+		// connect to MPD
+		static::connect();
+
+		MPD::send('previous');
+	}
+
+	/**
+	 * Jump to the next song
+	 */
+	public static function next()
+	{
+		// connect to MPD
+		static::connect();
+
+		MPD::send('next');
+	}
+
+	/**
+	 * Toggle between play/pause states
+	 */
+	public static function togglePlay()
+	{
+		static::connect();
+
+		MPD::send('pause', static::isPlaying() ? 1 : 0);
+
+		return static::isPlaying() ? 'play' : 'pause';
+	}
+
 }
