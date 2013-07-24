@@ -15,10 +15,9 @@
 <div data-role="page">
 
 	<div data-role="header" data-position="fixed">
-		{if="$previous"}
-		<a href="{$previous.path}" data-role="button" data-inline="true">{$previous.text}</a>
-		{/if}
-		<h1>{$page_title}</h1>
+		<p style='text-align: center; color: #bbb; font-size:11px; margin: 1px 0 0;'>{$artist}</p>
+		<p style='text-align: center; font-size:11px; margin: 1px 0 0;'><strong>{$title}</strong></p>
+		<p style='text-align: center; color: #bbb; font-size:11px; margin: 1px 0 0;'>{$album}</p>
 	</div><!-- /header -->
 
 	<div data-role="content">
