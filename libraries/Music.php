@@ -150,4 +150,22 @@ class Music {
 		return $status;
 	}
 
+	/**
+	 * Check to see if MPD is currently playing a song
+	 * 
+	 * @return bool
+	 * True if a song is playing, false otherwise
+	 */
+	public static function isPlaying()
+	{
+		// get the status
+		$status = static::getStatus();
+
+		// do we have some status values?
+		if( isset($status['values']) && isset($status['values']['state']) && $status['values']['state']=='play')
+			return true;
+
+		// the status does not include "state: play"
+		return false;
+	}
 }
