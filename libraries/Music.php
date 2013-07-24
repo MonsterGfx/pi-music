@@ -4,6 +4,22 @@ use \PHPMPDClient\MPD as MPD;
 
 class Music {
 
+	/**
+	 * A flag to indicate whether we're connected to MPD
+	 */
+	private static $is_connected = false;
+
+	private static function connect()
+	{
+		if(!static::$is_connected)
+		{
+			// connect to MPD
+			MPD::connect('', Config::get('app.mpd-connection'), null);
+
+			static::$is_connected = true;
+		}
+	}
+
 	private static function getSongList($args)
 	{
 		// discard the last item in the args, since that's the actual song ID
@@ -55,7 +71,7 @@ class Music {
 	public static function replacePlaylist($args)
 	{
 		// connect to MPD
-		MPD::connect('', Config::get('app.mpd-connection'), null);
+		static::connect();
 
 		// get the songs as defined by the arguments
 		$songs = Music::getSongList($args);
@@ -88,7 +104,7 @@ class Music {
 	public static function getCurrentSong()
 	{
 		// connect to MPD
-		MPD::connect('', Config::get('app.mpd-connection'), null);
+		static::connect();
 
 		// get the song info
 		$currentsong = MPD::send('currentsong');
