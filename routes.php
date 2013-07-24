@@ -267,7 +267,12 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 		// get it from the DB
 		$currentsong = Model::factory('Song')->where('filenamepath', $path)->find_one();
-		return "I'm playing {$obj->name}<br />$path<br /><pre>".print_r($currentsong,true)."</pre>";
+
+		// redirect to the "now playing" page
+		header( 'Location: /now-playing' );
+		header("Cache-Control: no-cache, must-revalidate");
+		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+		exit;
 	}
 	else if(is_array($obj))
 	{
