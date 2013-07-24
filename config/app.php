@@ -18,4 +18,6 @@ return array(
 	'query-cache-path' => dirname(__FILE__).'/../storage/cache/',
 
 	'mpd-connection' => 'unix:///var/run/mpd/socket',
+
+	'query-caching' => false,
 );
