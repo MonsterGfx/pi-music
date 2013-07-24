@@ -173,7 +173,7 @@ class Music {
 	 * Check to see if MPD is currently paused
 	 * 
 	 * @return bool
-	 * True if a song is playing, false otherwise
+	 * True if a song is paused, false otherwise
 	 */
 	public static function isPaused()
 	{
