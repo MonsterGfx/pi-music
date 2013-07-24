@@ -42,9 +42,9 @@
 	<div data-role="footer" data-id="list-footer" data-position="fixed">
 		<div data-role="navbar">
 			<ul>
-				<li><a href="#" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-inline="true">Prev</a></li>
-				<li><a href="#" data-role="button" data-icon="gear" data-iconpos="notext" data-inline="true">Play</a></li>
-				<li><a href="#" data-role="button" data-icon="arrow-r" data-iconpos="notext" data-inline="true">Next</a></li>
+				<li><a href="#" data-role="button" id="prev" class='playback-control' data-icon="arrow-l" data-iconpos="notext" data-inline="true">Prev</a></li>
+				<li><a href="#" data-role="button" id="play" class='playback-control' data-icon="gear" data-iconpos="notext" data-inline="true">Play</a></li>
+				<li><a href="#" data-role="button" id="next" class='playback-control' data-icon="arrow-r" data-iconpos="notext" data-inline="true">Next</a></li>
 			</ul>
 		</div><!-- /navbar -->
 	</div><!-- /footer -->
