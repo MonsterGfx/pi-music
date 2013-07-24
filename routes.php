@@ -290,12 +290,13 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 		throw new Exception("Oops! I don't know what went wrong!");
 });
 
-$klein->respond('GET','/now-playing', function(){
+$klein->respond('GET','/now-playing', function($request){
+
 		// get the song info
 		$currentsong = Music::getCurrentSong();
 
 		// return the message
-		return NowPlayingPage::render($currentsong);
+		return NowPlayingPage::render($currentsong, $request);
 });
 
 $klein->respond('GET','/show-tables', function(){
