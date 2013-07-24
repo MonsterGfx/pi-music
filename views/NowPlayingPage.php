@@ -16,7 +16,6 @@ class NowPlayingPage extends View {
 	 */
 	public static function render($song)
 	{
-
 		// get the extra info
 		$album = $song->album()->find_one();
 		$artist = $song->artist()->find_one();
