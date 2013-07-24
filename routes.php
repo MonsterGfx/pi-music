@@ -38,23 +38,33 @@
  * 
  * * ******************** bump version 0.0.8-alpha
  * 
- * @todo implement "now playing" page
+ * * implement "now playing" page
+ * @todo redirect from query pay to now playing page
+ * @todo add "back" button to now playing page
+ * @todo add control buttons to now playing page
+ * @todo add volume control to now playing page
+ * @todo add scrubbing control to now playing page
+ * 
  * 
  * @todo ******************** bump version 0.0.9-alpha
  * 
  * ------------------------- this will get us to a point where the player works!
  * 
- * @todo playlist editor
+ * @todo add "shuffle" buttons
  * 
  * @todo ******************** bump version 0.0.10-alpha
  * 
- * @todo desktop pc layout
+ * @todo playlist editor
  * 
  * @todo ******************** bump version 0.0.11-alpha
  * 
  * @todo testing
  * 
  * @todo ******************** bump version 0.1.0-beta
+ * 
+ * ------------------------- future enhancements
+ * 
+ * @todo desktop pc layout
  * 
  */
 
