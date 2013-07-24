@@ -51,5 +51,14 @@
 
 </div><!-- /page -->
 
+<script type='text/javascript'>
+
+(function($){
+
+
+})(jQuery);
+
+</script>
+
 </body>
 </html>
