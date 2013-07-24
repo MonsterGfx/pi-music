@@ -42,11 +42,9 @@
 	<div data-role="footer" data-id="list-footer" data-position="fixed">
 		<div data-role="navbar">
 			<ul>
-				<li><a href="/playlist">Playlists</a></li>
-				<li><a href="/artist">Artists</a></li>
-				<li><a href="/song">Songs</a></li>
-				<li><a href="/album">Albums</a></li>
-				<li><a href="#">More</a></li>
+				<li><a href="#" data-role="button" data-icon="arrow-l" data-iconpos="notext" data-inline="true">Prev</a></li>
+				<li><a href="#" data-role="button" data-icon="gear" data-iconpos="notext" data-inline="true">Play</a></li>
+				<li><a href="#" data-role="button" data-icon="arrow-r" data-iconpos="notext" data-inline="true">Next</a></li>
 			</ul>
 		</div><!-- /navbar -->
 	</div><!-- /footer -->
