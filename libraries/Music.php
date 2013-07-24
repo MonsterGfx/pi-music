@@ -228,4 +228,17 @@ class Music {
 
 		MPD::send('next');
 	}
+
+	/**
+	 * Toggle between play/pause states
+	 */
+	public static function togglePlay()
+	{
+		static::connect();
+
+		MPD::send('pause', static::isPlaying() ? 1 : 0);
+
+		return static::isPlaying() ? 'play' : 'pause';
+	}
+
 }
