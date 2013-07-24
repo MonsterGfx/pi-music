@@ -50,6 +50,7 @@
  * 
  */
 
+use \PHPMPDClient\MPD as MPD;
 
 // instantiate the router class
 //
