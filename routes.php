@@ -42,22 +42,25 @@
  * * redirect from query page to now playing page
  * * add "now playing" button to list page
  * * add "back" button to now playing page
- * @todo add control buttons to now playing page
+ * * add control buttons to now playing page
  * @todo add volume control to now playing page
  * @todo add scrubbing control to now playing page
  * 
- * 
  * @todo ******************** bump version 0.0.9-alpha
  * 
- * ------------------------- this will get us to a point where the player works!
- * 
- * @todo add "shuffle" buttons
+ * @todo add custom play/pause icons to play button
  * 
  * @todo ******************** bump version 0.0.10-alpha
  * 
- * @todo playlist editor
+ * @todo add "shuffle" buttons to song lists
  * 
  * @todo ******************** bump version 0.0.11-alpha
+ * 
+ * ------------------------- this will get us to a point where the player works!
+ * 
+ * @todo playlist editor
+ * 
+ * @todo ******************** bump version 0.0.12-alpha
  * 
  * @todo testing
  * 
@@ -299,6 +302,28 @@ $klein->respond('GET','/now-playing', function($request){
 		return NowPlayingPage::render($currentsong, $request);
 });
 
+$klein->respond('GET','/action-prev', function(){ Music::previous(); });
+
+$klein->respond('GET','/action-next', function(){ Music::next(); });
+
+$klein->respond('GET','/action-toggle-play', function(){ return Music::togglePlay(); });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 $klein->respond('GET','/show-tables', function(){
 	Kint::dump(Database::query("SELECT name FROM sqlite_master WHERE type='table';"));
 });
@@ -336,7 +361,7 @@ $klein->respond('GET','/view-db', function($request,$response){
 $klein->respond('GET','/test-route', function($request,$response){
 
 	// check to see if a song is currently playing
-	Kint::dump(Music::getStatus());
+	Kint::dump(Music::isPlaying() ? 'true' : 'false');
 
 });
 
