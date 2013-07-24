@@ -2,12 +2,12 @@
 
 return array(
 
-	// 'music-path' => array('/home/local/STARKART/dthomas/Music/',),
-	'music-path' => array(
-			'/media/music/Kate Bush/',
-			'/media/music/Billy Bragg/',
-			'/media/music/Dar Williams/',
-		),
+	'music-path' => array('/home/local/STARKART/dthomas/Music/',),
+	// 'music-path' => array(
+	// 		'/media/music/Kate Bush/',
+	// 		'/media/music/Billy Bragg/',
+	// 		'/media/music/Dar Williams/',
+	// 	),
 
 	'music-artwork-path'  => dirname(__FILE__).'/../storage/artwork/',
 

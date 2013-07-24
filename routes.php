@@ -39,7 +39,7 @@
  * * ******************** bump version 0.0.8-alpha
  * 
  * * implement "now playing" page
- * @todo redirect from query pay to now playing page
+ * * redirect from query page to now playing page
  * @todo add "back" button to now playing page
  * @todo add control buttons to now playing page
  * @todo add volume control to now playing page
@@ -267,7 +267,12 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 		// get it from the DB
 		$currentsong = Model::factory('Song')->where('filenamepath', $path)->find_one();
-		return "I'm playing {$obj->name}<br />$path<br /><pre>".print_r($currentsong,true)."</pre>";
+
+		// redirect to the "now playing" page
+		header( 'Location: /now-playing' );
+		header("Cache-Control: no-cache, must-revalidate");
+		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+		exit;
 	}
 	else if(is_array($obj))
 	{
