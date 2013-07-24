@@ -116,4 +116,38 @@ class Music {
 		return $currentsong;
 	}
 
+	/**
+	 * Get the status of MPD
+	 * 
+	 * @return array
+	 * The array of status values
+	 */
+	public static function getStatus()
+	{
+		// connect to MPD
+		static::connect();
+
+		// get the status
+		$status = MPD::status();
+
+		// now parse the values so they're a little more usable
+		if(isset($status['values']))
+		{
+			// the status values are strings in the format "key: value". I'm 
+			// going to parse this into an associative array
+			$newvalues = array();
+
+			foreach($status['values'] as $v)
+			{
+				$new = explode(':', $v);
+				$newvalues[trim($new[0])] = trim($new[1]);
+			}
+
+			$status['values'] = $newvalues;
+		}
+
+		// and return the results
+		return $status;
+	}
+
 }
