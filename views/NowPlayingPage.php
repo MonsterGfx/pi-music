@@ -33,6 +33,9 @@ class NowPlayingPage extends View {
 		$parser->assign(array(
 			'image_path'	=> $image_path,
 			'image'			=> Image::toDataUrl($image_path),
+			'title'			=> $song->name,
+			'artist'		=> $artist->name,
+			'album'			=> $album->name,
 		));
 
 		// return the HTML
