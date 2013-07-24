@@ -235,7 +235,15 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	if($obj && get_class($obj)=='Song')
 	{
 		// load the playlist with the current batch of songs & start playing
-		Music::replacePlaylist($args);
+		Music::replacePlaylist($original_args);
+
+		// get the song info
+		$currentsong = MPD::send('currentsong');
+		$path = trim(substr($currentsong['values'][0],5));
+
+		// get it from the DB
+		$currentsong = Model::factory('Song')->where('filenamepath', $path)->find_one();
+		return "I'm playing {$obj->name}<br />$path<br /><pre>".print_r($currentsong,true)."</pre>";
 	}
 	else if(is_array($obj))
 	{
