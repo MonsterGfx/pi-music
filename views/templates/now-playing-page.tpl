@@ -15,9 +15,16 @@
 <div data-role="page">
 
 	<div data-role="header" data-position="fixed">
-		<p style='text-align: center; color: #bbb; font-size:11px; margin: 1px 0 0;'>{$artist}</p>
-		<p style='text-align: center; font-size:11px; margin: 1px 0 0;'><strong>{$title}</strong></p>
-		<p style='text-align: center; color: #bbb; font-size:11px; margin: 1px 0 0;'>{$album}</p>
+		{if="$back"}
+		<a href="{$back}" data-role="button" data-inline="true">Back</a>
+		{/if}
+
+		<div>
+			<p style='text-align: center; color: #bbb; font-size:11px; margin: 1px 0 0;'>{$artist}</p>
+			<p style='text-align: center; font-size:11px; margin: 1px 0 0;'><strong>{$title}</strong></p>
+			<p style='text-align: center; color: #bbb; font-size:11px; margin: 1px 0 0;'>{$album}</p>
+		</div>
+			
 	</div><!-- /header -->
 
 	<div data-role="content">
