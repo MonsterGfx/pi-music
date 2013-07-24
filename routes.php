@@ -41,7 +41,7 @@
  * * implement "now playing" page
  * * redirect from query page to now playing page
  * * add "now playing" button to list page
- * @todo add "back" button to now playing page
+ * * add "back" button to now playing page
  * @todo add control buttons to now playing page
  * @todo add volume control to now playing page
  * @todo add scrubbing control to now playing page
@@ -290,12 +290,13 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 		throw new Exception("Oops! I don't know what went wrong!");
 });
 
-$klein->respond('GET','/now-playing', function(){
+$klein->respond('GET','/now-playing', function($request){
+
 		// get the song info
 		$currentsong = Music::getCurrentSong();
 
 		// return the message
-		return NowPlayingPage::render($currentsong);
+		return NowPlayingPage::render($currentsong, $request);
 });
 
 $klein->respond('GET','/show-tables', function(){
