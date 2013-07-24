@@ -55,6 +55,12 @@
 
 (function($){
 
+// call the following as soon as the page is initialized
+$(document).on('pageinit', function(){
+
+
+});
+
 
 })(jQuery);
 
