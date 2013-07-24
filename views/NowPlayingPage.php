@@ -17,10 +17,14 @@ class NowPlayingPage extends View {
 	public static function render($song)
 	{
 
+		// get the extra info
+		$album = $song->album()->find_one();
+		$artist = $song->artist()->find_one();
+// Kint::dump($artist); die;
+		
 		// instantiate the template engine
 		$parser = new Rain\Tpl;
 
-// Kint::dump($song); die;
 
 		// get the path to the image file
 		$image_path = Config::get('app.music-artwork-path').$song->artwork.'-320.jpg';
