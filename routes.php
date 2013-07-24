@@ -279,7 +279,7 @@ $klein->respond('GET','/now-playing', function(){
 		$currentsong = Music::getCurrentSong();
 
 		// return the message
-		return "I'm playing {$currentsong->name}!";
+		return NowPlayingPage::render($currentsong);
 });
 
 $klein->respond('GET','/show-tables', function(){
