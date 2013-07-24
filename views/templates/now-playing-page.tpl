@@ -90,6 +90,14 @@ $(document).on('pageinit', function(){
 
 });
 
+function refreshPage()
+{
+	// refresh the information on the page
+
+	// schedule another refresh
+}
+
+
 
 })(jQuery);
 
