@@ -5,8 +5,6 @@
  * 
  * This looks like a good spot to write some TODOs
  * 
- * currently at version 0.0.2-alpha
- * 
  * * list page: fix toolbar at bottom
  * * list page: fix toolbar at top
  * * list page: add "back" button in upper left
@@ -31,20 +29,28 @@
  * 
  * * ******************** bump version 0.0.6-alpha
  * 
- * @todo install MPD
- * @todo implement MPD interface
+ * * install MPD
+ * * implement MPD interface
  * 
- * @todo ******************** bump version 0.0.7-alpha
+ * * ******************** bump version 0.0.7-alpha
+ * 
+ * @todo bugfix: correct song order in query
+ * 
+ * @todo ******************** bump version 0.0.8-alpha
+ * 
+ * @todo implement "now playing" page
+ * 
+ * @todo ******************** bump version 0.0.9-alpha
  * 
  * ------------------------- this will get us to a point where the player works!
  * 
  * @todo playlist editor
  * 
- * @todo ******************** bump version 0.0.8-alpha
+ * @todo ******************** bump version 0.0.10-alpha
  * 
  * @todo desktop pc layout
  * 
- * @todo ******************** bump version 0.0.9-alpha
+ * @todo ******************** bump version 0.0.11-alpha
  * 
  * @todo testing
  * 
@@ -52,6 +58,7 @@
  * 
  */
 
+use \PHPMPDClient\MPD as MPD;
 
 // instantiate the router class
 //
@@ -235,7 +242,16 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	// check if the final object is a song
 	if($obj && get_class($obj)=='Song')
 	{
-		return "It looks like you want '".$obj->name."'' to start playing.";
+		// load the playlist with the current batch of songs & start playing
+		Music::replacePlaylist($original_args);
+
+		// get the song info
+		$currentsong = MPD::send('currentsong');
+		$path = trim(substr($currentsong['values'][0],5));
+
+		// get it from the DB
+		$currentsong = Model::factory('Song')->where('filenamepath', $path)->find_one();
+		return "I'm playing {$obj->name}<br />$path<br /><pre>".print_r($currentsong,true)."</pre>";
 	}
 	else if(is_array($obj))
 	{
@@ -288,10 +304,16 @@ $klein->respond('GET','/view-db', function($request,$response){
 
 $klein->respond('GET','/test-route', function($request,$response){
 
+	$args = array(
+		'artist',
+		'2',
+		'album',
+		'12',
+		'song',
+		'105',
+	);
 
-	Kint::dump(Model::factory('Song')->find_one(23)->playlists()->find_one()->as_array());
-
-
+	Music::replacePlaylist($args);
 });
 
 
