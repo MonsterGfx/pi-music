@@ -19,7 +19,6 @@ class NowPlayingPage extends View {
 		// get the extra info
 		$album = $song->album()->find_one();
 		$artist = $song->artist()->find_one();
-// Kint::dump($artist); die;
 		
 		// instantiate the template engine
 		$parser = new Rain\Tpl;
