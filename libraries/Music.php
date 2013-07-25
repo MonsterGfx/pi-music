@@ -25,47 +25,10 @@ class Music {
 		// discard the last item in the args, since that's the actual song ID
 		array_pop($args);
 
-		// loop through the arguments
-		while(count($args))
-		{
+		// get the list of songs
+		$query = QueryBuilder::get($args);
 
-			// get the next argument
-			$a = array_shift($args);
-
-			// check to see if the object has been created yet
-			if(!$obj)
-			{
-				// instantiate a new object
-				$obj = Model::factory(ucfirst(strtolower($a)));
-			}
-			else
-			{
-				//otherwise, we're looking for a relationship
-				// $a currently is something like "album"; the relationship looks
-				// something like $obj->albums(). Fix up $a
-				$func = $a.'s';
-				$obj = $obj->$func();
-			}
-
-			// if we have more arguments, then the next one must be an ID value
-			if(count($args)) {
-				// get the ID
-				$id = array_shift($args);
-
-				// find the single object corresponding to that ID
-				$obj = $obj->find_one($id);
-			}
-			else
-			{
-				// no more arguments, so we want to find the "many" elements at this
-				// point
-				$obj = $obj->find_many();
-			}
-
-		}
-
-		// and return the results
-		return $obj;
+		return $query['items'];
 	}
 
 	public static function replacePlaylist($args)
