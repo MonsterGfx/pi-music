@@ -48,7 +48,7 @@ div#volume-slider-div .ui-slider {
 
 	<div data-role="content">
 
-		<img src='{$image}' style='position:absolute; top:44px; left:0px; opacity:0.3;' />
+		<img src='{$image}' style='position:absolute; top:44px; left:0px; opacity:0.05;' />
 
 		<div style='position:absolute; top:40px; left:0px; width:320px; height:320px; z-index:10;'>
 
