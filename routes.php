@@ -112,6 +112,8 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	// set the base URI
 	ListPage::setBaseUri(implode('/',$args));
 
+	// get the results of this query
+	$query = QueryBuilder::get($args);
 
 	// check if the final object is a song
 	if($obj && get_class($obj)=='Song')
