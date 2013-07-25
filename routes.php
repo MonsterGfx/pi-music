@@ -108,8 +108,6 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 		// yes! return the info from the cache rather than re-generating it
 		return $html;
 	}
-	// save the original arguments for later
-	$original_args = $args;
 
 	// set the base URI
 	ListPage::setBaseUri(implode('/',$args));
