@@ -44,22 +44,27 @@
  * * add "back" button to now playing page
  * * add control buttons to now playing page
  * * add volume control to now playing page
+ * * toggle play/pause icons on now playing page
  * 
  * * ******************** bump version 0.0.9-alpha
  * 
- * @todo add custom play/pause icons to play button
+ * @todo bugfix: songs not added in expected order
  * 
  * @todo ******************** bump version 0.0.10-alpha
  * 
- * @todo add "shuffle" buttons to song lists
+ * @todo add custom play/pause icons to play button
  * 
  * @todo ******************** bump version 0.0.11-alpha
+ * 
+ * @todo add "shuffle" buttons to song lists
+ * 
+ * @todo ******************** bump version 0.0.12-alpha
  * 
  * ------------------------- this will get us to a point where the player works!
  * 
  * @todo playlist editor
  * 
- * @todo ******************** bump version 0.0.12-alpha
+ * @todo ******************** bump version 0.0.13-alpha
  * 
  * @todo testing
  * 
