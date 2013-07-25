@@ -88,7 +88,8 @@ $klein = new \Klein\Klein;
 // a regular expression for parsing queries
 $query_regex = "^(/([a-zA-Z]+)/([0-9]+)){0,5}(/([a-zA-Z]+)(/[0-9]+)?)[/]?$";
 
-// set up the route
+// set up the route for queries
+//
 $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 	$args = explode('/', $request->uri());
@@ -101,9 +102,10 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	// attempt to get the value from the cache
 	$html = QueryCache::get($args);
 
+	// was there anything in the cache?
 	if($html!==false)
 	{
-		// got something from the cache!
+		// yes! return the info from the cache rather than re-generating it
 		return $html;
 	}
 	// save the original arguments for later
@@ -147,6 +149,8 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 		throw new Exception("Oops! I don't know what went wrong!");
 });
 
+// the "now playing" page
+//
 $klein->respond('GET','/now-playing', function($request){
 
 		// get the song info
@@ -156,12 +160,20 @@ $klein->respond('GET','/now-playing', function($request){
 		return NowPlayingPage::render($currentsong, $request);
 });
 
+// the "skip to previous song" action
+//
 $klein->respond('GET','/action-prev', function(){ Music::previous(); });
 
+// the "skip to next song" action
+//
 $klein->respond('GET','/action-next', function(){ Music::next(); });
 
+// the "toggle play/pause" action
+//
 $klein->respond('GET','/action-toggle-play', function(){ return Music::togglePlay(); });
 
+// the "adjust volume" action
+//
 $klein->respond('GET','/action-volume/[i:volume]', function($request){ Music::setVolume( $request->volume ); });
 
 
