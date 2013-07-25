@@ -36,6 +36,7 @@ class NowPlayingPage extends View {
 			'title'			=> $song->name,
 			'artist'		=> $artist->name,
 			'album'			=> $album->name,
+			'volume'		=> Music::getVolume(),
 			'back'			=> $back_url,
 
 			// 'debug'			=> print_r($request,true),

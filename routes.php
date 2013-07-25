@@ -43,24 +43,28 @@
  * * add "now playing" button to list page
  * * add "back" button to now playing page
  * * add control buttons to now playing page
- * @todo add volume control to now playing page
- * @todo add scrubbing control to now playing page
+ * * add volume control to now playing page
+ * * toggle play/pause icons on now playing page
  * 
- * @todo ******************** bump version 0.0.9-alpha
+ * * ******************** bump version 0.0.9-alpha
  * 
- * @todo add custom play/pause icons to play button
+ * @todo bugfix: songs not added in expected order
  * 
  * @todo ******************** bump version 0.0.10-alpha
  * 
- * @todo add "shuffle" buttons to song lists
+ * @todo add custom play/pause icons to play button
  * 
  * @todo ******************** bump version 0.0.11-alpha
+ * 
+ * @todo add "shuffle" buttons to song lists
+ * 
+ * @todo ******************** bump version 0.0.12-alpha
  * 
  * ------------------------- this will get us to a point where the player works!
  * 
  * @todo playlist editor
  * 
- * @todo ******************** bump version 0.0.12-alpha
+ * @todo ******************** bump version 0.0.13-alpha
  * 
  * @todo testing
  * 
@@ -68,6 +72,7 @@
  * 
  * ------------------------- future enhancements
  * 
+ * @todo add scrubbing control to now playing page
  * @todo desktop pc layout
  * 
  */
@@ -308,6 +313,7 @@ $klein->respond('GET','/action-next', function(){ Music::next(); });
 
 $klein->respond('GET','/action-toggle-play', function(){ return Music::togglePlay(); });
 
+$klein->respond('GET','/action-volume/[i:volume]', function($request){ Music::setVolume( $request->volume ); });
 
 
 

@@ -8,6 +8,25 @@
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
 	<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
+
+<style>
+
+div#volume-slider-div .ui-slider-input {
+	display: none;
+}
+
+div#volume-slider-div .ui-slider-track {
+	margin-left: 15px;
+}
+
+div#volume-slider-div .ui-slider {
+	margin-left: 5%;
+	margin-right: 5%;
+	width: 90%;
+}
+
+</style>
+
 </head> 
 
 <body> 
@@ -29,13 +48,15 @@
 
 	<div data-role="content">
 
-		<img src='{$image}' style='position:absolute; top:44px; left:0px; opacity:0.3;' />
+		<img src='{$image}' style='position:absolute; top:44px; left:0px; opacity:0.05;' />
 
-{*
 		<div style='position:absolute; top:40px; left:0px; width:320px; height:320px; z-index:10;'>
-			<h1>Some Stuff</h1>
+
+			<div id='volume-slider-div' style='position:absolute; top: 270px; left: 0px; width: 320px;'>
+				<input type="range" name="volume-slider" id="volume-slider" data-highlight="true" min="0" max="100" value="{$volume}">
+			</div>
+
 		</div>
-*}
 
 	</div><!-- /content -->
 
@@ -63,37 +84,49 @@ $(document).on('pageinit', function(){
 		// stop event propagation
 		e.stopPropagation();
 
-		// get the ID of the item that was clicked/touched
-		var action = e.currentTarget.id;
-
-		if(action=='prev')
-		{
-			// submit request for "previous" action
-			$.get('/action-prev');
-		}
-		else if(action=='next')
-		{
-			// submit request for "next" action
-			$.get('/action-next');
-		}
-		else if(action=="play")
-		{
-			// submit request for "play" action
-			$.get('/action-toggle-play', { }, function(data){
-				// @todo toggle the play button (once we have our custom icons)
-			});
-		}
-		else
-		{
-			// unrecognized action. Just bail out
-			return;
-		}
-
-		// some action has been submitted. Wait a brief moment and refresh this
-		// page
+		// handle the event
+		clickControlButton(e.currentTarget.id);
 	});
 
+	// bind events for the volume slider
+	$('input#volume-slider').on('slidestop', function(){
+		console.log('vol = '+$('input#volume-slider').val());
+		$.get('/action-volume/'+$('input#volume-slider').val() );
+	});
+
+	// @todo start page refresh event
 });
+
+function clickControlButton(action)
+{
+	// figure out what action it is
+	if(action=='prev')
+	{
+		// submit request for "previous" action
+		$.get('/action-prev');
+	}
+	else if(action=='next')
+	{
+		// submit request for "next" action
+		$.get('/action-next');
+	}
+	else if(action=="play")
+	{
+		// submit request for "play" action
+		$.get('/action-toggle-play', { }, function(data){
+			// @todo update the play button toggle to use custom icons
+			if(data=='play')
+				$('a#play span.ui-icon').removeClass('ui-icon-alert').addClass('ui-icon-gear');
+			else
+				$('a#play span.ui-icon').removeClass('ui-icon-gear').addClass('ui-icon-alert');
+		});
+	}
+	else
+	{
+		// unrecognized action. Just bail out
+		return;
+	}
+}
 
 function refreshPage()
 {

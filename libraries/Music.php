@@ -241,4 +241,38 @@ class Music {
 		return static::isPlaying() ? 'play' : 'pause';
 	}
 
+	/**
+	 * Get the current volume
+	 * 
+	 * @return int
+	 */
+	public static function getVolume()
+	{
+		// get the player status
+		$status = static::getStatus();
+
+		if(isset($status['values']) && isset($status['values']['volume']))
+			return $status['values']['volume'];
+
+		return false;
+	}
+	/**
+	 * Set the current volume
+	 * 
+	 * @param int $volume 
+	 * A volume value between 0 and 100
+	 */
+	public static function setVolume($volume)
+	{
+		if(!is_numeric($volume))
+			$volume = 0;
+		if($volume<0)
+			$volume = 0;
+		if($volume>100)
+			$volume = 100;
+
+		static::connect();
+
+		MPD::send('setvol', $volume);
+	}
 }
