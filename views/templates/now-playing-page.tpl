@@ -93,6 +93,8 @@ $(document).on('pageinit', function(){
 		console.log('vol = '+$('input#volume-slider').val());
 		$.get('/action-volume/'+$('input#volume-slider').val() );
 	});
+
+	// @todo start page refresh event
 });
 
 function clickControlButton(action)
@@ -120,6 +122,8 @@ function clickControlButton(action)
 		// unrecognized action. Just bail out
 		return;
 	}
+}
+
 function refreshPage()
 {
 	// refresh the information on the page
