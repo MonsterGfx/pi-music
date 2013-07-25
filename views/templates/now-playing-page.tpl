@@ -19,6 +19,12 @@ div#volume-slider-div .ui-slider-track {
 	margin-left: 15px;
 }
 
+div#volume-slider-div .ui-slider {
+	margin-left: 5%;
+	margin-right: 5%;
+	width: 90%;
+}
+
 </style>
 
 </head> 
