@@ -84,38 +84,37 @@ $(document).on('pageinit', function(){
 		// stop event propagation
 		e.stopPropagation();
 
-		// get the ID of the item that was clicked/touched
-		var action = e.currentTarget.id;
-
-		if(action=='prev')
-		{
-			// submit request for "previous" action
-			$.get('/action-prev');
-		}
-		else if(action=='next')
-		{
-			// submit request for "next" action
-			$.get('/action-next');
-		}
-		else if(action=="play")
-		{
-			// submit request for "play" action
-			$.get('/action-toggle-play', { }, function(data){
-				// @todo toggle the play button (once we have our custom icons)
-			});
-		}
-		else
-		{
-			// unrecognized action. Just bail out
-			return;
-		}
-
-		// some action has been submitted. Wait a brief moment and refresh this
-		// page
+		// handle the event
+		clickControlButton(e.currentTarget.id);
 	});
 
 });
 
+function clickControlButton(action)
+{
+	// figure out what action it is
+	if(action=='prev')
+	{
+		// submit request for "previous" action
+		$.get('/action-prev');
+	}
+	else if(action=='next')
+	{
+		// submit request for "next" action
+		$.get('/action-next');
+	}
+	else if(action=="play")
+	{
+		// submit request for "play" action
+		$.get('/action-toggle-play', { }, function(data){
+			// @todo toggle the play button (once we have our custom icons)
+		});
+	}
+	else
+	{
+		// unrecognized action. Just bail out
+		return;
+	}
 function refreshPage()
 {
 	// refresh the information on the page
