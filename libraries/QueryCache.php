@@ -37,6 +37,10 @@ class QueryCache {
 	 */
 	public static function save($args, $value)
 	{
+		// only save if the "query-cache" flag is true
+		if(!Config::get('app.query-caching'))
+			return;
+
 		// create the filename
 		$filename = Config::get('app.query-cache-path').implode('-',$args).'.qcache';
 
