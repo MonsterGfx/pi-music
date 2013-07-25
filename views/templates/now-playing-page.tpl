@@ -114,7 +114,11 @@ function clickControlButton(action)
 	{
 		// submit request for "play" action
 		$.get('/action-toggle-play', { }, function(data){
-			// @todo toggle the play button (once we have our custom icons)
+			// @todo update the play button toggle to use custom icons
+			if(data=='play')
+				$('a#play span.ui-icon').removeClass('ui-icon-alert').addClass('ui-icon-gear');
+			else
+				$('a#play span.ui-icon').removeClass('ui-icon-gear').addClass('ui-icon-alert');
 		});
 	}
 	else
