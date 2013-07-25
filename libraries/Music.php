@@ -256,4 +256,23 @@ class Music {
 
 		return false;
 	}
+	/**
+	 * Set the current volume
+	 * 
+	 * @param int $volume 
+	 * A volume value between 0 and 100
+	 */
+	public static function setVolume($volume)
+	{
+		if(!is_numeric($volume))
+			$volume = 0;
+		if($volume<0)
+			$volume = 0;
+		if($volume>100)
+			$volume = 100;
+
+		static::connect();
+
+		MPD::send('setvol', $volume);
+	}
 }
