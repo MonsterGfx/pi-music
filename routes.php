@@ -43,10 +43,9 @@
  * * add "now playing" button to list page
  * * add "back" button to now playing page
  * * add control buttons to now playing page
- * @todo add volume control to now playing page
- * @todo add scrubbing control to now playing page
+ * * add volume control to now playing page
  * 
- * @todo ******************** bump version 0.0.9-alpha
+ * * ******************** bump version 0.0.9-alpha
  * 
  * @todo add custom play/pause icons to play button
  * 
@@ -68,6 +67,7 @@
  * 
  * ------------------------- future enhancements
  * 
+ * @todo add scrubbing control to now playing page
  * @todo desktop pc layout
  * 
  */
