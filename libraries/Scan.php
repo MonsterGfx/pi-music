@@ -181,6 +181,30 @@ class Scan {
 				$song->created_at = time();
 			}
 
+			// massage the data a little
+			$m = array();
+
+			// sometimes the track number is saved as "1/10". I just want the
+			// number
+			$track_number = isset($tags['track_number']) ? $tags['track_number'][0] : null;
+			if($track_number)
+			{
+				preg_match_all('/^([0-9]+)[^0-9]?/', $track_number, $m);
+				if(isset($m[1][0]))
+					$track_number = (int)$m[1][0];
+			}
+
+			// sometimes the disc number is saved as "1/10". I just want the
+			// number
+			$disc_number = isset($tags['disc_number']) ? $tags['disc_number'][0] : null;
+			if($disc_number)
+			{
+				preg_match_all('/^([0-9]+)[^0-9]?/', $disc_number, $m);
+				if(isset($m[1][0]))
+					$disc_number = (int)$m[1][0];
+			}
+
+			// update the model with the data
 			$song->filenamepath	= $file_info['filenamepath'];
 			$song->filesize		= $file_info['filesize'];
 			$song->fileformat	= $file_info['fileformat'];
@@ -201,8 +225,8 @@ class Scan {
 			$song->album_artist	= isset($tags['album_artist']) ? $tags['album_artist'][0] : null;
 			$song->albums_id		= $album ? $album->id : null;
 			$song->genres_id		= $genre ? $genre->id : null;
-			$song->track_number	= isset($tags['track_number']) ? $tags['track_number'][0] : null;
-			$song->disc_number	= isset($tags['disc_number']) ? $tags['disc_number'][0] : null;
+			$song->track_number	= $track_number;
+			$song->disc_number	= $disc_number;
 			$song->compilation	= isset($tags['compilation']) ? $tags['compilation'][0] : null;
 			$song->bpm			= isset($tags['bpm']) ? $tags['bpm'][0] : null;
 			$song->rating		= isset($tags['rating']) ? $tags['rating'][0] : null;
