@@ -48,9 +48,9 @@
  * 
  * * ******************** bump version 0.0.9-alpha
  * 
- * @todo bugfix: songs not added in expected order
+ * * bugfix: songs not added in expected order
  * 
- * @todo ******************** bump version 0.0.10-alpha
+ * * ******************** bump version 0.0.10-alpha
  * 
  * @todo add custom play/pause icons to play button
  * 
