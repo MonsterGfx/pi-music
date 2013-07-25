@@ -241,4 +241,19 @@ class Music {
 		return static::isPlaying() ? 'play' : 'pause';
 	}
 
+	/**
+	 * Get the current volume
+	 * 
+	 * @return int
+	 */
+	public static function getVolume()
+	{
+		// get the player status
+		$status = static::getStatus();
+
+		if(isset($status['values']) && isset($status['values']['volume']))
+			return $status['values']['volume'];
+
+		return false;
+	}
 }
