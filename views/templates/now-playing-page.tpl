@@ -88,6 +88,11 @@ $(document).on('pageinit', function(){
 		clickControlButton(e.currentTarget.id);
 	});
 
+	// bind events for the volume slider
+	$('input#volume-slider').on('slidestop', function(){
+		console.log('vol = '+$('input#volume-slider').val());
+		$.get('/action-volume/'+$('input#volume-slider').val() );
+	});
 });
 
 function clickControlButton(action)
