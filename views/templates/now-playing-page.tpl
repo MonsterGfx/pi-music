@@ -47,7 +47,7 @@ div#volume-slider-div .ui-slider-track {
 		<div style='position:absolute; top:40px; left:0px; width:320px; height:320px; z-index:10;'>
 
 			<div id='volume-slider-div' style='position:absolute; top: 270px; left: 0px; width: 320px;'>
-				<input type="range" name="volume-slider" id="volume-slider" data-highlight="true" min="0" max="100" value="50">
+				<input type="range" name="volume-slider" id="volume-slider" data-highlight="true" min="0" max="100" value="{$volume}">
 			</div>
 
 		</div>
