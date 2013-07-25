@@ -157,7 +157,7 @@ class Scan {
 					imagejpeg($img, Config::get('app.music-artwork-path').$image_filename.".jpg", 100);
 
 					// resize to the resolutions in the array below
-					$res = array(640,180);
+					$res = array(320,180);
 
 					foreach( $res as $r )
 					{

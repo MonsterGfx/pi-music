@@ -38,23 +38,42 @@
  * 
  * * ******************** bump version 0.0.8-alpha
  * 
- * @todo implement "now playing" page
+ * * implement "now playing" page
+ * * redirect from query page to now playing page
+ * * add "now playing" button to list page
+ * * add "back" button to now playing page
+ * * add control buttons to now playing page
+ * * add volume control to now playing page
+ * * toggle play/pause icons on now playing page
  * 
- * @todo ******************** bump version 0.0.9-alpha
+ * * ******************** bump version 0.0.9-alpha
+ * 
+ * @todo bugfix: songs not added in expected order
+ * 
+ * @todo ******************** bump version 0.0.10-alpha
+ * 
+ * @todo add custom play/pause icons to play button
+ * 
+ * @todo ******************** bump version 0.0.11-alpha
+ * 
+ * @todo add "shuffle" buttons to song lists
+ * 
+ * @todo ******************** bump version 0.0.12-alpha
  * 
  * ------------------------- this will get us to a point where the player works!
  * 
  * @todo playlist editor
  * 
- * @todo ******************** bump version 0.0.10-alpha
- * 
- * @todo desktop pc layout
- * 
- * @todo ******************** bump version 0.0.11-alpha
+ * @todo ******************** bump version 0.0.13-alpha
  * 
  * @todo testing
  * 
  * @todo ******************** bump version 0.1.0-beta
+ * 
+ * ------------------------- future enhancements
+ * 
+ * @todo add scrubbing control to now playing page
+ * @todo desktop pc layout
  * 
  */
 
@@ -257,7 +276,12 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 
 		// get it from the DB
 		$currentsong = Model::factory('Song')->where('filenamepath', $path)->find_one();
-		return "I'm playing {$obj->name}<br />$path<br /><pre>".print_r($currentsong,true)."</pre>";
+
+		// redirect to the "now playing" page
+		header( 'Location: /now-playing' );
+		header("Cache-Control: no-cache, must-revalidate");
+		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+		exit;
 	}
 	else if(is_array($obj))
 	{
@@ -273,6 +297,38 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	else
 		throw new Exception("Oops! I don't know what went wrong!");
 });
+
+$klein->respond('GET','/now-playing', function($request){
+
+		// get the song info
+		$currentsong = Music::getCurrentSong();
+
+		// return the message
+		return NowPlayingPage::render($currentsong, $request);
+});
+
+$klein->respond('GET','/action-prev', function(){ Music::previous(); });
+
+$klein->respond('GET','/action-next', function(){ Music::next(); });
+
+$klein->respond('GET','/action-toggle-play', function(){ return Music::togglePlay(); });
+
+$klein->respond('GET','/action-volume/[i:volume]', function($request){ Music::setVolume( $request->volume ); });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 $klein->respond('GET','/show-tables', function(){
 	Kint::dump(Database::query("SELECT name FROM sqlite_master WHERE type='table';"));
@@ -310,16 +366,9 @@ $klein->respond('GET','/view-db', function($request,$response){
 
 $klein->respond('GET','/test-route', function($request,$response){
 
-	$args = array(
-		'artist',
-		'2',
-		'album',
-		'12',
-		'song',
-		'105',
-	);
+	// check to see if a song is currently playing
+	Kint::dump(Music::isPlaying() ? 'true' : 'false');
 
-	Music::replacePlaylist($args);
 });
 
 

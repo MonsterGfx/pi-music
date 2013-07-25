@@ -65,6 +65,7 @@ class ListPage extends View {
 			'previous'		=> $previous,
 			'album_stats'	=> $album_stats,
 			'list'			=> $list,
+			'now_playing'	=> Music::isPlayingOrPaused(),
 		));
 
 		// return the HTML
