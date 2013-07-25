@@ -115,11 +115,12 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 	// get the results of this query
 	$query = QueryBuilder::get($args);
 
-	// check if the final object is a song
-	if($obj && get_class($obj)=='Song')
+	// is the final object is a song?
+	if(is_object($query['items']) && get_class($query['items'])=='Song')
 	{
-		// load the playlist with the current batch of songs & start playing
-		Music::replacePlaylist($original_args);
+		// yes! we need to load the player with the current list of songs &
+		// start playing
+		Music::replacePlaylist($args);
 
 		// get the song info
 		$currentsong = MPD::send('currentsong');
@@ -134,13 +135,13 @@ $klein->respond('GET',"@{$query_regex}",function($request,$response){
 		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 		exit;
 	}
-	else if(is_array($obj))
+	else if(is_array($query['items']))
 	{
-		// and render the list
-		$html = ListPage::render($page_title, $previous, $album_stats, $obj);
+		// no, it's a list that we need to render
+		$html = ListPage::render($query['page_title'], $query['previous'], $query['album_stats'], $query['items']);
 
 		// otherwise, save the results in the cache
-		QueryCache::save($original_args, $html);
+		QueryCache::save($args, $html);
 
 		// and return the result
 		return $html;
