@@ -308,6 +308,7 @@ $klein->respond('GET','/action-next', function(){ Music::next(); });
 
 $klein->respond('GET','/action-toggle-play', function(){ return Music::togglePlay(); });
 
+$klein->respond('GET','/action-volume/[i:volume]', function($request){ Music::setVolume( $request->volume ); });
 
 
 
