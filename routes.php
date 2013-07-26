@@ -54,7 +54,7 @@
  * 
  * * add "shuffle" buttons to song lists
  * 
- * @todo ******************** bump version 0.0.11-alpha
+ * * ******************** bump version 0.0.11-alpha
  * 
  * @todo add custom play/pause icons to play button
  * 
