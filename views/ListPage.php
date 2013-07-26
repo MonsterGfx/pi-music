@@ -71,13 +71,13 @@ class ListPage extends View {
 
 		// assign the values to the template parser
 		$parser->assign(array(
-			'base_uri'		=> static::$base_uri,
-			'object_type'	=> $type,
-			'page_title'	=> $page_title,
-			'previous'		=> $previous,
-			'album_stats'	=> $album_stats,
-			'list'			=> $list,
-			'now_playing'	=> Music::isPlayingOrPaused(),
+			'base_uri'			=> static::$base_uri,
+			'object_type'		=> $type,
+			'page_title'		=> $page_title,
+			'previous'			=> $previous,
+			'album_stats'		=> $album_stats,
+			'list'				=> $list,
+			'now_playing'		=> Music::isPlayingOrPaused(),
 		));
 
 		// return the HTML
