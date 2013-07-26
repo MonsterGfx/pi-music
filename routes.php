@@ -85,12 +85,7 @@ $klein = new \Klein\Klein;
 
 // Handle the routing for queries
 //
-// a regular expression for parsing queries
-$query_regex = "^(/([a-zA-Z]+)/([0-9]+)){0,5}(/([a-zA-Z]+)(/[0-9]+)?)[/]?$";
-
-// set up the route for queries
-//
-$klein->respond('GET',"@{$query_regex}",function($request,$response){
+$klein->respond('GET',"@".QueryBuilder::regex(),function($request,$response){
 
 	$args = explode('/', $request->uri());
 
