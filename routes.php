@@ -52,7 +52,7 @@
  * 
  * * ******************** bump version 0.0.10-alpha
  * 
- * @todo add "shuffle" buttons to song lists
+ * * add "shuffle" buttons to song lists
  * 
  * @todo ******************** bump version 0.0.11-alpha
  * 
