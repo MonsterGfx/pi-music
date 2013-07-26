@@ -35,6 +35,17 @@ class ListPage extends View {
 		// calculate the type of the next item
 		$type = '';
 
+		// some flags to indicate what types of special links to add
+
+		// if the include_shuffle flag is set, then the view will render a
+		// shuffle button at the top of the list
+		$include_shuffle = false;
+
+		// if the include_all_songs flag is set, then the view will render an
+		// include all songs button at the top of the list so, for example,
+		// if you're viewing an artist, you can see the list of all songs for
+		// that artist
+		$include_all_songs = false;
 		// are there any items in the list?
 		if(count($list_items))
 		{
@@ -53,19 +64,22 @@ class ListPage extends View {
 			{
 				case 'Genre':
 					$type = 'artist';
+					$include_all_songs = true;
 					break;
 				case 'Artist':
 					$type = 'album';
+					$include_all_songs = true;
 					break;
 				case 'Playlist':
 				case 'Album':
 					$type = 'song';
+					$include_all_songs = true;
 					break;
 				case 'Song':
+					$include_shuffle = true;
 					break;
 				default:
 					throw new Exception("Unrecognized object class");
-
 			}
 		}
 
@@ -78,6 +92,8 @@ class ListPage extends View {
 			'album_stats'		=> $album_stats,
 			'list'				=> $list,
 			'now_playing'		=> Music::isPlayingOrPaused(),
+			'include_all_songs'	=> $include_all_songs,
+			'include_shuffle'	=> $include_shuffle,
 		));
 
 		// return the HTML
