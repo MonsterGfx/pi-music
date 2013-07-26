@@ -43,6 +43,13 @@
 			</li>
 	{/if}
 
+{if="$include_all_songs"}
+			<li><a href="/{$all_songs_uri}"><em>All Songs</em></a></li>
+{/if}
+
+{if="$include_shuffle"}
+			<li><a href="/{$all_songs_uri}/shuffle"><em>Shuffle</em></a></li>
+{/if}
 
 {loop="$list"}
 			<li><a href="/{$base_uri}/{$value.id}/{$object_type}">{$value.name}</a></li>
@@ -58,7 +65,9 @@
 				<li><a href="/artist">Artists</a></li>
 				<li><a href="/song">Songs</a></li>
 				<li><a href="/album">Albums</a></li>
+{*
 				<li><a href="#">More</a></li>
+*}
 			</ul>
 		</div><!-- /navbar -->
 	</div><!-- /footer -->
