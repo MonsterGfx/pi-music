@@ -47,6 +47,12 @@ class ListPage extends View {
 		// that artist
 		$include_all_songs = false;
 
+		// build the URL for all songs (just in case)
+		$all_songs = explode('/',static::$base_uri);
+		array_pop($all_songs);
+		$all_songs[] = 'song';
+		$all_songs = implode('/',$all_songs);
+
 		// are there any items in the list?
 		if(count($list_items))
 		{
@@ -95,6 +101,7 @@ class ListPage extends View {
 			'now_playing'		=> Music::isPlayingOrPaused(),
 			'include_all_songs'	=> $include_all_songs,
 			'include_shuffle'	=> $include_shuffle,
+			'all_songs_uri'		=> $all_songs,
 		));
 
 		// return the HTML
