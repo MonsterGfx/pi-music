@@ -46,6 +46,7 @@ class ListPage extends View {
 		// if you're viewing an artist, you can see the list of all songs for
 		// that artist
 		$include_all_songs = false;
+
 		// are there any items in the list?
 		if(count($list_items))
 		{
