@@ -31,7 +31,7 @@ class Music {
 		return $query['items'];
 	}
 
-	public static function replacePlaylist($args)
+	public static function replacePlaylist($args, $shuffle=false)
 	{
 		// connect to MPD
 		static::connect();
@@ -60,8 +60,20 @@ class Music {
 
 		}
 		// start playing the selected song
-		if($mpd_id)
+		if(!$shuffle && $mpd_id)
+		{
+			// turn off random play
+			MPD::send('random', 0);
+			// play the requested song
 			MPD::send('playid', $mpd_id);
+		}
+		else
+		{
+			// turn on random play
+			MPD::send('random', 1);
+			// start playing
+			MPD::send('play');
+		}
 	}
 
 	public static function getCurrentSong()
