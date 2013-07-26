@@ -34,9 +34,21 @@ class ListPage extends View {
 
 		// calculate the type of the next item
 		$type = '';
+
+		// are there any items in the list?
 		if(count($list_items))
 		{
+			// Yes! figure out what type of object we're dealing with
 			$class = get_class($list_items[0]);
+
+			// set some important values for the view rendering
+
+			// the object type ($type) is used to determine what the final
+			// segment of the URL to use in the links on the page. For example,
+			// when you're on "/artist", you're seeing a list of albums and the
+			// link for each album must be something like
+			// "/artist/1/album/2/song". The $type value provides the third
+			// segment of the URL.
 			switch($class)
 			{
 				case 'Genre':
