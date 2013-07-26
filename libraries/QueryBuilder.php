@@ -134,18 +134,33 @@ class QueryBuilder {
 				// Yes! The next one must be an ID value
 				$id = array_shift($arguments);
 
-				// find the object with that ID
-				$obj = $obj->find_one($id);
-
-				// is it an Album object?
-				if(get_class($obj)=='Album')
+				// is it "shuffle"?
+				if($id=='shuffle')
 				{
-					// Yes! Save the album stats
-					$results['album_stats'] = $obj->getStats();
-				}
+					// Yes! we're shuffling a list of songs. Order it by track
+					// number then alphabetically by name
+					$obj = $obj->order_by_asc('track_number')->order_by_asc('name');
 
-				// update the page title with the name of this object
-				$results['page_title'] = $obj->name;
+					// and get the list of objects
+					$obj = $obj->find_many();
+				}
+				else
+				{
+					// no, it's an ID value
+
+					// find the object with that ID
+					$obj = $obj->find_one($id);
+
+					// is it an Album object?
+					if(get_class($obj)=='Album')
+					{
+						// Yes! Save the album stats
+						$results['album_stats'] = $obj->getStats();
+					}
+
+					// update the page title with the name of this object
+					$results['page_title'] = $obj->name;
+				}
 			}
 			else
 			{
