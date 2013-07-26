@@ -58,7 +58,9 @@
 				<li><a href="/artist">Artists</a></li>
 				<li><a href="/song">Songs</a></li>
 				<li><a href="/album">Albums</a></li>
+{*
 				<li><a href="#">More</a></li>
+*}
 			</ul>
 		</div><!-- /navbar -->
 	</div><!-- /footer -->
