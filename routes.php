@@ -107,22 +107,26 @@ $klein->respond('GET',"@".QueryBuilder::regex(),function($request,$response){
 	// set the base URI
 	ListPage::setBaseUri(implode('/',$args));
 
+	// is this a shuffle request?
+	$shuffle = $args;
+	$shuffle = array_pop($shuffle)=='shuffle';
+
 	// get the results of this query
 	$query = QueryBuilder::get($args);
 
 	// is the final object is a song?
-	if(is_object($query['items']) && get_class($query['items'])=='Song')
+	if($shuffle || (is_object($query['items']) && get_class($query['items'])=='Song'))
 	{
 		// yes! we need to load the player with the current list of songs &
 		// start playing
-		Music::replacePlaylist($args);
+		Music::replacePlaylist($args, $shuffle);
 
-		// get the song info
-		$currentsong = MPD::send('currentsong');
-		$path = trim(substr($currentsong['values'][0],5));
+		// // get the song info
+		// $currentsong = MPD::send('currentsong');
+		// $path = trim(substr($currentsong['values'][0],5));
 
-		// get it from the DB
-		$currentsong = Model::factory('Song')->where('filenamepath', $path)->find_one();
+		// // get it from the DB
+		// $currentsong = Model::factory('Song')->where('filenamepath', $path)->find_one();
 
 		// redirect to the "now playing" page
 		header( 'Location: /now-playing' );
