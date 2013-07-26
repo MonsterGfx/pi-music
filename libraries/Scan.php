@@ -191,7 +191,7 @@ class Scan {
 			{
 				preg_match_all('/^([0-9]+)[^0-9]?/', $track_number, $m);
 				if(isset($m[1][0]))
-					$track_number = (int)$m[1][0];
+					$track_number = sprintf('%04d',(int)$m[1][0]);
 			}
 
 			// sometimes the disc number is saved as "1/10". I just want the
@@ -201,7 +201,7 @@ class Scan {
 			{
 				preg_match_all('/^([0-9]+)[^0-9]?/', $disc_number, $m);
 				if(isset($m[1][0]))
-					$disc_number = (int)$m[1][0];
+					$disc_number = sprintf('%04d',(int)$m[1][0]);
 			}
 
 			// update the model with the data
