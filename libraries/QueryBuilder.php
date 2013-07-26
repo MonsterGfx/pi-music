@@ -71,6 +71,14 @@ class QueryBuilder {
 	 * @return string
 	 */
 	public static function regex() { return static::$allowed_query_regex; }
+
+	/**
+	 * Get the results of a "query"
+	 * 
+	 * A "query" in this context is the sequence of arguments passed to the
+	 * router which describes the information the user is looking for. Above is
+	 * a set of examples of all the possible types of queries.
+	 * 
 	 * @param type $arguments 
 	 * @return type
 	 */
