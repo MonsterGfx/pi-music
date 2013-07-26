@@ -43,6 +43,10 @@
 			</li>
 	{/if}
 
+{if="$include_all_songs"}
+			<li><a href="/{$all_songs_uri}"><em>All Songs</em></a></li>
+{/if}
+
 
 {loop="$list"}
 			<li><a href="/{$base_uri}/{$value.id}/{$object_type}">{$value.name}</a></li>
