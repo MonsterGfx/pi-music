@@ -62,6 +62,13 @@ class QueryBuilder {
 	 *
 	 *		genre/1/artist/2/album/3/song/4	- load all songs for genre=1, artist=2, album=3, play song=4, go to nowplaying
 	 * 
+	private static $allowed_query_regex = "^(/([a-zA-Z]+)/([0-9]+)){0,5}(/([a-zA-Z]+)(/([0-9]+|shuffle))?)[/]?$";
+
+	/**
+	 * A "getter" for the routing regex
+	 * @return string
+	 */
+	public static function regex() { return static::$allowed_query_regex; }
 	 * @param type $arguments 
 	 * @return type
 	 */
