@@ -1,67 +1,69 @@
 <?php
 
 class QueryBuilder {
-	
+
 	/**
-	 * Get the results of a "query"
-	 * 
-	 * A "query" in this context is the sequence of arguments passed to the
-	 * router which describes the information the user is looking for. Below is
-	 * a set of examples of all the possible types of queries:
+	 * The regex used for routing queries 
 	 * 
 	 * queries look like this:
 	 *
 	 *		playlist 			- list of playlists
-	 *				ph='Playlist', lh=null
+	 *				page head='Playlist', list head=null
 	 *
 	 *		playlist/1/song			- list of songs for playlist=1
-	 *				ph=playlist.name, lh=null
+	 *				page head=playlist.name, list head=null
 	 *
 	 *		playlist/1/song/2 	- load all songs for playlist=1, start playing song=2, go to nowplaying
 	 *
 	 *
 	 *		artist 					- list of artists
-	 *				ph='Artists', lh=null
+	 *				page head='Artists', list head=null
 	 *
 	 *		artist/1/album			- list of albums for artist=1
-	 *				ph=artist.artist, lh=null
+	 *				page head=artist.artist, list head=null
 	 *
 	 *		artist/1/album/2/song	- list of songs for artist=1, album=2
-	 *				ph=artist.artist, lh=album+stats
+	 *				page head=artist.artist, list head=album+stats
 	 *
 	 *		artist/1/album/2/song/3	- load all songs for artist=1, album=2, play song=3, go to nowplaying
+	 * 
+	 * 		artist/1/song			- list of all songs for artist=1
+	 *				page head=artist.artist, list head=null
 	 *
 	 *
 	 *		song 	- list of all songs
-	 *				ph='Songs', lh=null
+	 *				page head='Songs', list head=null
 	 *
 	 *		song/1 	- load ALL songs, play song=1, go to nowplaying
 	 *
 	 *
 	 *		album 			- list all albums
-	 *				ph='Albums', lh=null
+	 *				page head='Albums', list head=null
 	 *
 	 *		album/1/song	- list of songs for album=1
-	 *				ph=album.title, lh=album+stats
+	 *				page head=album.title, list head=album+stats
 	 *
 	 *		album/1/song/2	- load all songs for album=1, play song=2, go to nowplaying
 	 *
 	 *
 	 *		genre 		- list all genres
-	 *				ph='Genres', lh=null
+	 *				page head='Genres', list head=null
 	 *
 	 *		genre/1/artist 	- list of artists for genre=1
-	 *				ph=genre.name, lh=null
+	 *				page head=genre.name, list head=null
 	 *
 	 *		genre/1/artist/2/album 	- list of albums for genre=1, artist=2
-	 *				ph=artist.artist, lh=null
+	 *				page head=artist.artist, list head=null
 	 *
 	 *		genre/1/artist/2/album/3/song	- list of songs for genre=1, artist=2, album=3
-	 *				ph=artist.artist, lh=album+stats
+	 *				page head=artist.artist, list head=album+stats
 	 *
 	 *
 	 *		genre/1/artist/2/album/3/song/4	- load all songs for genre=1, artist=2, album=3, play song=4, go to nowplaying
 	 * 
+	 * In addition, any path ending in song/# can also end song/shuffle, in
+	 * which case all songs are loaded and play shuffled.
+	 */	
 	private static $allowed_query_regex = "^(/([a-zA-Z]+)/([0-9]+)){0,5}(/([a-zA-Z]+)(/([0-9]+|shuffle))?)[/]?$";
 
 	/**
