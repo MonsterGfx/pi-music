@@ -60,11 +60,23 @@
  * 
  * @todo ******************** bump version 0.0.12-alpha
  * 
+ * @todo add update functionality to now-playing page
+ * 
+ * @todo ******************** bump version 0.0.13-alpha
+ * 
+ * @todo make "now playing" the default route
+ * 
+ * @todo ******************** bump version 0.0.14-alpha
+ * 
  * ------------------------- this will get us to a point where the player works!
+ * 
+ * @todo refactor query route handling to simplify it
+ * 
+ * @todo ******************** bump version 0.0.15-alpha
  * 
  * @todo playlist editor
  * 
- * @todo ******************** bump version 0.0.13-alpha
+ * @todo ******************** bump version 0.0.16-alpha
  * 
  * @todo testing
  * 
