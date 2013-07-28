@@ -9,6 +9,8 @@
 	<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
 
+	<link rel="stylesheet" href="assets/css/msx-icons.css" />
+
 <style>
 
 div#volume-slider-div .ui-slider-input {
@@ -63,9 +65,9 @@ div#volume-slider-div .ui-slider {
 	<div data-role="footer" data-id="list-footer" data-position="fixed">
 		<div data-role="navbar">
 			<ul>
-				<li><a href="#" data-role="button" id="prev" class='playback-control' data-icon="arrow-l" data-iconpos="notext" data-inline="true">Prev</a></li>
-				<li><a href="#" data-role="button" id="play" class='playback-control' data-icon="gear" data-iconpos="notext" data-inline="true">Play</a></li>
-				<li><a href="#" data-role="button" id="next" class='playback-control' data-icon="arrow-r" data-iconpos="notext" data-inline="true">Next</a></li>
+				<li><a href="#" data-role="button" id="prev" class='playback-control' data-icon="msx-prev" data-iconpos="notext" data-inline="true">Prev</a></li>
+				<li><a href="#" data-role="button" id="play" class='playback-control' data-icon="msx-play" data-iconpos="notext" data-inline="true">Play</a></li>
+				<li><a href="#" data-role="button" id="next" class='playback-control' data-icon="msx-next" data-iconpos="notext" data-inline="true">Next</a></li>
 			</ul>
 		</div><!-- /navbar -->
 	</div><!-- /footer -->
@@ -116,9 +118,9 @@ function clickControlButton(action)
 		$.get('/action-toggle-play', { }, function(data){
 			// @todo update the play button toggle to use custom icons
 			if(data=='play')
-				$('a#play span.ui-icon').removeClass('ui-icon-alert').addClass('ui-icon-gear');
+				$('a#play span.ui-icon').removeClass('ui-icon-msx-play').addClass('ui-icon-msx-pause');
 			else
-				$('a#play span.ui-icon').removeClass('ui-icon-gear').addClass('ui-icon-alert');
+				$('a#play span.ui-icon').removeClass('ui-icon-msx-pause').addClass('ui-icon-msx-play');
 		});
 	}
 	else
