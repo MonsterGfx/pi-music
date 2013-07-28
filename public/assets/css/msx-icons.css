@@ -15,13 +15,24 @@
 	background-image: url("../img/msx-icon-next.png");
 }
 
-
-
-
-
 @media only screen and (-webkit-min-device-pixel-ratio: 2) {
 	.ui-icon-msx-play {
 		background-image: url("../img/msx-icon-play-highres.png");
+		background-size: 18px 18px;
+	}
+
+	.ui-icon-msx-pause {
+		background-image: url("../img/msx-icon-pause-highres.png");
+		background-size: 18px 18px;
+	}
+
+	.ui-icon-msx-prev {
+		background-image: url("../img/msx-icon-prev-highres.png");
+		background-size: 18px 18px;
+	}
+
+	.ui-icon-msx-next {
+		background-image: url("../img/msx-icon-next-highres.png");
 		background-size: 18px 18px;
 	}
 }
