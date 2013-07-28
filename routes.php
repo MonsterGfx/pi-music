@@ -56,9 +56,9 @@
  * 
  * * ******************** bump version 0.0.11-alpha
  * 
- * @todo add custom play/pause icons to play button
+ * * add custom play/pause icons to play button
  * 
- * @todo ******************** bump version 0.0.12-alpha
+ * * ******************** bump version 0.0.12-alpha
  * 
  * @todo add update functionality to now-playing page
  * 
