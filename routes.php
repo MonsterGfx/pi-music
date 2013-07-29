@@ -60,9 +60,9 @@
  * 
  * * ******************** bump version 0.0.12-alpha
  * 
- * @todo add update functionality to now-playing page
+ * * add update functionality to now-playing page
  * 
- * @todo ******************** bump version 0.0.13-alpha
+ * * ******************** bump version 0.0.13-alpha
  * 
  * @todo make "now playing" the default route
  * 
@@ -188,6 +188,10 @@ $klein->respond('GET','/action-toggle-play', function(){ return Music::togglePla
 //
 $klein->respond('GET','/action-volume/[i:volume]', function($request){ Music::setVolume( $request->volume ); });
 
+// the "now playing update" request
+//
+$klein->respond('GET','/now-playing-update', function(){ return json_encode(Music::updateNowPlaying()); });
+
 
 
 
@@ -240,7 +244,7 @@ $klein->respond('GET','/view-db', function($request,$response){
 $klein->respond('GET','/test-route', function($request,$response){
 
 	// check to see if a song is currently playing
-	Kint::dump(Music::isPlaying() ? 'true' : 'false');
+	Kint::dump(Music::getStatus());
 
 });
 
