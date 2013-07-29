@@ -141,7 +141,7 @@ $klein->respond('GET',"@".QueryBuilder::regex(),function($request,$response){
 		// $currentsong = Model::factory('Song')->where('filenamepath', $path)->find_one();
 
 		// redirect to the "now playing" page
-		header( 'Location: /now-playing' );
+		header( 'Location: /' );
 		header("Cache-Control: no-cache, must-revalidate");
 		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 		exit;
