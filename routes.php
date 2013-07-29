@@ -64,9 +64,9 @@
  * 
  * * ******************** bump version 0.0.13-alpha
  * 
- * @todo make "now playing" the default route
+ * * make "now playing" the default route
  * 
- * @todo ******************** bump version 0.0.14-alpha
+ * * ******************** bump version 0.0.14-alpha
  * 
  * ------------------------- this will get us to a point where the player works!
  * 
