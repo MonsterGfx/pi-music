@@ -163,7 +163,7 @@ $klein->respond('GET',"@".QueryBuilder::regex(),function($request,$response){
 
 // the "now playing" page
 //
-$klein->respond('GET','/now-playing', function($request){
+$klein->respond('GET','/', function($request){
 
 		// get the song info
 		$currentsong = Music::getCurrentSong();
