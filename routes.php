@@ -188,6 +188,10 @@ $klein->respond('GET','/action-toggle-play', function(){ return Music::togglePla
 //
 $klein->respond('GET','/action-volume/[i:volume]', function($request){ Music::setVolume( $request->volume ); });
 
+// the "now playing update" request
+//
+$klein->respond('GET','/now-playing-update', function(){ return json_encode(Music::updateNowPlaying()); });
+
 
 
 
