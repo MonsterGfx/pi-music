@@ -133,8 +133,29 @@ function clickControlButton(action)
 function refreshPage()
 {
 	// refresh the information on the page
+	// submit an AJAX request for update info
+	$.get('/now-playing-update', { }, function(data){
+		// parse the result
+		data = $.parseJSON(data);
 
-	// schedule another refresh
+		// insert info into the DOM
+		$('#artist-name').text(data['artist']);
+		$('#title-name').text(data['title']);
+		$('#album-name').text(data['album']);
+
+		// update the volume slider
+		$('input#volume-slider').val(data['volume']);
+		$('input#volume-slider').slider('refresh');
+
+		// update the play state
+		if(data['state']=='play')
+			$('a#play span.ui-icon').removeClass('ui-icon-msx-play').addClass('ui-icon-msx-pause');
+		else
+			$('a#play span.ui-icon').removeClass('ui-icon-msx-pause').addClass('ui-icon-msx-play');
+
+		// schedule another refresh
+		setTimeout(refreshPage, 200);
+	});
 }
 
 
