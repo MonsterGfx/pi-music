@@ -64,9 +64,9 @@
  * 
  * * ******************** bump version 0.0.13-alpha
  * 
- * @todo make "now playing" the default route
+ * * make "now playing" the default route
  * 
- * @todo ******************** bump version 0.0.14-alpha
+ * * ******************** bump version 0.0.14-alpha
  * 
  * ------------------------- this will get us to a point where the player works!
  * 
@@ -141,7 +141,7 @@ $klein->respond('GET',"@".QueryBuilder::regex(),function($request,$response){
 		// $currentsong = Model::factory('Song')->where('filenamepath', $path)->find_one();
 
 		// redirect to the "now playing" page
-		header( 'Location: /now-playing' );
+		header( 'Location: /' );
 		header("Cache-Control: no-cache, must-revalidate");
 		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 		exit;
@@ -163,7 +163,7 @@ $klein->respond('GET',"@".QueryBuilder::regex(),function($request,$response){
 
 // the "now playing" page
 //
-$klein->respond('GET','/now-playing', function($request){
+$klein->respond('GET','/', function($request){
 
 		// get the song info
 		$currentsong = Music::getCurrentSong();
