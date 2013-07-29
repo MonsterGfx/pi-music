@@ -250,4 +250,23 @@ class Music {
 
 		MPD::send('setvol', $volume);
 	}
+
+	public static function updateNowPlaying()
+	{
+		// get the current status of the player
+		$status = static::getStatus();
+
+		$results['volume'] = $status['values']['volume'];
+		$results['state'] = $status['values']['state'];
+
+		// get the current song
+		$song = static::getCurrentSong();
+
+		$results['title'] = $song ? $song->name : null;
+		$results['artist'] = $song ? $song->artist()->find_one()->name : null;
+		$results['album'] = $song ? $song->album()->find_one()->name : null;
+
+		return $results;
+	}
+
 }
