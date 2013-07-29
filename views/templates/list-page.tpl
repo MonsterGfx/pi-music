@@ -20,7 +20,7 @@
 		{/if}
 		<h1>{$page_title}</h1>
 		{if="$now_playing"}
-		<a href="/now-playing" data-role="button" data-inline="true">Now Playing</a>
+		<a href="/" data-role="button" data-inline="true">Now Playing</a>
 		{/if}
 	</div><!-- /header -->
 
