@@ -60,9 +60,9 @@
  * 
  * * ******************** bump version 0.0.12-alpha
  * 
- * @todo add update functionality to now-playing page
+ * * add update functionality to now-playing page
  * 
- * @todo ******************** bump version 0.0.13-alpha
+ * * ******************** bump version 0.0.13-alpha
  * 
  * @todo make "now playing" the default route
  * 
