@@ -31,6 +31,23 @@ class Music {
 		return $query['items'];
 	}
 
+	public static function send()
+	{
+		// connect to MPD
+		static::connect();
+
+		// get the arguments
+		$args = func_get_args();
+
+		// the first argument is the method
+		$method = array_shift($args);
+
+		// send the command
+		$values = MPD::send($method, $args);
+
+		return $values;
+	}
+
 	public static function replacePlaylist($args, $shuffle=false)
 	{
 		// connect to MPD
