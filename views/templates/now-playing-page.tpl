@@ -96,7 +96,8 @@ $(document).on('pageinit', function(){
 		$.get('/action-volume/'+$('input#volume-slider').val() );
 	});
 
-	// @todo start page refresh event
+	// start page refresh event
+	refreshPage();
 });
 
 function clickControlButton(action)
