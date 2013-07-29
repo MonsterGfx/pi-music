@@ -243,14 +243,7 @@ $klein->respond('GET','/view-db', function($request,$response){
 });
 
 $klein->respond('GET','/test-route', function($request,$response){
-
-	MPD::connect('', Config::get('app.mpd-connection'), null);
-
-	Kint::dump(MPD::send('list','genre'));
-
-
-	Kint::dump(MPD::send('search','genre', 'Folk - Contemporary', 'artist', 'Dar Williams', 'album', 'End of the Summer'));
-	// Genre: Folk - Contemporary
+	Kint::dump(Music::send('list','artist'));
 });
 
 
