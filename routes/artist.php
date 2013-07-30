@@ -21,6 +21,10 @@
 // artist 					- list of artists
 //
 $klein->respond('GET', '/artist', function($request, $response){
+	// get the list of artists
+	$list = Artist::getList();
+
+	Kint::dump($list); die;
 	return "list of artists";
 
 });
