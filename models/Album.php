@@ -1,72 +1,34 @@
 <?php
 
-class Album extends BaseModel {
-	// the table
-	public static $_table = 'albums';
-
-	// the primary key
-	public static $_id_column = 'id';
+class Album {
 
 	/**
-	 * Get the artist linked to this album
-	 * 
-	 * @return ORMWrapper
-	 */
-	public function artist()
-	{
-		return $this->belongs_to('Artist');
-	}
-
-	/**
-	 * Get the songs linked to this album
-	 * 
-	 * @return ORMWrapper
-	 */
-	public function songs()
-	{
-		return $this->has_many('Song');
-	}
-
-	/**
-	 * Get the statistics for display at the head of a list
+	 * Get the list of all albums in the database
 	 * 
 	 * @return array
 	 */
-	public function getStats()
+	public static function getList()
 	{
-		// get the list of songs
-		$songs = $this->songs()->find_many();
+		// get the list
+		$result = Music::send('list', 'album');
 
-		// calculate the total time
-		$time = 0;
-		foreach($songs as $s)
-			$time += $s->playtime_seconds;
-		$time = round($time/60);
+		// extract the values
+		$result = $result['values'];
 
-		// load the image data
-		$path = Config::get('app.music-artwork-path').$songs[0]->artwork.'-180.jpg';
+		// now parse
+		array_walk($result, function(&$val, $key){
+			$a = explode(':',$val);
+			array_shift($a);
+			$val = trim(implode(':',$a));
+		});
 
-		$img = Image::toDataUrl($path);
+		// remove any empty values
+		$result = array_filter(array_values($result));
 
-		// return the results
-		return array(
-			'artist' => $this->artist()->find_one()->name,
-			'artwork' => $img,
-			'name' => $this->name,
-			'year' => $this->year ?: null,
-			'song_count' => count($songs) ?: null,
-			'total_time' => $time ?: null,
-		);
+		// sort it
+		sort($result, SORT_NATURAL|SORT_FLAG_CASE);
 
-	}
-
-	public function toArray()
-	{
-		return array(
-			'id'			=> $this->id,
-			'name'			=> $this->name,
-			'artists_id'	=> $this->artists_id,
-			'year'			=> $this->year,
-		);
+		// and return the result
+		return $result;
 	}
 }
