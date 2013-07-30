@@ -100,6 +100,9 @@ $klein->respond('GET', '/artist/[:artist]/album/[:album]/song/[i:song]$', functi
 // artist/1/song			- list of all songs for artist=1
 //
 $klein->respond('GET', '/artist/[:artist]/song', function($request, $response){
+
+	// @todo play song
+	
 	return "songs for artist: ".$request->param('artist');
 
 });
