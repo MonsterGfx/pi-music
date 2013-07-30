@@ -20,6 +20,26 @@ class Music {
 		}
 	}
 
+	/**
+	 * Encode a value for transmission as part of a URL
+	 * 
+	 * @param string $data 
+	 * @return string
+	 */
+	public static function encode($data) { 
+		return rtrim(strtr(base64_encode($data), '+/', '-_'), '='); 
+	} 
+
+	/**
+	 * Decode a value encoded with the function above
+	 * 
+	 * @param string $data 
+	 * @return string
+	 */
+	public static function decode($data) { 
+		return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT)); 
+	} 
+
 	private static function getSongList($args)
 	{
 		// discard the last item in the args, since that's the actual song ID
