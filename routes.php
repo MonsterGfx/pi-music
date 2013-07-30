@@ -92,6 +92,12 @@
 
 use \PHPMPDClient\MPD as MPD;
 
+
+// @todo remove this line
+// clear the template cache
+array_map( "unlink", glob( Config::get('app.template-cache-path') . "*.rtpl.php" ) );
+
+
 // instantiate the router class
 //
 $klein = new \Klein\Klein;
