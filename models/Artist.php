@@ -29,4 +29,38 @@ class Artist {
 		return $list;
 	}
 
+	/**
+	 * Get the list of albums for an artist
+	 * 
+	 * @param string $artist 
+	 * The artist name
+	 * 
+	 * @return array
+	 */
+	public static function getAlbums($artist)
+	{
+		// query the MPD database
+		$result = Music::send('search', 'artist', $artist);
+
+		// get the list of songs
+		$songs = Music::buildSongList($result['values']);
+
+		// extract the album information from the list
+		$list = array();
+
+		foreach($songs as $s)
+		{
+			if(isset($s['Album']))
+			{
+				$l = array(
+					'artist' => $artist,
+					'album' => $s['Album'],
+				);
+				if(!in_array($l, $list))
+					$list[] = $l;
+			}
+		}
+
+		return $list;
+	}
 }
