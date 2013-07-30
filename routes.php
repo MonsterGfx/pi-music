@@ -96,6 +96,12 @@ use \PHPMPDClient\MPD as MPD;
 //
 $klein = new \Klein\Klein;
 
+// load the artist routes
+require_once 'routes/artist.php';
+
+
+
+/*
 // Handle the routing for queries
 //
 $klein->respond('GET',"@".QueryBuilder::regex(),function($request,$response){
