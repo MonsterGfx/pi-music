@@ -10,25 +10,30 @@ class Album {
 	public static function getList()
 	{
 		// get the list
-		$result = Music::send('list', 'album');
+		$result = Music::send('listallinfo');
 
 		// extract the values
-		$result = $result['values'];
+		$result = Music::buildSongList($result['values']);
 
-		// now parse
-		array_walk($result, function(&$val, $key){
-			$a = explode(':',$val);
-			array_shift($a);
-			$val = trim(implode(':',$a));
-		});
+		// build an array of artists & albums
+		$list = array();
 
-		// remove any empty values
-		$result = array_filter(array_values($result));
+		foreach($result as $s)
+		{
+			if(isset($s['Artist']) && isset($s['Album']))
+			{
+				$l = array(
+					'artist' => $s['Artist'],
+					'album' => $s['Album'],
+				);
 
-		// sort it
-		sort($result, SORT_NATURAL|SORT_FLAG_CASE);
+				if(!in_array($l,$list))
+					$list[] = $l;
+			}
+		}
 
 		// and return the result
-		return $result;
+		return $list;
+	}
 	}
 }
