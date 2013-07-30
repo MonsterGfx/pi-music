@@ -24,7 +24,6 @@ $klein->respond('GET', '/artist', function($request, $response){
 	// get the list of artists
 	$list = Artist::getList();
 
-
 	// walk the array and construct URLs
 	// The encoded URL value is actually "artist name|album title". The artist
 	// name is included to ensure that albums with the same name are not
