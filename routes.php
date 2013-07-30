@@ -167,6 +167,7 @@ $klein->respond('GET',"@".QueryBuilder::regex(),function($request,$response){
 	else
 		throw new Exception("Oops! I don't know what went wrong!");
 });
+*/
 
 // the "now playing" page
 //
@@ -248,8 +249,85 @@ $klein->respond('GET','/view-db', function($request,$response){
 	}
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 $klein->respond('GET','/test-route', function($request,$response){
-	Kint::dump(Music::send('list','artist'));
+
+	// queries look like this:
+	//
+	//		playlist 			- list of playlists
+	//				page head='Playlist', list head=null
+	//
+	//		playlist/1/song			- list of songs for playlist=1
+	//				page head=playlist.name, list head=null
+	//
+	//		playlist/1/song/2 	- load all songs for playlist=1, start playing song=2, go to nowplaying
+	//
+	//
+	//		artist 					- list of artists
+	//				page head='Artists', list head=null
+	//
+	//		artist/1/album			- list of albums for artist=1
+	//				page head=artist.artist, list head=null
+	//
+	//		artist/1/album/2/song	- list of songs for artist=1, album=2
+	//				page head=artist.artist, list head=album+stats
+	//
+	//		artist/1/album/2/song/3	- load all songs for artist=1, album=2, play song=3, go to nowplaying
+	// 
+	// 		artist/1/song			- list of all songs for artist=1
+	//				page head=artist.artist, list head=null
+	//
+	//
+	//		song 	- list of all songs
+	//				page head='Songs', list head=null
+	//
+	//		song/1 	- load ALL songs, play song=1, go to nowplaying
+	//
+	//
+	//		album 			- list all albums
+	//				page head='Albums', list head=null
+	//
+	//		album/1/song	- list of songs for album=1
+	//				page head=album.title, list head=album+stats
+	//
+	//		album/1/song/2	- load all songs for album=1, play song=2, go to nowplaying
+	//
+	//
+	//		genre 		- list all genres
+	//				page head='Genres', list head=null
+	//
+	//		genre/1/artist 	- list of artists for genre=1
+	//				page head=genre.name, list head=null
+	//
+	//		genre/1/artist/2/album 	- list of albums for genre=1, artist=2
+	//				page head=artist.artist, list head=null
+	//
+	//		genre/1/artist/2/album/3/song	- list of songs for genre=1, artist=2, album=3
+	//				page head=artist.artist, list head=album+stats
+	//
+	//
+	//		genre/1/artist/2/album/3/song/4	- load all songs for genre=1, artist=2, album=3, play song=4, go to nowplaying
+
+	Kint::dump(Music::send('currentsong'));
+	Kint::dump(Music::encode('Peter Gabriel'));
+	Kint::dump(Music::encode('Kate Bush'));
+
 });
 
 
