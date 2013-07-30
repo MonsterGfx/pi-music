@@ -35,5 +35,24 @@ class Album {
 		// and return the result
 		return $list;
 	}
+
+	/**
+	 * Get the list of songs for the requested album
+	 * 
+	 * @param string $artist 
+	 * The encoded name of the artist
+	 * 
+	 * @param string $album 
+	 * The encoded name of the album
+	 * 
+	 * @return array
+	 */
+	public static function getSongs($artist, $album)
+	{
+		// query the MPD database
+		$result = Music::send('search', 'artist', $artist, 'album', $album);
+
+		// get the list of songs
+		return Music::buildSongList($result['values']);
 	}
 }
