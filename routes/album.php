@@ -18,15 +18,17 @@ $klein->respond('GET', '/album', function($request, $response){
 	$list = Album::getList();
 
 	// walk the array and construct URLs
+	// The encoded URL value is actually "artist name|album title". The artist
+	// name is included to ensure that albums with the same name are not
+	// conflated and the pipe character is a delimiter
 	array_walk($list, function(&$v, $k){
 		$v = array(
-			'name' => $v,
-			'url' => '/album/'.Music::encode($v).'/song',
+			'name' => $v['album'],
+			'url' => '/album/'.Music::encode($v['artist'].'|'.$v['album']).'/song',
 		);
 	});
 
-Kint::dump($list); die;
-	return ListPage::render('Albums', null, null, Album::getList());
+	return ListPage::render('Albums', null, null, $list);
 });
 
 
