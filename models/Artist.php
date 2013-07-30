@@ -1,32 +1,31 @@
 <?php
 
-class Artist extends BaseModel {
-	// the table
-	public static $_table = 'artists';
-
-	// the primary key
-	public static $_id_column = 'id';
+class Artist {
 
 	/**
-	 * Get the list of albums by this artist
-	 * 
-	 * @return ORMWrapper
+	 * Get the list of artists
+	 * @return array
 	 */
-	public function albums()
+	public static function getList()
 	{
-		return $this->has_many('Album');
+		// get the list
+		$result = Music::send('list', 'artist');
+
+		// start building the list
+		$list = array();
+
+		// step through the results
+		foreach($result['values'] as $v)
+		{
+			if(substr($v,0,7)=='Artist:')
+				$list[] = trim(substr($v,7));
+		}
+
+		// sort the list
+		sort($list);
+
+		// and return it
+		return $list;
 	}
 
-	public function songs()
-	{
-		return $this->has_many('Song');
-	}
-
-	public function toArray()
-	{
-		return array(
-			'id'	=> $this->id,
-			'name'	=> $this->name,
-		);
-	}
 }
