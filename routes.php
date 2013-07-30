@@ -99,106 +99,21 @@ $klein = new \Klein\Klein;
 // load the artist routes
 require_once 'routes/artist.php';
 
+// load the album routes
+require_once 'routes/album.php';
 
+// load the genre routes
+require_once 'routes/genre.php';
 
-/*
-// Handle the routing for queries
-//
-$klein->respond('GET',"@".QueryBuilder::regex(),function($request,$response){
+// load the song routes
+require_once 'routes/song.php';
 
-	$args = explode('/', $request->uri());
+// load the playlist routes
+require_once 'routes/playlist.php';
 
-	// get the values - the array filter function preserves array keys, even in
-	// non-associative arrays; therefore, to make sure we don't have holes in
-	// our numeric keys, I'm going to pull out the list of values
-	$args = array_values(array_filter($args));
+// load the "now playing" routes
+require_once 'routes/now-playing.php';
 
-	// attempt to get the value from the cache
-	$html = QueryCache::get($args);
-
-	// was there anything in the cache?
-	if($html!==false)
-	{
-		// yes! return the info from the cache rather than re-generating it
-		return $html;
-	}
-
-	// set the base URI
-	ListPage::setBaseUri(implode('/',$args));
-
-	// is this a shuffle request?
-	$shuffle = $args;
-	$shuffle = array_pop($shuffle)=='shuffle';
-
-	// get the results of this query
-	$query = QueryBuilder::get($args);
-
-	// is the final object is a song?
-	if($shuffle || (is_object($query['items']) && get_class($query['items'])=='Song'))
-	{
-		// yes! we need to load the player with the current list of songs &
-		// start playing
-		Music::replacePlaylist($args, $shuffle);
-
-		// // get the song info
-		// $currentsong = MPD::send('currentsong');
-		// $path = trim(substr($currentsong['values'][0],5));
-
-		// // get it from the DB
-		// $currentsong = Model::factory('Song')->where('filenamepath', $path)->find_one();
-
-		// redirect to the "now playing" page
-		header( 'Location: /' );
-		header("Cache-Control: no-cache, must-revalidate");
-		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
-		exit;
-	}
-	else if(is_array($query['items']))
-	{
-		// no, it's a list that we need to render
-		$html = ListPage::render($query['page_title'], $query['previous'], $query['album_stats'], $query['items']);
-
-		// otherwise, save the results in the cache
-		QueryCache::save($args, $html);
-
-		// and return the result
-		return $html;
-	}
-	else
-		throw new Exception("Oops! I don't know what went wrong!");
-});
-*/
-
-// the "now playing" page
-//
-$klein->respond('GET','/', function($request){
-
-		// get the song info
-		$currentsong = Music::getCurrentSong();
-
-		// return the message
-		return NowPlayingPage::render($currentsong, $request);
-});
-
-// the "skip to previous song" action
-//
-$klein->respond('GET','/action-prev', function(){ Music::previous(); });
-
-// the "skip to next song" action
-//
-$klein->respond('GET','/action-next', function(){ Music::next(); });
-
-// the "toggle play/pause" action
-//
-$klein->respond('GET','/action-toggle-play', function(){ return Music::togglePlay(); });
-
-// the "adjust volume" action
-//
-$klein->respond('GET','/action-volume/[i:volume]', function($request){ Music::setVolume( $request->volume ); });
-
-// the "now playing update" request
-//
-$klein->respond('GET','/now-playing-update', function(){ return json_encode(Music::updateNowPlaying()); });
 
 
 
