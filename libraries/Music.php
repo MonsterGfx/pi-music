@@ -306,4 +306,42 @@ class Music {
 		return $results;
 	}
 
+	public static function buildSongList($list)
+	{
+
+		// instantiate an array for results
+		$results = array();
+
+		// instantiate a variable for the current song
+		$current = array();
+
+		// step through the list
+		foreach($list as $l)
+		{
+			// parse the line
+			$x = explode(':',$l);
+			$tag = trim(array_shift($x));
+			$value = trim(implode(':',$x));
+
+			// is it a "file" tag?
+			if($tag=='file')
+			{
+				// Yes! add the current song to the results (if it exists)
+				if(count($current))
+					$results[] = $current;
+
+				// and reset the current song
+				$current = array();
+			}
+
+			$current[$tag] = $value;
+		}
+
+		// add the last "current" song to the results
+		if(count($current))
+			$results[] = $current;
+
+		// and return the results
+		return $results;
+	}
 }
