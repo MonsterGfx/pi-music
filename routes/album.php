@@ -14,8 +14,19 @@
 //		album 			- list all albums
 //
 $klein->respond('GET', '/album', function($request, $response){
-	return "list of albums";
+	// get the list of albums
+	$list = Album::getList();
 
+	// walk the array and construct URLs
+	array_walk($list, function(&$v, $k){
+		$v = array(
+			'name' => $v,
+			'url' => '/album/'.Music::encode($v).'/song',
+		);
+	});
+
+Kint::dump($list); die;
+	return ListPage::render('Albums', null, null, Album::getList());
 });
 
 
