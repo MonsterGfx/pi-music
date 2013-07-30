@@ -239,9 +239,8 @@ $klein->respond('GET','/test-route', function($request,$response){
 	//
 	//		genre/1/artist/2/album/3/song/4	- load all songs for genre=1, artist=2, album=3, play song=4, go to nowplaying
 
-	Kint::dump(Music::send('currentsong'));
-	Kint::dump(Music::encode('Peter Gabriel'));
-	Kint::dump(Music::encode('Kate Bush'));
+	Kint::dump(Album::getList());
+
 
 });
 
