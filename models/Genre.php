@@ -98,4 +98,20 @@ class Genre {
 
 	}
 
+	/**
+	 * Get the list of songs for a genre, artist, and album
+	 * 
+	 * @param string $genre 
+	 * @param string $artist 
+	 * @param string $album 
+	 * @return array
+	 */
+	public static function getSongs($genre, $artist, $album)
+	{
+		// query the MPD database
+		$result = Music::send('search', 'genre', $genre, 'artist', $artist, 'album', $album);
+
+		// get the list of songs
+		return Music::buildSongList($result['values']);
+	}
 }
