@@ -24,9 +24,19 @@ $klein->respond('GET', '/artist', function($request, $response){
 	// get the list of artists
 	$list = Artist::getList();
 
-	Kint::dump($list); die;
-	return "list of artists";
 
+	// walk the array and construct URLs
+	// The encoded URL value is actually "artist name|album title". The artist
+	// name is included to ensure that albums with the same name are not
+	// conflated and the pipe character is a delimiter
+	array_walk($list, function(&$v, $k){
+		$v = array(
+			'name' => $v,
+			'url' => '/artist/'.Music::encode($v).'/album',
+		);
+	});
+
+	return ListPage::render('Artists', null, null, $list);
 });
 
 
