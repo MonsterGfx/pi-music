@@ -245,7 +245,7 @@ $klein->respond('GET','/test-route', function($request,$response){
 	//
 	//		genre/1/artist/2/album/3/song/4	- load all songs for genre=1, artist=2, album=3, play song=4, go to nowplaying
 
-	Kint::dump(Album::getList());
+	Kint::dump(Music::send('search', 'artist', 'Dar Williams', 'album', 'End of the Summer'));
 
 
 });
