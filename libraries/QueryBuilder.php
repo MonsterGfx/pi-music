@@ -233,4 +233,127 @@ class QueryBuilder {
 		return $results;
 	}
 
+	/*
+	 *		artist 					- list of artists
+	 *				page head='Artists', list head=null
+	 *
+	 *		artist/1/album			- list of albums for artist=1
+	 *				page head=artist.artist, list head=null
+	 *
+	 *		artist/1/album/2/song	- list of songs for artist=1, album=2
+	 *				page head=artist.artist, list head=album+stats
+	 *
+	 *		artist/1/album/2/song/3	- load all songs for artist=1, album=2, play song=3, go to nowplaying
+	 * 
+	 * 		artist/1/song			- list of all songs for artist=1
+	 *				page head=artist.artist, list head=null
+	 */
+
+	/**
+	 * Build a list of entries for a given key value.
+	 * 
+	 * This is used to parse the output from MPD, which is an array of strings
+	 * of the form "key: value\n". Given a list of strings and a key value, this
+	 * method will extract the values corresponding to that key.
+	 * 
+	 * @param string $key 
+	 * @param array $list 
+	 * @return array
+	 */
+	private static function buildListOfKeys($key, $list)
+	{
+		$result = array();
+		foreach($list as $l)
+		{
+			// a little kludge here to handle names, etc. with colons in them.
+			// Explode the string with colons, shift off the first item (the
+			// key), then implode the rest with colons to rebuild
+			$a = explode(':', $l);
+			$b = array_shift($a);
+			$a = array( $b, implode(':', $a));
+			if(count($a)>=2)
+			{
+				$k = strtolower(trim($a[0]));
+				$v = trim($a[1]);
+
+				if($k==strtolower($key))
+				{
+					if(!in_array($v,$result))
+						$result[] = $v;
+				}
+			}
+		}
+		sort($result, SORT_NATURAL|SORT_FLAG_CASE);
+
+		return $result;
+	}
+	/**
+	 * Build a list of artists from a query
+	 * 
+	 * @param array $query 
+	 * The URI, parsed into an array of elements
+	 * 
+	 * @return array
+	 */
+	public static function query($query=array())
+	{
+		//		artist					- list of artist
+		//				list: artist
+		//		artist/1/album			- list of albums for artist=1
+		//				search: artist, ID - extract album names
+		//		artist/1/album/2/song	- list of songs for artist=1, album=2
+		//				search: artist, ID, album, ID - extract song names
+		//		artist/1/album/2/song/3	- load all songs for artist=1, album=2, play song=3, go to nowplaying
+		//				search: artist, ID, album, ID, song, ID - get song info & start playing
+		// 		artist/1/song			- list of all songs for artist=1
+		//				search: artist, ID - get song titles
+
+		// chop the array up into pairs of entries
+		$query = array_chunk($query,2);
+
+		// start building the command
+		$command = null;
+		$args = null;
+
+		// step through the chunks
+		while(count($query)>0)
+		{
+			$a = array_shift($query);
+
+			// is it a single element array with the value 'artist'?
+			if(count($a)==1 && $a[0]=='artist')
+			{
+				// Yes! update the command and exit the loop
+				$command = 'list';
+				$args = array('artist');
+				break;
+			}
+
+			// No. add to the command
+			$command = 'search';
+			$args[] = $a[0];
+			if(isset($a[1]))
+				$args[] = Music::decode($a[1]);
+				// $args[] = $a[1];
+		}
+
+
+		// at this point, the last item in the $args array tells us what kind
+		// of list we want
+		$list = array_pop($args);
+		// is the $list values actually "song"?
+		if($list=='song')
+		{
+			// Yes! We actually want the "title" tag from the results
+			$list = 'title';
+		}
+
+		// run the command
+		$result = Music::send($command, $args);
+Kint::dump($result['values']);
+
+		// build the appropriate type of list
+		return static::buildListOfKeys($list, $result['values']);
+	}
+
 }
