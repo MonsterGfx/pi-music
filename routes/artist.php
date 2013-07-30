@@ -66,8 +66,26 @@ $klein->respond('GET', '/artist/[:artist]/album', function($request, $response){
 // artist/1/album/2/song	- list of songs for artist=1, album=2
 //
 $klein->respond('GET', '/artist/[:artist]/album/[:album]/song$', function($request, $response){
-	return "songs for artist: ".$request->param('artist').", album: ".$request->param('album');
+	// get the parameters
+	$artist = Music::decode($request->param('artist'));
+	$album = Music::decode($request->param('album'));
 
+	// get the song list
+	$list = Album::getSongs($artist, $album);
+
+	// walk the array and construct URLs
+	// The encoded URL value is actually "artist name|album title". The artist
+	// name is included to ensure that albums with the same name are not
+	// conflated and the pipe character is a delimiter
+	array_walk($list, function(&$v, $k) use ($artist, $album) {
+		$v = array(
+			'name' => $v['Title'],
+			'url' => '/album/'.Music::encode($artist.'|'.$album).'/song/'.$v['Track'],
+		);
+	});
+
+	// render($page_title, $previous, $album_stats, $list)
+	return ListPage::render($album, null, null, $list);
 });
 
 
