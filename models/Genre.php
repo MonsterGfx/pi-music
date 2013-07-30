@@ -62,4 +62,40 @@ class Genre {
 
 		return $list;
 	}
+
+	/**
+	 * Get the list of albums for a genre & artist
+	 * 
+	 * @param string $genre 
+	 * @param string $artist 
+	 * @return array
+	 */
+	public static function getAlbums($genre, $artist)
+	{
+		// query the MPD database
+		$result = Music::send('search', 'genre', $genre, 'artist', $artist);
+
+		// get the list of songs
+		$songs = Music::buildSongList($result['values']);
+
+		// extract the album information from the list
+		$list = array();
+
+		foreach($songs as $s)
+		{
+			if(isset($s['Artist']) && isset($s['Album']))
+			{
+				$l = array(
+					'artist' => $s['Artist'],
+					'album' => $s['Album'],
+				);
+				if(!in_array($l, $list))
+					$list[] = $l;
+			}
+		}
+
+		return $list;
+
+	}
+
 }
