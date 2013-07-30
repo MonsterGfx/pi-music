@@ -4,6 +4,7 @@ class Artist {
 
 	/**
 	 * Get the list of artists
+	 * 
 	 * @return array
 	 */
 	public static function getList()
