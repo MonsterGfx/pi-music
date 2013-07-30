@@ -27,10 +27,7 @@ class ListPage extends View {
 		$parser = new Rain\Tpl;
 
 		// assign some values
-		// the list of items is an array of objects. These need to be converted
-		// to an array.
-		$list = (array)$list_items;
-		array_walk($list, function(&$v, $k){ $v = $v->toArray(); });
+		$list = $list_items;
 
 		// calculate the type of the next item
 		$type = '';
