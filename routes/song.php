@@ -10,7 +10,7 @@
 //		song 	- list of all songs
 //
 $klein->respond('GET', '/song', function($request, $response){
-	// get the list of albums
+	// get the list of songs
 	$list = Song::getList();
 
 	// walk the array and construct URLs
