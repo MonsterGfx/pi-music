@@ -114,7 +114,7 @@ Kint::dump($list); die;
 
 //		genre/1/artist/2/album/3/song/4	- load all songs for genre=1, artist=2, album=3, play song=4, go to nowplaying
 //
-$klein->respond('GET', '/genre/[:genre]/artist/[:artist]/album/[:album]/song/[i:song]', function($request, $response){
+$klein->respond('GET', '/genre/[:genre]/artist/[:artist]/album/[:album]/song/[:song]', function($request, $response){
 	return "play song ".$request->param('song')." for genre ".$request->param('genre')." and artist ".$request->param('artist')." and album ".$request->param('album');
 
 });

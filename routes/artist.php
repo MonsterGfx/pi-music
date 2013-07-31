@@ -91,8 +91,8 @@ $klein->respond('GET', '/artist/[:artist]/album/[:album]/song$', function($reque
 
 // artist/1/album/2/song/3	- load all songs for artist=1, album=2, play song=3, go to nowplaying
 //
-$klein->respond('GET', '/artist/[:artist]/album/[:album]/song/[i:song]$', function($request, $response){
-	return "play song ".$request->param('song')." for artist: ".$request->param('artist').", album: ".$request->param('album');
+$klein->respond('GET', '/artist/[:artist]/album/[:album]/song/[:song]', function($request, $response){
+	return "play song ".Music::decode($request->param('song'))." for artist: ".$request->param('artist').", album: ".$request->param('album');
 
 });
 

@@ -28,7 +28,7 @@ $klein->respond('GET', '/playlist/[:playlist]/song', function($request, $respons
 
 //		playlist/1/song/2 	- load all songs for playlist=1, start playing song=2, go to nowplaying
 //
-$klein->respond('GET', '/playlist/[:playlist]/song/[i:song]', function($request, $response){
+$klein->respond('GET', '/playlist/[:playlist]/song/[:song]', function($request, $response){
 	return "play song ".$request->param('song')." for playlist ".$request->param('playlist');
 
 });
