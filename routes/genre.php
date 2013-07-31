@@ -96,15 +96,15 @@ $klein->respond('GET', '/genre/[:genre]/artist/[:artist]/album/[:album]/song', f
 
 	// get the list
 	$list = Genre::getSongs($genre, $artist, $album);
-Kint::dump($list); die;
+
 	// walk the array and construct URLs
 	// The encoded URL value is actually "artist name|album title". The artist
 	// name is included to ensure that albums with the same name are not
 	// conflated and the pipe character is a delimiter
 	array_walk($list, function(&$v, $k) use ($genre) {
 		$v = array(
-			'name' => $v['title'],
-			'url' => '/genre/'.Music::encode($genre).'/artist/'.Music::encode($v['artist']).'/album/'.Music::encode($v['album']).'/song/',
+			'name' => $v['Title'],
+			'url' => '/genre/'.Music::encode($genre).'/artist/'.Music::encode($v['Artist']).'/album/'.Music::encode($v['Album']).'/song/'.Music::encode($v['file']),
 		);
 	});
 
