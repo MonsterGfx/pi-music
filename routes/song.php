@@ -41,8 +41,31 @@ $klein->respond('GET', '/song', function($request, $response){
 //		song/1 	- load ALL songs, play song=1, go to nowplaying
 //
 $klein->respond('GET', '/song/[:song]', function($request, $response){
-	return "start playing song ".Music::decode($request->param('song'));
+	// get parameter
+	$song = Music::decode($request->param('song'));
 
+	// clear the playlist
+	Music::send('clear');
+
+	// get the list of songs
+	$songs = Song::getList();
+
+	// load the playlist with the requested songs (and figure out the current
+	// song position)
+	$pos = 0;
+	for($i=0; $i<count($songs); $i++)
+	{
+		Music::send('add', $songs[$i]['file']);
+		if($songs[$i]['file']==$song)
+			$pos = $i;
+	}
+
+	// start playing the selected song
+	Music::send('play', $pos);
+
+	// redirect to "now playing"
+	header('Location: /');
+	die;
 });
 
 
