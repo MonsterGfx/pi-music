@@ -80,7 +80,7 @@ $klein->respond('GET', '/artist/[:artist]/album/[:album]/song', function($reques
 	array_walk($list, function(&$v, $k) use ($artist, $album) {
 		$v = array(
 			'name' => $v['Title'],
-			'url' => '/album/'.Music::encode($artist.'|'.$album).'/song/'.$v['Track'],
+			'url' => '/album/'.Music::encode($artist.'|'.$album).'/song/'.Music::encode($v['file']),
 		);
 	});
 
