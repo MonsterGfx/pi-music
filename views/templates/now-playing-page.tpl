@@ -41,9 +41,9 @@ div#volume-slider-div .ui-slider {
 		{/if}
 
 		<div>
-			<p id='artist-name' style='text-align: center; color: #bbb; font-size:11px; margin: 1px 0 0;'>{$artist}</p>
-			<p id='title-name' style='text-align: center; font-size:11px; margin: 1px 0 0;'><strong>{$title}</strong></p>
-			<p id='album-name' style='text-align: center; color: #bbb; font-size:11px; margin: 1px 0 0;'>{$album}</p>
+			<p id='artist-name' style='text-align: center; color: #bbb; font-size:11px; margin: 1px 0 0;'>{$song.Artist}</p>
+			<p id='title-name' style='text-align: center; font-size:11px; margin: 1px 0 0;'><strong>{$song.Title}</strong></p>
+			<p id='album-name' style='text-align: center; color: #bbb; font-size:11px; margin: 1px 0 0;'>{$song.Album}</p>
 		</div>
 			
 	</div><!-- /header -->
