@@ -63,4 +63,20 @@ class Artist {
 
 		return $list;
 	}
+
+	/**
+	 * Get all the songs for an artist
+	 * 
+	 * @param string $artist 
+	 * 
+	 * @return array
+	 */
+	public static function getSongs($artist)
+	{
+		// query the MPD database
+		$result = Music::send('search', 'artist', $artist);
+
+		// get the list of songs
+		return Music::buildSongList($result['values']);
+	}
 }
