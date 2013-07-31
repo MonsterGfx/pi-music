@@ -5,12 +5,8 @@
 // the "now playing" page
 //
 $klein->respond('GET','/', function($request){
-
-		// get the song info
-		$currentsong = Music::getCurrentSong();
-
 		// return the message
-		return NowPlayingPage::render($currentsong, $request);
+		return NowPlayingPage::render(Music::getCurrentSong(), $request);
 });
 
 // the "skip to previous song" action
