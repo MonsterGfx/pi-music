@@ -119,8 +119,8 @@ $klein->respond('GET', '/artist/[:artist]/album/[:album]/song/[:song]', function
 	Music::send('play', $pos);
 
 	// redirect to "now playing"
-	// @todo redirect to now-playing
-	return "play song ".Music::decode($request->param('song'))." for artist: ".$request->param('artist').", album: ".$request->param('album');
+	header('Location: /');
+	die;
 });
 
 
