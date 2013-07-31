@@ -33,3 +33,13 @@ class Playlist {
 		return $list;
 	}
 }
+	public static function getSongs($playlist)
+	{
+		// send the command to MPD
+		$results = Music::send('listplaylistinfo', $playlist);
+
+		// return the list of songs
+		return Music::buildSongList($results['values']);
+	}
+
+}
