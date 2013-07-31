@@ -127,9 +127,23 @@ $klein->respond('GET', '/artist/[:artist]/album/[:album]/song/[:song]', function
 // artist/1/song			- list of all songs for artist=1
 //
 $klein->respond('GET', '/artist/[:artist]/song', function($request, $response){
+	// get the parameters
+	$artist = Music::decode($request->param('artist'));
 
-	// @todo play song
-	
-	return "songs for artist: ".$request->param('artist');
+	// get the song list
+	$list = Artist::getSongs($artist);
 
+	// walk the array and construct URLs
+	// The encoded URL value is actually "artist name|album title". The artist
+	// name is included to ensure that albums with the same name are not
+	// conflated and the pipe character is a delimiter
+	array_walk($list, function(&$v, $k) use ($artist) {
+		$v = array(
+			'name' => $v['Title'],
+			'url' => '/artist/'.Music::encode($artist).'/song/'.Music::encode($v['file']),
+		);
+	});
+
+	// render($page_title, $previous, $album_stats, $list)
+	return ListPage::render($artist, null, null, $list);
 });
