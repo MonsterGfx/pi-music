@@ -35,6 +35,7 @@ $klein->respond('GET', '/artist', function($request, $response){
 		);
 	});
 
+	$list = array_filter($list, function($v){ return $v['name'] ? true : false; });
 	return ListPage::render('Artists', null, null, $list);
 });
 
