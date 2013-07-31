@@ -120,12 +120,8 @@ class Music {
 
 		// get the song info
 		$currentsong = MPD::send('currentsong');
-		$path = trim(substr($currentsong['values'][0],5));
 
-		// get it from the DB
-		$currentsong = Model::factory('Song')->where('filenamepath', $path)->find_one();
-
-		return $currentsong;
+		return static::buildSongList($currentsong['values'])[0];
 	}
 
 	/**
