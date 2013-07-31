@@ -13,8 +13,21 @@
 //		playlist 			- list of playlists
 //
 $klein->respond('GET', '/playlist', function($request, $response){
-	return "list of playlists";
+	// get the list of playlists
+	$list = Playlist::getList();
 
+	// walk the array and construct URLs
+	// The encoded URL value is actually "artist name|album title". The artist
+	// name is included to ensure that albums with the same name are not
+	// conflated and the pipe character is a delimiter
+	array_walk($list, function(&$v, $k){
+		$v = array(
+			'name' => $v,
+			'url' => '/playlist/'.Music::encode($v).'/song',
+		);
+	});
+
+	return ListPage::render('Playlists', null, null, $list);
 });
 
 
