@@ -59,7 +59,7 @@ $klein->respond('GET', '/album/[:album]/song', function($request, $response){
 
 //		album/1/song/2	- load all songs for album=1, play song=2, go to nowplaying
 //
-$klein->respond('GET', '/album/[:album]/song/[i:song]', function($request, $response){
+$klein->respond('GET', '/album/[:album]/song/[:song]', function($request, $response){
 
 	// @todo start playing the requested song
 
