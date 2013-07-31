@@ -32,7 +32,7 @@ class Playlist {
 		// and return it
 		return $list;
 	}
-}
+
 	public static function getSongs($playlist)
 	{
 		// send the command to MPD
