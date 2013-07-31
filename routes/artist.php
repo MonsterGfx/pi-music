@@ -65,7 +65,7 @@ $klein->respond('GET', '/artist/[:artist]/album', function($request, $response){
 
 // artist/1/album/2/song	- list of songs for artist=1, album=2
 //
-$klein->respond('GET', '/artist/[:artist]/album/[:album]/song$', function($request, $response){
+$klein->respond('GET', '/artist/[:artist]/album/[:album]/song', function($request, $response){
 	// get the parameters
 	$artist = Music::decode($request->param('artist'));
 	$album = Music::decode($request->param('album'));
