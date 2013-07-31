@@ -295,9 +295,9 @@ class Music {
 		// get the current song
 		$song = static::getCurrentSong();
 
-		$results['title'] = $song ? $song->name : null;
-		$results['artist'] = $song ? $song->artist()->find_one()->name : null;
-		$results['album'] = $song ? $song->album()->find_one()->name : null;
+		$results['title'] = $song ? $song['Title'] : null;
+		$results['artist'] = $song ? $song['Artist'] : null;
+		$results['album'] = $song ? $song['Album'] : null;
 
 		return $results;
 	}
