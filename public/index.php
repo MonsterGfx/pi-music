@@ -19,6 +19,10 @@ catch(Exception $e) {
 	// oh no!
 	echo "<h1>Unhandled Exception!</h1>";
 
+	echo "\n<!--\n\n";
+	print_r($e);
+	echo "-->\n\n";
+
 	// dump the exception
 	Kint::dump($e);
 
