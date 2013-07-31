@@ -16,10 +16,6 @@ class NowPlayingPage extends View {
 	 */
 	public static function render($song, $request)
 	{
-		// get the extra info
-		$album = $song->album()->find_one();
-		$artist = $song->artist()->find_one();
-		
 		// instantiate the template engine
 		$parser = new Rain\Tpl;
 
@@ -31,11 +27,11 @@ class NowPlayingPage extends View {
 
 		// assign the values to the template parser
 		$parser->assign(array(
-			'image_path'	=> $image_path,
-			'image'			=> Image::toDataUrl($image_path),
-			'title'			=> $song->name,
-			'artist'		=> $artist->name,
-			'album'			=> $album->name,
+			'image_path'	=> null,
+			'image'			=> null,
+			// 'image_path'	=> $image_path,
+			// 'image'			=> Image::toDataUrl($image_path),
+			'song'			=> $song,
 			'volume'		=> Music::getVolume(),
 			'back'			=> $back_url,
 
