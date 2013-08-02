@@ -1,10 +1,10 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html>
 
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1"> 
-	<title>{$page_title}</title> 
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{$page_title}</title>
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
 	<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
@@ -29,9 +29,9 @@ div#volume-slider-div .ui-slider {
 
 </style>
 
-</head> 
+</head>
 
-<body> 
+<body>
 
 <div data-role="page">
 
@@ -45,7 +45,7 @@ div#volume-slider-div .ui-slider {
 			<p id='title-name' style='text-align: center; font-size:11px; margin: 1px 0 0;'><strong>{$song.Title}</strong></p>
 			<p id='album-name' style='text-align: center; color: #bbb; font-size:11px; margin: 1px 0 0;'>{$song.Album}</p>
 		</div>
-			
+
 	</div><!-- /header -->
 
 	<div data-role="content">
@@ -98,6 +98,7 @@ $(document).on('pageinit', function(){
 
 	// start page refresh event
 	refreshPage();
+
 });
 
 function clickControlButton(action)
