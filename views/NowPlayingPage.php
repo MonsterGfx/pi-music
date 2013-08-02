@@ -22,15 +22,15 @@ class NowPlayingPage extends View {
 		// get the previous page address from the $request
 		$back_url = $request->server()['HTTP_REFERER'];
 
-		// get the path to the image file
-		$image_path = Config::get('app.music-artwork-path').$song->artwork.'-320.jpg';
+		// get the image data for the song
+		$image_data = Song::getImageData($song['Artist'], $song['Album'], 320);
 
 		// assign the values to the template parser
 		$parser->assign(array(
 			'image_path'	=> null,
 			'image'			=> null,
 			// 'image_path'	=> $image_path,
-			// 'image'			=> Image::toDataUrl($image_path),
+			'image'			=> $image_data,
 			'song'			=> $song,
 			'volume'		=> Music::getVolume(),
 			'back'			=> $back_url,
