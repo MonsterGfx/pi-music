@@ -33,7 +33,7 @@ div#volume-slider-div .ui-slider {
 
 <body>
 
-<div data-role="page">
+<div data-role="page" data-url='/'>
 
 	<div data-role="header" data-position="fixed">
 		{if="$back"}
