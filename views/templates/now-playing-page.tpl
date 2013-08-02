@@ -12,24 +12,6 @@
 	<link rel="stylesheet" href="assets/css/msx-icons.css" />
 	<script src="assets/js/msx.js"></script>
 
-<style>
-
-div#volume-slider-div .ui-slider-input {
-	display: none;
-}
-
-div#volume-slider-div .ui-slider-track {
-	margin-left: 15px;
-}
-
-div#volume-slider-div .ui-slider {
-	margin-left: 5%;
-	margin-right: 5%;
-	width: 90%;
-}
-
-</style>
-
 </head>
 
 <body>
