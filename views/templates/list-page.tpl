@@ -19,11 +19,11 @@
 
 	<div data-role="header" data-position="fixed">
 {if="$previous"}
-		<a href="{$previous.path}" data-role="button" data-inline="true">{$previous.text}</a>
+		<a href="{$previous.path}" data-role="button" data-inline="true" class='ui-btn-left'>{$previous.text}</a>
 {/if}
 		<h1>{$page_title}</h1>
 {if="$now_playing"}
-		<a href="/" data-role="button" data-inline="true">Now Playing</a>
+		<a href="/" data-role="button" data-inline="true" class='ui-btn-right'>Now Playing</a>
 {/if}
 	</div><!-- /header -->
 
