@@ -37,7 +37,7 @@ $klein->respond('GET', '/song', function($request, $response){
 	// build the shuffle link
 	$shuffle = '/song/shuffle';
 
-	return ListPage::render('Songs', null, $shuffle, $list);
+	return ListPage::render('Songs', null, $shuffle, false, $list);
 });
 
 

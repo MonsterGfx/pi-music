@@ -28,7 +28,7 @@ $klein->respond('GET', '/album', function($request, $response){
 		);
 	});
 
-	return ListPage::render('Albums', null, false, $list);
+	return ListPage::render('Albums', null, false, false, $list);
 });
 
 
@@ -61,7 +61,7 @@ $klein->respond('GET', '/album/[:album]/song', function($request, $response){
 	// build the shuffle link
 	$shuffle = '/album/'.Music::encode($artist.'|'.$album).'/song/shuffle';
 
-	return ListPage::render($album, $previous, $shuffle, $list);
+	return ListPage::render($album, $previous, $shuffle, false, $list);
 });
 
 
