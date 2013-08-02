@@ -140,7 +140,9 @@ $klein->respond('GET', '/genre/[:genre]/artist/[:artist]/album/[:album]/song/[:s
 	$genre = Music::decode($request->param('genre'));
 	$artist = Music::decode($request->param('artist'));
 	$album = Music::decode($request->param('album'));
-	$song = Music::decode($request->param('song'));
+
+	$song = $request->param('song');
+	$song = $song=='shuffle' ? 'shuffle' : Music::decode($song);
 
 	// clear the playlist
 	Music::send('clear');
