@@ -34,7 +34,7 @@ $klein->respond('GET', '/genre', function($request, $response){
 		);
 	});
 
-	return ListPage::render('Albums', null, false, $list);
+	return ListPage::render('Albums', null, false, false, $list);
 });
 
 
@@ -64,7 +64,7 @@ $klein->respond('GET', '/genre/[:genre]/artist', function($request, $response){
 		'text' => 'Genres',
 	);
 
-	return ListPage::render($genre, $previous, false, $list);
+	return ListPage::render($genre, $previous, false, false, $list);
 });
 
 
@@ -88,13 +88,16 @@ $klein->respond('GET', '/genre/[:genre]/artist/[:artist]/album', function($reque
 		);
 	});
 
+	// build the "all songs" link
+	$allsongs = '/genre/'.Music::encode($genre).'/artist/'.Music::encode($artist).'/song';
+
 	// build the "previous" link data
 	$previous = array(
 		'path' => '/genre/'.$request->param('genre').'/artist',
 		'text' => 'Artists',
 	);
 
-	return ListPage::render($artist, $previous, false, $list);
+	return ListPage::render($artist, $previous, false, $allsongs, $list);
 });
 
 
@@ -127,9 +130,9 @@ $klein->respond('GET', '/genre/[:genre]/artist/[:artist]/album/[:album]/song', f
 	);
 
 	// build the shuffle link
-	$shuffle = '/genre/'.Music::encode($genre).'/artist/'.Music::encode($v['Artist']).'/album/'.Music::encode($v['Album']).'/song/shuffle';
+	$shuffle = '/genre/'.Music::encode($genre).'/artist/'.Music::encode($artist).'/album/'.Music::encode($album).'/song/shuffle';
 
-	return ListPage::render($album, $previous, $shuffle, $list);
+	return ListPage::render($album, $previous, $shuffle, false, $list);
 });
 
 

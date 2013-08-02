@@ -27,7 +27,7 @@ $klein->respond('GET', '/playlist', function($request, $response){
 		);
 	});
 
-	return ListPage::render('Playlists', null, false, $list);
+	return ListPage::render('Playlists', null, false, false, $list);
 });
 
 
@@ -60,7 +60,7 @@ $klein->respond('GET', '/playlist/[:playlist]/song', function($request, $respons
 	// build the shuffle link
 	$shuffle = '/playlist/'.Music::encode($playlist).'/song/shuffle';
 
-	return ListPage::render($playlist, $previous, $shuffle, $list);
+	return ListPage::render($playlist, $previous, $shuffle, false, $list);
 });
 
 

@@ -37,7 +37,7 @@ $klein->respond('GET', '/artist', function($request, $response){
 
 	$list = array_filter($list, function($v){ return $v['name'] ? true : false; });
 
-	return ListPage::render('Artists', null, false, $list);
+	return ListPage::render('Artists', null, false, false, $list);
 });
 
 
@@ -61,13 +61,16 @@ $klein->respond('GET', '/artist/[:artist]/album', function($request, $response){
 		);
 	});
 
+	// the "all songs" link
+	$allsongs ='/artist/'.Music::encode($artist).'/song';
+
 	// build the "previous" link data
 	$previous = array(
 		'path' => '/artist',
 		'text' => 'Artists',
 	);
 
-	return ListPage::render($artist, $previous, false, $list);
+	return ListPage::render($artist, $previous, false, $allsongs, $list);
 });
 
 
@@ -101,7 +104,7 @@ $klein->respond('GET', '/artist/[:artist]/album/[:album]/song', function($reques
 	// build the shuffle link
 	$shuffle = '/album/'.Music::encode($artist.'|'.$album).'/song/shuffle';
 
-	return ListPage::render($album, $previous, $shuffle, $list);
+	return ListPage::render($album, $previous, $shuffle, false, $list);
 });
 
 // artist/1/album/2/song/3	- load all songs for artist=1, album=2, play song=3, go to nowplaying
@@ -183,5 +186,5 @@ $klein->respond('GET', '/artist/[:artist]/song', function($request, $response){
 	// build the shuffle link
 	$shuffle = '/artist/'.Music::encode($artist).'/song/shuffle';
 
-	return ListPage::render($artist, $previous, $shuffle, $list);
+	return ListPage::render($artist, $previous, $shuffle, false, $list);
 });

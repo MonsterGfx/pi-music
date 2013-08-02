@@ -20,7 +20,7 @@ class ListPage extends View {
 	 * @return string
 	 * The HTML of the rendered page
 	 */
-	public static function render($page_title, $previous, $shuffle, $list)
+	public static function render($page_title, $previous, $shuffle, $allsongs, $list)
 	{
 
 		// instantiate the template engine
@@ -32,12 +32,12 @@ class ListPage extends View {
 			'list'				=> $list,
 			'previous'			=> $previous,
 			'shuffle'			=> $shuffle,
+			'all_songs'			=> $allsongs,
+			'now_playing'		=> Music::isPlayingOrPaused(),
 
 
 			'album_stats'		=> $album_stats,
-			'now_playing'		=> Music::isPlayingOrPaused(),
 			'include_all_songs'	=> $include_all_songs,
-			'all_songs_uri'		=> $all_songs,
 
 			'base_uri'			=> static::$base_uri,
 			'object_type'		=> $type,
