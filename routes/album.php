@@ -71,7 +71,9 @@ $klein->respond('GET', '/album/[:album]/song/[:song]', function($request, $respo
 	// get the parameters
 	// get the artist & album values
 	list($artist, $album) = explode('|',Music::decode($request->param('album')));
-	$song = Music::decode($request->param('song'));
+
+	$song = $request->param('song');
+	$song = $song=='shuffle' ? 'shuffle' : Music::decode($song);
 
 	// clear the playlist
 	Music::send('clear');

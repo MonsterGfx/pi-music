@@ -69,7 +69,9 @@ $klein->respond('GET', '/playlist/[:playlist]/song', function($request, $respons
 $klein->respond('GET', '/playlist/[:playlist]/song/[:song]', function($request, $response){
 	// get the params
 	$playlist = Music::decode($request->param('playlist'));
-	$song = Music::decode($request->param('song'));
+
+	$song = $request->param('song');
+	$song = $song=='shuffle' ? 'shuffle' : Music::decode($song);
 
 	// clear the playlist
 	Music::send('clear');
