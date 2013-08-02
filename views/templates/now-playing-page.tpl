@@ -37,8 +37,8 @@ div#volume-slider-div .ui-slider {
 <div data-role="page" data-url='/'>
 
 	<div data-role="header" data-position="fixed">
-		{if="$back"}
-		<a href="{$back}" data-role="button" data-inline="true">Back</a>
+		{if="$previous"}
+		<a href="{$previous.path}" data-role="button" data-inline="true">{$previous.text}</a>
 		{/if}
 
 		<div>
