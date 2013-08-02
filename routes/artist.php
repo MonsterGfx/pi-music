@@ -104,7 +104,6 @@ $klein->respond('GET', '/artist/[:artist]/album/[:album]/song', function($reques
 	return ListPage::render($album, $previous, $shuffle, $list);
 });
 
-
 // artist/1/album/2/song/3	- load all songs for artist=1, album=2, play song=3, go to nowplaying
 //
 $klein->respond('GET', '/artist/[:artist]/album/[:album]/song/[:song]', function($request, $response){
