@@ -1,32 +1,82 @@
 <?php
 
-class Artist extends BaseModel {
-	// the table
-	public static $_table = 'artists';
-
-	// the primary key
-	public static $_id_column = 'id';
+class Artist {
 
 	/**
-	 * Get the list of albums by this artist
+	 * Get the list of artists
 	 * 
-	 * @return ORMWrapper
+	 * @return array
 	 */
-	public function albums()
+	public static function getList()
 	{
-		return $this->has_many('Album');
+		// get the list
+		$result = Music::send('list', 'artist');
+
+		// start building the list
+		$list = array();
+
+		// step through the results
+		foreach($result['values'] as $v)
+		{
+			if(substr($v,0,7)=='Artist:')
+				$list[] = trim(substr($v,7));
+		}
+
+		// sort the list
+		sort($list);
+
+		// and return it
+		return $list;
 	}
 
-	public function songs()
+	/**
+	 * Get the list of albums for an artist
+	 * 
+	 * @param string $artist 
+	 * The artist name
+	 * 
+	 * @return array
+	 */
+	public static function getAlbums($artist)
 	{
-		return $this->has_many('Song');
+		// query the MPD database
+		$result = Music::send('search', 'artist', $artist);
+
+		// get the list of songs
+		$songs = Music::buildSongList($result['values']);
+
+		// extract the album information from the list
+		$list = array();
+
+		foreach($songs as $s)
+		{
+			if(isset($s['Album']))
+			{
+				$l = array(
+					'artist' => $artist,
+					'album' => $s['Album'],
+				);
+				if(!in_array($l, $list))
+					$list[] = $l;
+			}
+		}
+
+		return $list;
 	}
 
-	public function toArray()
+	/**
+	 * Get all the songs for an artist
+	 * 
+	 * @param string $artist 
+	 * 
+	 * @return array
+	 */
+	public static function getSongs($artist)
 	{
-		return array(
-			'id'	=> $this->id,
-			'name'	=> $this->name,
-		);
+		// query the MPD database
+		$result = Music::send('search', 'artist', $artist);
+
+		// get the list of songs
+		return Music::buildSongList($result['values']);
 	}
 }

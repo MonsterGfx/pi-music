@@ -1,50 +1,121 @@
 <?php
 
-class Genre extends BaseModel {
-	// the table
-	public static $_table = 'genres';
-
-	// the primary key
-	public static $_id_column = 'id';
+class Genre {
 
 	/**
-	 * Get the list of artists who have songs in this genre
-	 * @return ORMWrapper
+	 * Get the list of genres
+	 *
+	 * @return array
 	 */
-	public function artists()
+	public static function getList()
 	{
-		// build a list of artists for this genre
-		$songs = $this->songs()->find_many();
+		// get the list
+		$result = Music::send('list', 'genre');
 
-		// build an array of artist IDs
-		$ids = array();
+		// start building the list
+		$list = array();
 
-		// loop through the songs
-		foreach($songs as $s)
+		// step through the results
+		foreach($result['values'] as $v)
 		{
-			// if the artist ID is not already in the list, add it
-			if(!in_array($s->artists_id,$ids))
-				$ids[] = $s->artists_id;
+			if(substr($v,0,6)=='Genre:')
+				$list[] = trim(substr($v,6));
 		}
 
-		// return the artist list corresponding to the list of IDs
-		return Model::factory('Artist')->where_in('id',$ids);
+		// sort the list
+		sort($list);
+
+		// and return it
+		return $list;
 	}
 
 	/**
-	 * Get the songs linked to this genre
-	 * @return ORMWrapper
+	 * Get the list of artists for the genre
+	 *
+	 * @param string $genre
+	 * The genre
+	 *
+	 * @return array
 	 */
-	public function songs()
+	public static function getArtists($genre)
 	{
-		return $this->has_many('Song');
+		// query the MPD database
+		$result = Music::send('search', 'genre', $genre);
+
+		// get the list of songs
+		$songs = Music::buildSongList($result['values']);
+
+		// extract the album information from the list
+		$list = array();
+
+		foreach($songs as $s)
+		{
+			if(isset($s['Artist']))
+			{
+				$l = array(
+					'artist' => $s['Artist'],
+				);
+				if(!in_array($l, $list))
+					$list[] = $l;
+			}
+		}
+
+		return $list;
 	}
 
-	public function toArray()
+	/**
+	 * Get the list of albums for a genre & artist
+	 *
+	 * @param string $genre
+	 * @param string $artist
+	 * @return array
+	 */
+	public static function getAlbums($genre, $artist)
 	{
-		return array(
-			'id'	=> $this->id,
-			'name'	=> $this->name,
-		);
+		// query the MPD database
+		$result = Music::send('search', 'genre', $genre, 'artist', $artist);
+
+		// get the list of songs
+		$songs = Music::buildSongList($result['values']);
+
+		// extract the album information from the list
+		$list = array();
+
+		foreach($songs as $s)
+		{
+			if(isset($s['Artist']) && isset($s['Album']))
+			{
+				$l = array(
+					'artist' => $s['Artist'],
+					'album' => $s['Album'],
+				);
+				if(!in_array($l, $list))
+					$list[] = $l;
+			}
+		}
+
+		return $list;
+
+	}
+
+	/**
+	 * Get the list of songs for a genre, artist, and album
+	 *
+	 * @param string $genre
+	 * @param string $artist
+	 * @param string $album
+	 * @return array
+	 */
+	public static function getSongs($genre, $artist, $album)
+	{
+		// query the MPD database
+		if($album)
+			$result = Music::send('search', 'genre', $genre, 'artist', $artist, 'album', $album);
+		else
+			$result = Music::send('search', 'genre', $genre, 'artist', $artist);
+
+
+		// get the list of songs
+		return Music::buildSongList($result['values']);
 	}
 }

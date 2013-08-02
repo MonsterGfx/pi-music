@@ -1,72 +1,58 @@
 <?php
 
-class Album extends BaseModel {
-	// the table
-	public static $_table = 'albums';
-
-	// the primary key
-	public static $_id_column = 'id';
+class Album {
 
 	/**
-	 * Get the artist linked to this album
-	 * 
-	 * @return ORMWrapper
-	 */
-	public function artist()
-	{
-		return $this->belongs_to('Artist');
-	}
-
-	/**
-	 * Get the songs linked to this album
-	 * 
-	 * @return ORMWrapper
-	 */
-	public function songs()
-	{
-		return $this->has_many('Song');
-	}
-
-	/**
-	 * Get the statistics for display at the head of a list
+	 * Get the list of all albums in the database
 	 * 
 	 * @return array
 	 */
-	public function getStats()
+	public static function getList()
 	{
-		// get the list of songs
-		$songs = $this->songs()->find_many();
+		// get the list
+		$result = Music::send('listallinfo');
 
-		// calculate the total time
-		$time = 0;
-		foreach($songs as $s)
-			$time += $s->playtime_seconds;
-		$time = round($time/60);
+		// extract the values
+		$result = Music::buildSongList($result['values']);
 
-		// load the image data
-		$path = Config::get('app.music-artwork-path').$songs[0]->artwork.'-180.jpg';
+		// build an array of artists & albums
+		$list = array();
 
-		$img = Image::toDataUrl($path);
+		foreach($result as $s)
+		{
+			if(isset($s['Artist']) && isset($s['Album']))
+			{
+				$l = array(
+					'artist' => $s['Artist'],
+					'album' => $s['Album'],
+				);
 
-		// return the results
-		return array(
-			'artist' => $this->artist()->find_one()->name,
-			'artwork' => $img,
-			'name' => $this->name,
-			'year' => $this->year ?: null,
-			'song_count' => count($songs) ?: null,
-			'total_time' => $time ?: null,
-		);
+				if(!in_array($l,$list))
+					$list[] = $l;
+			}
+		}
 
+		// and return the result
+		return $list;
 	}
 
-	public function toArray()
+	/**
+	 * Get the list of songs for the requested album
+	 * 
+	 * @param string $artist 
+	 * The encoded name of the artist
+	 * 
+	 * @param string $album 
+	 * The encoded name of the album
+	 * 
+	 * @return array
+	 */
+	public static function getSongs($artist, $album)
 	{
-		return array(
-			'id'			=> $this->id,
-			'name'			=> $this->name,
-			'artists_id'	=> $this->artists_id,
-			'year'			=> $this->year,
-		);
+		// query the MPD database
+		$result = Music::send('search', 'artist', $artist, 'album', $album);
+
+		// get the list of songs
+		return Music::buildSongList($result['values']);
 	}
 }
