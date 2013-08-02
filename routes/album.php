@@ -84,7 +84,10 @@ $klein->respond('GET', '/album/[:album]/song/[:song]', function($request, $respo
 	$pos = 0;
 	for($i=0; $i<count($songs); $i++)
 	{
+		// add the current song to the current playlist
 		Music::send('add', $songs[$i]['file']);
+
+		// see if the current song is the one the user selected
 		if($songs[$i]['file']==$song)
 			$pos = $i;
 	}
