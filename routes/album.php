@@ -52,8 +52,13 @@ $klein->respond('GET', '/album/[:album]/song', function($request, $response){
 		);
 	});
 
-	// render($page_title, $previous, $album_stats, $list)
-	return ListPage::render($album, null, null, $list);
+	// build the "previous" link data
+	$previous = array(
+		'path' => '/album',
+		'text' => 'Albums',
+	);
+
+	return ListPage::render($album, $previous, null, $list);
 });
 
 
