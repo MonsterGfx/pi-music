@@ -69,10 +69,11 @@
  * * ******************** bump version 0.0.14-alpha
  *
  * ------------------------- this will get us to a point where the player works!
- * 
- * @todo refactor query route handling to simplify it
- * @todo correct/clarify "back" route (button)
- * 
+ *
+ * * refactor query route handling to simplify it
+ * * correct/clarify "back" route (button)
+ * * rewrite to use MPD song database
+ *
  * @todo ******************** bump version 0.0.15-alpha
  *
  * @todo playlist editor
