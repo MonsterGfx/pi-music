@@ -50,8 +50,8 @@
 			<li><a href="/{$all_songs_uri}"><em>All Songs</em></a></li>
 {/if}
 
-{if="$include_shuffle"}
-			<li><a href="/{$all_songs_uri}/shuffle"><em>Shuffle</em></a></li>
+{if="$shuffle"}
+			<li><a href="{$shuffle}"><em>Shuffle</em></a></li>
 {/if}
 
 {loop="$list"}
