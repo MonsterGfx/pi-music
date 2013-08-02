@@ -4,7 +4,7 @@ class Genre {
 
 	/**
 	 * Get the list of genres
-	 * 
+	 *
 	 * @return array
 	 */
 	public static function getList()
@@ -31,10 +31,10 @@ class Genre {
 
 	/**
 	 * Get the list of artists for the genre
-	 * 
-	 * @param string $genre 
+	 *
+	 * @param string $genre
 	 * The genre
-	 * 
+	 *
 	 * @return array
 	 */
 	public static function getArtists($genre)
@@ -65,9 +65,9 @@ class Genre {
 
 	/**
 	 * Get the list of albums for a genre & artist
-	 * 
-	 * @param string $genre 
-	 * @param string $artist 
+	 *
+	 * @param string $genre
+	 * @param string $artist
 	 * @return array
 	 */
 	public static function getAlbums($genre, $artist)
@@ -100,10 +100,10 @@ class Genre {
 
 	/**
 	 * Get the list of songs for a genre, artist, and album
-	 * 
-	 * @param string $genre 
-	 * @param string $artist 
-	 * @param string $album 
+	 *
+	 * @param string $genre
+	 * @param string $artist
+	 * @param string $album
 	 * @return array
 	 */
 	public static function getSongs($genre, $artist, $album)
