@@ -1,70 +1,41 @@
 <?php
 
-class Song extends BaseModel {
-	// the table
-	public static $_table = 'songs';
+class Song {
 
-	// the primary key
-	public static $_id_column = 'id';
-
-	/**
-	 * Get the album for this song
-	 * 
-	 * @return ORMWrapper
-	 */
-	public function album()
+	public static function getList()
 	{
-		return $this->belongs_to('Album');
+		// get the list
+		$result = Music::send('listallinfo');
+
+		// return the values
+		return Music::buildSongList($result['values']);
 	}
 
 	/**
-	 * Get the artist for this song
-	 * 
-	 * @return ORMWrapper
-	 */
-	public function artist()
-	{
-		return $this->belongs_to('Artist');
-	}
-
-	/**
-	 * Get the playlists to which this song belongs
+	 * Get the image data as a data URL for an artist & album
 	 *
-	 * @return ORMWrapper
+	 * @param string $artist
+	 * @param string $album
+	 * @param int $size
+	 * @return string
 	 */
-	public function playlists()
+	public static function getImageData($artist, $album, $size)
 	{
-		return $this->has_many_through('Playlist');
-	}
+		// build the expected file name
+		$image_file = Config::get('app.music-artwork-path').md5($artist.$album)."-{$size}.jpg";
 
-	public function toArray()
-	{
-		return array(
-			'id'				=> $this->id,
-			'filenamepath'		=> $this->filenamepath,
-			'filesize'			=> $this->filesize,
-			'fileformat'		=> $this->fileformat,
-			'dataformat'		=> $this->dataformat,
-			'codec'				=> $this->codec,
-			'sample_rate'		=> $this->sample_rate,
-			'channels'			=> $this->channels,
-			'bits_per_sample'	=> $this->bits_per_sample,
-			'lossless'			=> $this->lossless,
-			'channelmode'		=> $this->channelmode,
-			'bitrate'			=> $this->bitrate,
-			'playtime_seconds'	=> $this->playtime_seconds,
-			'name'				=> $this->name,
-			'artists_id'		=> $this->artists_id,
-			'album_artist'		=> $this->album_artist,
-			'albums_id'			=> $this->albums_id,
-			'genres_id'			=> $this->genres_id,
-			'track_number'		=> $this->track_number,
-			'disc_number'		=> $this->disc_number,
-			'compilation'		=> $this->compilation,
-			'bpm'				=> $this->bpm,
-			'rating'			=> $this->rating,
-			'created_at'		=> $this->created_at,
-			'updated_at'		=> $this->updated_at,
-		);
+		// does the file exist?
+		if(file_exists($image_file))
+		{
+			// load the contents
+			$image = file_get_contents($image_file);
+
+			// convert it to a string & return it
+			return Image::toDataURL($image_file);
+		}
+
+		// couldn't find the artwork
+		// @todo return default artwork
+		return null;
 	}
 }
