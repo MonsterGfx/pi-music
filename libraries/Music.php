@@ -340,4 +340,9 @@ class Music {
 		// and return the results
 		return $results;
 	}
+
+	public static function shuffle($state)
+	{
+		static::send('random', $state ? 1 : 0 );
+	}
 }
