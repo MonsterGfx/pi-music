@@ -215,3 +215,48 @@ $klein->respond('GET', '/genre/[:genre]/artist/[:artist]/song', function($reques
 
 	return ListPage::render($album, $previous, $shuffle, false, $list);
 });
+
+$klein->respond('GET', '/genre/[:genre]/artist/[:artist]/song/[:song]', function($request, $response){
+	// get the parameter
+	$genre = Music::decode($request->param('genre'));
+	$artist = Music::decode($request->param('artist'));
+
+	$song = $request->param('song');
+	$song = $song=='shuffle' ? 'shuffle' : Music::decode($song);
+
+	// clear the playlist
+	Music::send('clear');
+
+	// get the list
+	$songs = Genre::getSongs($genre, $artist, null);
+
+	// load the playlist with the requested songs (and figure out the current
+	// song position)
+	$pos = 0;
+	for($i=0; $i<count($songs); $i++)
+	{
+		Music::send('add', $songs[$i]['file']);
+		if($songs[$i]['file']==$song)
+			$pos = $i;
+	}
+
+	// turn off "shuffle"
+	Music::shuffle(false);
+
+	// is the current song "shuffle"
+	if($song=='shuffle')
+	{
+		// choose a random song
+		$pos = rand(0,count($songs)-1);
+
+		// turn on shuffle
+		Music::shuffle(true);
+	}
+
+	// start playing the selected song
+	Music::send('play', $pos);
+
+	// redirect to "now playing"
+	header('Location: /');
+	die;
+});
