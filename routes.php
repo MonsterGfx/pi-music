@@ -74,7 +74,7 @@
  * * correct/clarify "back" route (button)
  * * rewrite to use MPD song database
  *
- * @todo ******************** bump version 0.0.15-alpha
+ * * ******************** bump version 0.0.15-alpha
  *
  * @todo playlist editor
  *
