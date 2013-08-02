@@ -49,7 +49,7 @@
 	{/if}
 
 {if="$all_songs"}
-			<li><a href="/{$all_songs}"><em>All Songs</em></a></li>
+			<li><a href="{$all_songs}"><em>All Songs</em></a></li>
 {/if}
 
 {if="$shuffle"}
