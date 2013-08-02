@@ -14,25 +14,20 @@ class NowPlayingPage extends View {
 	 * @return string
 	 * The HTML of the rendered page
 	 */
-	public static function render($song, $request)
+	public static function render($song, $previous)
 	{
 		// instantiate the template engine
 		$parser = new Rain\Tpl;
-
-		// get the previous page address from the $request
-		$back_url = $request->server()['HTTP_REFERER'];
 
 		// get the image data for the song
 		$image_data = Song::getImageData($song['Artist'], $song['Album'], 320);
 
 		// assign the values to the template parser
 		$parser->assign(array(
-			'image_path'	=> null,
-			'image'			=> null,
-			'image'			=> $image_data,
-			'song'			=> $song,
-			'volume'		=> Music::getVolume(),
-			'back'			=> $back_url,
+			'image'		=> $image_data,
+			'song'		=> $song,
+			'volume'	=> Music::getVolume(),
+			'previous'	=> $previous,
 		));
 
 		// return the HTML
