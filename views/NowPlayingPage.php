@@ -7,10 +7,10 @@ class NowPlayingPage extends View {
 
 	/**
 	 * Render a list page
-	 * 
+	 *
 	 * @param Song $song
 	 * The song that is currently playing
-	 * 
+	 *
 	 * @return string
 	 * The HTML of the rendered page
 	 */
