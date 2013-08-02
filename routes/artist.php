@@ -12,7 +12,7 @@
 //				page head=artist.artist, list head=album+stats
 //
 //		artist/1/album/2/song/3	- load all songs for artist=1, album=2, play song=3, go to nowplaying
-// 
+//
 // 		artist/1/song			- list of all songs for artist=1
 //				page head=artist.artist, list head=null
 
@@ -36,6 +36,7 @@ $klein->respond('GET', '/artist', function($request, $response){
 	});
 
 	$list = array_filter($list, function($v){ return $v['name'] ? true : false; });
+
 	return ListPage::render('Artists', null, null, $list);
 });
 
