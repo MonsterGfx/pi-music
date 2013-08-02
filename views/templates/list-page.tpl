@@ -18,13 +18,13 @@
 <div data-role="page">
 
 	<div data-role="header" data-position="fixed">
-		{if="$previous"}
+{if="$previous"}
 		<a href="{$previous.path}" data-role="button" data-inline="true">{$previous.text}</a>
-		{/if}
+{/if}
 		<h1>{$page_title}</h1>
-		{if="$now_playing"}
+{if="$now_playing"}
 		<a href="/" data-role="button" data-inline="true">Now Playing</a>
-		{/if}
+{/if}
 	</div><!-- /header -->
 
 	<div data-role="content">
