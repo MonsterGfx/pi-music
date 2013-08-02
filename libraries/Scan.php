@@ -21,9 +21,6 @@ class Scan {
 		// Analyze file and store returned data in $ThisFileInfo
 		$file_info = $getID3->analyze($filename);
 
-
-
-
 		// try to extract the album artwork (if any)
 		// find the artwork in the $file_info structure
 		$artwork = null;
