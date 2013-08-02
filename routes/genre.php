@@ -122,7 +122,7 @@ $klein->respond('GET', '/genre/[:genre]/artist/[:artist]/album/[:album]/song', f
 
 	// build the "previous" link data
 	$previous = array(
-		'path' => '/genre/'.$request->param('genre').'/artist/'.$request->param('genre').'/album',
+		'path' => '/genre/'.$request->param('genre').'/artist/'.$request->param('artist').'/album',
 		'text' => $artist,
 	);
 
