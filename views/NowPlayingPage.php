@@ -29,13 +29,10 @@ class NowPlayingPage extends View {
 		$parser->assign(array(
 			'image_path'	=> null,
 			'image'			=> null,
-			// 'image_path'	=> $image_path,
 			'image'			=> $image_data,
 			'song'			=> $song,
 			'volume'		=> Music::getVolume(),
 			'back'			=> $back_url,
-
-			// 'debug'			=> print_r($request,true),
 		));
 
 		// return the HTML
