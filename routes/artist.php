@@ -37,7 +37,7 @@ $klein->respond('GET', '/artist', function($request, $response){
 
 	$list = array_filter($list, function($v){ return $v['name'] ? true : false; });
 
-	return ListPage::render('Artists', null, null, $list);
+	return ListPage::render('Artists', null, false, $list);
 });
 
 
@@ -67,7 +67,7 @@ $klein->respond('GET', '/artist/[:artist]/album', function($request, $response){
 		'text' => 'Artists',
 	);
 
-	return ListPage::render($artist, $previous, null, $list);
+	return ListPage::render($artist, $previous, false, $list);
 });
 
 
@@ -98,7 +98,10 @@ $klein->respond('GET', '/artist/[:artist]/album/[:album]/song', function($reques
 		'text' => $artist,
 	);
 
-	return ListPage::render($album, $previous, null, $list);
+	// build the shuffle link
+	$shuffle = '/album/'.Music::encode($artist.'|'.$album).'/song/shuffle';
+
+	return ListPage::render($album, $previous, $shuffle, $list);
 });
 
 
@@ -162,5 +165,8 @@ $klein->respond('GET', '/artist/[:artist]/song', function($request, $response){
 		'text' => 'Artists',
 	);
 
-	return ListPage::render($artist, $previous, null, $list);
+	// build the shuffle link
+	$shuffle = '/artist/'.Music::encode($artist).'/song/shuffle';
+
+	return ListPage::render($artist, $previous, $shuffle, $list);
 });
