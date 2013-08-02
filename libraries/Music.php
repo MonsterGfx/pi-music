@@ -22,23 +22,23 @@ class Music {
 
 	/**
 	 * Encode a value for transmission as part of a URL
-	 * 
-	 * @param string $data 
+	 *
+	 * @param string $data
 	 * @return string
 	 */
-	public static function encode($data) { 
-		return rtrim(strtr(base64_encode($data), '+/', '-_'), '='); 
-	} 
+	public static function encode($data) {
+		return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+	}
 
 	/**
 	 * Decode a value encoded with the function above
-	 * 
-	 * @param string $data 
+	 *
+	 * @param string $data
 	 * @return string
 	 */
-	public static function decode($data) { 
-		return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT)); 
-	} 
+	public static function decode($data) {
+		return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT));
+	}
 
 	private static function getSongList($args)
 	{
@@ -126,7 +126,7 @@ class Music {
 
 	/**
 	 * Get the status of MPD
-	 * 
+	 *
 	 * @return array
 	 * The array of status values
 	 */
@@ -141,7 +141,7 @@ class Music {
 		// now parse the values so they're a little more usable
 		if(isset($status['values']))
 		{
-			// the status values are strings in the format "key: value". I'm 
+			// the status values are strings in the format "key: value". I'm
 			// going to parse this into an associative array
 			$newvalues = array();
 
@@ -160,7 +160,7 @@ class Music {
 
 	/**
 	 * Check to see if MPD is currently playing a song
-	 * 
+	 *
 	 * @return bool
 	 * True if a song is playing, false otherwise
 	 */
@@ -179,7 +179,7 @@ class Music {
 
 	/**
 	 * Check to see if MPD is currently paused
-	 * 
+	 *
 	 * @return bool
 	 * True if a song is paused, false otherwise
 	 */
@@ -198,7 +198,7 @@ class Music {
 
 	/**
 	 * Check to see if MPD is currently playing or paused
-	 * 
+	 *
 	 * @return bool
 	 * True if a song is playing or paused, false otherwise
 	 */
@@ -251,7 +251,7 @@ class Music {
 
 	/**
 	 * Get the current volume
-	 * 
+	 *
 	 * @return int
 	 */
 	public static function getVolume()
@@ -266,8 +266,8 @@ class Music {
 	}
 	/**
 	 * Set the current volume
-	 * 
-	 * @param int $volume 
+	 *
+	 * @param int $volume
 	 * A volume value between 0 and 100
 	 */
 	public static function setVolume($volume)
