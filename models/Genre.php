@@ -109,7 +109,11 @@ class Genre {
 	public static function getSongs($genre, $artist, $album)
 	{
 		// query the MPD database
-		$result = Music::send('search', 'genre', $genre, 'artist', $artist, 'album', $album);
+		if($album)
+			$result = Music::send('search', 'genre', $genre, 'artist', $artist, 'album', $album);
+		else
+			$result = Music::send('search', 'genre', $genre, 'artist', $artist);
+
 
 		// get the list of songs
 		return Music::buildSongList($result['values']);
