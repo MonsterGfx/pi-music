@@ -7,16 +7,16 @@ class ListPage extends View {
 
 	/**
 	 * Render a list page
-	 * 
-	 * @param string $page_title 
+	 *
+	 * @param string $page_title
 	 * The page title (displayed in the top bar)
-	 * 
-	 * @param array|null $album_stats 
+	 *
+	 * @param array|null $album_stats
 	 * The album stats, if this is a list of songs from an album
-	 * 
-	 * @param array $list_items 
+	 *
+	 * @param array $list_items
 	 * The list of items to display
-	 * 
+	 *
 	 * @return string
 	 * The HTML of the rendered page
 	 */
