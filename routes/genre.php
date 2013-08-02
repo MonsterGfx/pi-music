@@ -185,3 +185,33 @@ $klein->respond('GET', '/genre/[:genre]/artist/[:artist]/album/[:album]/song/[:s
 });
 
 
+$klein->respond('GET', '/genre/[:genre]/artist/[:artist]/song', function($request, $response){
+	// get the parameter
+	$genre = Music::decode($request->param('genre'));
+	$artist = Music::decode($request->param('artist'));
+
+	// get the list
+	$list = Genre::getSongs($genre, $artist, null);
+
+	// walk the array and construct URLs
+	// The encoded URL value is actually "artist name|album title". The artist
+	// name is included to ensure that albums with the same name are not
+	// conflated and the pipe character is a delimiter
+	array_walk($list, function(&$v, $k) use ($genre) {
+		$v = array(
+			'name' => $v['Title'],
+			'url' => '/genre/'.Music::encode($genre).'/artist/'.Music::encode($v['Artist']).'/song/'.Music::encode($v['file']),
+		);
+	});
+
+	// build the "previous" link data
+	$previous = array(
+		'path' => '/genre/'.$request->param('genre').'/artist',
+		'text' => 'Artists',
+	);
+
+	// build the shuffle link
+	$shuffle = '/genre/'.Music::encode($genre).'/artist/'.Music::encode($artist).'/song/shuffle';
+
+	return ListPage::render($album, $previous, $shuffle, false, $list);
+});
