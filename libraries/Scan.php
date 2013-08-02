@@ -2,278 +2,151 @@
 
 class Scan {
 
-	private static function scanFolder($path)
+	/**
+	 * Extract the image data (if any) from a file
+	 *
+	 * @param string $filename
+	 *
+	 * @return Image|null
+	 */
+	private static function getImage($filename)
 	{
-		// make sure there's a trailing '/' on the path
-		$x = strrev($path);
-		if($x[0]!='/')
-			$path .= '/';
+		// check the file
+		if(!file_exists($filename))
+			return null;
 
-		// iterate through the folders
-		$dirhandle = opendir($path);
+		// scan the file
+		$getID3 = new getID3;
 
-		echo "starting ($path)\n";
+		// Analyze file and store returned data in $ThisFileInfo
+		$file_info = $getID3->analyze($filename);
 
-		// instantiate a list to hold songs/albums/artists/etc. that have changed
-		$dirty = array();
+		// try to extract the album artwork (if any)
+		// find the artwork in the $file_info structure
+		$artwork = null;
 
-		while(false!==($entry=readdir($dirhandle)))
+		// try the different places in which I've found artwork
+		if(isset($file_info['comments']['picture'][0]['data']))
 		{
-			// if we have '.' or '..' then skip
-			if($entry=='.' || $entry=='..')
-				continue;
-
-			$filename = "{$path}{$entry}";
-
-			// if it's a folder, then scan it recursively
-			if(is_dir($filename))
-			{
-				Scan::scanFolder($filename);
-				continue;
-			}
-
-			// otherwise, it's a file & we need to scan it
-
-			// get the last update time
-			$file_updated = filemtime($filename);
-
-
-			// scan the file
-			$getID3 = new getID3;
-
-			// Analyze file and store returned data in $ThisFileInfo
-			$file_info = $getID3->analyze($filename);
-
-			// try to load the entry for this song
-			$song = Model::factory('Song')->where('filenamepath', $file_info['filenamepath'])->find_one();
-
-			// if the song exists and the last file modification time is BEFORE the
-			// database "updated_at" value, then there's no reason to continue since
-			// the file is still current
-			if($song && $file_updated<$song->updated_at)
-				continue;
-
-			// if we get here, that means that the song (if it exists) has
-			// changed
-			if($song)
-				$dirty[] = 'song/'.$song->id;
-
-			// get the tags
-			$tags = $file_info['tags'];
-			if(isset($tags['id3v2']))
-				$tags = $tags['id3v2'];
-			else if(isset($tags['id3v1']))
-				$tags = $tags['id3v1'];
-			else if(isset($tags['quicktime']))
-				$tags = $tags['quicktime'];
-			else
-				$tags = array();
-
-			// create/update the artist record
-			$artist = null;
-			if(isset($tags['artist']))
-			{
-				$artist = Model::factory('Artist')->where('name',$tags['artist'][0])->find_one();
-				if(!$artist)
-				{
-					$artist = Model::factory('Artist')->create();
-					$artist->name = $tags['artist'][0];
-					$artist->save();
-				}
-			}
-			// add the artist to the "dirty" list
-			if($artist->id)
-				$dirty[] = 'artist/'.$artist->id;
-
-			// create/update the album record
-			$album = null;
-			if(isset($tags['album']))
-			{
-				$album = Model::factory('Album')->where('name',$tags['album'][0])->where('artists_id',$artist->id)->find_one();
-				if(!$album)
-				{
-					$album = Model::factory('Album')->create();
-					$album->artists_id	= $artist->id;
-					$album->name		= $tags['album'][0];
-					$album->year		= isset($tags['year']) ? $tags['year'][0] : null;
-					$album->save();
-				}
-			}
-			// add the album to the "dirty" list
-			if($album->id)
-				$dirty[] = 'album/'.$album->id;
-
-			// create/update the genre record
-			$genre = null;
-			if(isset($tags['genre']))
-			{
-				$genre = Model::factory('Genre')->where('name',$tags['genre'][0])->find_one();
-				if(!$genre)
-				{
-					$genre = Model::factory('Genre')->create();
-					$genre->name = $tags['genre'][0];
-					$genre->save();
-				}
-			}
-			// add the genre to the "dirty" list
-			if($genre->id)
-				$dirty[] = 'genre/'.$genre->id;
-
-			// try to extract the album artwork (if any)
-			// find the artwork in the $file_info structure
-			$artwork = null;
-			$artwork_type = null;
-			$image_filename = null;
-
-			// try the different places in which I've found artwork
-			if(isset($file_info['comments']['picture'][0]['data']))
-			{
-				$artwork = $file_info['comments']['picture'][0]['data'];
-				$artwork_type = $file_info['comments']['picture'][0]['image_mime'];
-			}
-			else if(isset($file_info['id3v2']['APIC'][0]['data']))
-			{
-				$artwork = $file_info['id3v2']['APIC'][0]['data'];
-				$artwork_type = $file_info['id3v2']['APIC'][0]['image_mime'];
-			}
-
-			// did we find some artwork?
-			if($artwork)
-			{
-				// the function names to be used in resizing
-				$image_function = null;
-
-				// build the artwork path
-				$image_path = Config::get('app.music-artwork-path');
-				$image_filename = sha1($artist->name.'-'.$album->name);
-
-				// create the image object
-				$img = imagecreatefromstring($artwork);
-
-				// did we get a valid image object?
-				if($img)
-				{
-					// save the original as a JPEG
-					imagejpeg($img, Config::get('app.music-artwork-path').$image_filename.".jpg", 100);
-
-					// resize to the resolutions in the array below
-					$res = array(320,180);
-
-					foreach( $res as $r )
-					{
-						// create a resized image
-						$cpy = imagecreatetruecolor($r, $r);
-
-						// copy the image
-						imagecopyresampled($cpy, $img, 0, 0, 0, 0, $r, $r, imagesx($img), imagesy($img));
-
-						// save the image
-						imagejpeg($cpy, Config::get('app.music-artwork-path').$image_filename."-{$r}.jpg", 80);
-					}
-
-				}
-			}
-
-			// if the song wasn't found, then create it
-			if(!$song)
-			{
-				$song = Model::factory('Song')->create();
-				$song->created_at = time();
-			}
-
-			// massage the data a little
-			$m = array();
-
-			// sometimes the track number is saved as "1/10". I just want the
-			// number
-			$track_number = isset($tags['track_number']) ? $tags['track_number'][0] : null;
-			if($track_number)
-			{
-				preg_match_all('/^([0-9]+)[^0-9]?/', $track_number, $m);
-				if(isset($m[1][0]))
-					$track_number = sprintf('%04d',(int)$m[1][0]);
-			}
-
-			// sometimes the disc number is saved as "1/10". I just want the
-			// number
-			$disc_number = isset($tags['disc_number']) ? $tags['disc_number'][0] : null;
-			if($disc_number)
-			{
-				preg_match_all('/^([0-9]+)[^0-9]?/', $disc_number, $m);
-				if(isset($m[1][0]))
-					$disc_number = sprintf('%04d',(int)$m[1][0]);
-			}
-
-			// update the model with the data
-			$song->filenamepath	= $file_info['filenamepath'];
-			$song->filesize		= $file_info['filesize'];
-			$song->fileformat	= $file_info['fileformat'];
-
-
-			$song->dataformat		= isset($file_info['audio']['dataformat']) ? $file_info['audio']['dataformat'] : null;
-			$song->codec			= isset($file_info['audio']['codec']) ? $file_info['audio']['codec'] : null;
-			$song->sample_rate		= isset($file_info['audio']['sample_rate']) ? $file_info['audio']['sample_rate'] : null;
-			$song->channels			= isset($file_info['audio']['channels']) ? $file_info['audio']['channels'] : null;
-			$song->bits_per_sample	= isset($file_info['audio']['bits_per_sample']) ? $file_info['audio']['bits_per_sample'] : null;
-			$song->lossless			= isset($file_info['audio']['lossless']) ? $file_info['audio']['lossless'] : null;
-			$song->channelmode		= isset($file_info['audio']['channelmode']) ? $file_info['audio']['channelmode'] : null;
-			$song->bitrate			= isset($file_info['audio']['bitrate']) ? $file_info['audio']['bitrate'] : null;
-			$song->playtime_seconds			= isset($file_info['playtime_seconds']) ? $file_info['playtime_seconds'] : null;
-
-			$song->name			= isset($tags['title']) ? $tags['title'][0] : null;
-			$song->artists_id	= $artist ? $artist->id : null;
-			$song->album_artist	= isset($tags['album_artist']) ? $tags['album_artist'][0] : null;
-			$song->albums_id		= $album ? $album->id : null;
-			$song->genres_id		= $genre ? $genre->id : null;
-			$song->track_number	= $track_number;
-			$song->disc_number	= $disc_number;
-			$song->compilation	= isset($tags['compilation']) ? $tags['compilation'][0] : null;
-			$song->bpm			= isset($tags['bpm']) ? $tags['bpm'][0] : null;
-			$song->rating		= isset($tags['rating']) ? $tags['rating'][0] : null;
-
-			$song->artwork		= $image_filename;
-
-			$song->updated_at = time();
-
-			// save
-			$song->save();
-
+			$artwork = $file_info['comments']['picture'][0]['data'];
+		}
+		else if(isset($file_info['id3v2']['APIC'][0]['data']))
+		{
+			$artwork = $file_info['id3v2']['APIC'][0]['data'];
 		}
 
-		// we now have a "dirty" list - songs, artists, albums, etc. that have
-		// (probably) changed since the last update. We need to delete any
-		// entries in the cache that refer to those items
-		// clean up cache
-		QueryCache::cleanup($dirty);
+		// did we find some artwork?
+		if(!$artwork)
+			return null;
 
-		echo "done ($path).\n\n\n";
-
+		// create the image object and return it
+		return imagecreatefromstring($artwork);
 	}
 
+	/**
+	 * Resize an image
+	 *
+	 * @param Image $image
+	 * @param int $resolution
+	 * @return Image
+	 */
+	private static function resizeImage($image, $resolution)
+	{
+		// create a resized image
+		$copy = imagecreatetruecolor($resolution, $resolution);
+
+		// copy the image
+		imagecopyresampled($copy, $image, 0, 0, 0, 0, $resolution, $resolution, imagesx($image), imagesy($image));
+
+		// return the resulting copy
+		return $copy;
+	}
+	/**
+	 * Scan the albums & artists in the music database and create artwork for
+	 * them.
+	 */
 	public static function scanAll()
 	{
-		// get the file path
-		$path = Config::get('app.music-path');
+		// get some config items
+		$artwork_folder = Config::get('app.music-artwork-path');
+		$artwork_sizes = array(180,320);
 
-		if(!$path)
-			throw new Exception("Invalid music path");
+		// get the music directory path
+		$music_directory = Config::get('app.music-path');
 
-		// if it's not an array, then make it one
-		if(!is_array($path))
-			$path = array($path);
+		// get the list of artists
+		$artists = Artist::getList();
 
-		// step through the paths in the array
-		foreach($path as $p)
-			Scan::scanFolder($p);
-
-		// now scan ALL music and remove any that entries do not exist
-		$songs = Model::factory('Song')->find_many();
-		foreach($songs as $s)
+		// step through the artists
+		foreach($artists as $artist)
 		{
-			if(!file_exists($s->filenamepath))
+			// get the list of albums for the current artist
+			$albums = Artist::getAlbums($artist);
+
+			// step through the albums
+			foreach($albums as $album)
 			{
-				$s->delete();
-			}
-		}
+				// create a file name for the  artist/album combination
+				$image_file = md5($artist.$album['album']);
+
+				// does the file already exist?
+				if(!file_exists($artwork_folder.$image_file.'.jpg'))
+				{
+					// No! we need to extract the artwork from a song file for
+					// this artist/album
+
+					// get the list of songs
+					$songs = Album::getSongs($artist, $album['album']);
+
+					// step through the songs & attempt to extract the image
+					//data
+					foreach($songs as $song)
+					{
+						// get the music file name
+						$music_file = $music_directory.$song['file'];
+
+						// make sure we have a music file to check
+						if(file_exists($music_file))
+						{
+							// get the image data (if we can)
+							$image = static::getImage($music_file);
+
+							// make sure we got an image
+							if($image)
+							{
+								// save the "untouched" image file
+								// save the original as a JPEG
+								imagejpeg($image, Config::get('app.music-artwork-path').$image_file.".jpg", 100);
+
+								// loop through the required sizes
+								foreach($artwork_sizes as $s)
+								{
+									// resize to the appropriate size
+									$i = static::resizeImage($image, $s);
+
+									// and save
+									if($i)
+										imagejpeg($i, Config::get('app.music-artwork-path').$image_file."-{$s}.jpg", 100);
+
+								} // END loop through the required sizes
+
+								// all done with this one!
+								// break out of the song loop (since we
+								// don't need to scan any more songs from
+								// this album)
+								break;
+
+							} // END make sure we got an image
+
+						} // END make sure we have a music file to check
+
+					} // END step through the songs
+
+				} // END does the file already exist?
+
+			} // END step through the albums
+
+		} // END step through the artists
+
 	}
 }

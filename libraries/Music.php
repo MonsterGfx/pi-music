@@ -20,6 +20,26 @@ class Music {
 		}
 	}
 
+	/**
+	 * Encode a value for transmission as part of a URL
+	 *
+	 * @param string $data
+	 * @return string
+	 */
+	public static function encode($data) {
+		return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+	}
+
+	/**
+	 * Decode a value encoded with the function above
+	 *
+	 * @param string $data
+	 * @return string
+	 */
+	public static function decode($data) {
+		return base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT));
+	}
+
 	private static function getSongList($args)
 	{
 		// discard the last item in the args, since that's the actual song ID
@@ -29,6 +49,23 @@ class Music {
 		$query = QueryBuilder::get($args);
 
 		return $query['items'];
+	}
+
+	public static function send()
+	{
+		// connect to MPD
+		static::connect();
+
+		// get the arguments
+		$args = func_get_args();
+
+		// the first argument is the method
+		$method = array_shift($args);
+
+		// send the command
+		$values = MPD::send($method, $args);
+
+		return $values;
 	}
 
 	public static function replacePlaylist($args, $shuffle=false)
@@ -83,17 +120,13 @@ class Music {
 
 		// get the song info
 		$currentsong = MPD::send('currentsong');
-		$path = trim(substr($currentsong['values'][0],5));
 
-		// get it from the DB
-		$currentsong = Model::factory('Song')->where('filenamepath', $path)->find_one();
-
-		return $currentsong;
+		return static::buildSongList($currentsong['values'])[0];
 	}
 
 	/**
 	 * Get the status of MPD
-	 * 
+	 *
 	 * @return array
 	 * The array of status values
 	 */
@@ -108,7 +141,7 @@ class Music {
 		// now parse the values so they're a little more usable
 		if(isset($status['values']))
 		{
-			// the status values are strings in the format "key: value". I'm 
+			// the status values are strings in the format "key: value". I'm
 			// going to parse this into an associative array
 			$newvalues = array();
 
@@ -127,7 +160,7 @@ class Music {
 
 	/**
 	 * Check to see if MPD is currently playing a song
-	 * 
+	 *
 	 * @return bool
 	 * True if a song is playing, false otherwise
 	 */
@@ -146,7 +179,7 @@ class Music {
 
 	/**
 	 * Check to see if MPD is currently paused
-	 * 
+	 *
 	 * @return bool
 	 * True if a song is paused, false otherwise
 	 */
@@ -165,7 +198,7 @@ class Music {
 
 	/**
 	 * Check to see if MPD is currently playing or paused
-	 * 
+	 *
 	 * @return bool
 	 * True if a song is playing or paused, false otherwise
 	 */
@@ -218,7 +251,7 @@ class Music {
 
 	/**
 	 * Get the current volume
-	 * 
+	 *
 	 * @return int
 	 */
 	public static function getVolume()
@@ -233,8 +266,8 @@ class Music {
 	}
 	/**
 	 * Set the current volume
-	 * 
-	 * @param int $volume 
+	 *
+	 * @param int $volume
 	 * A volume value between 0 and 100
 	 */
 	public static function setVolume($volume)
@@ -262,11 +295,54 @@ class Music {
 		// get the current song
 		$song = static::getCurrentSong();
 
-		$results['title'] = $song ? $song->name : null;
-		$results['artist'] = $song ? $song->artist()->find_one()->name : null;
-		$results['album'] = $song ? $song->album()->find_one()->name : null;
+		$results['title'] = $song ? $song['Title'] : null;
+		$results['artist'] = $song ? $song['Artist'] : null;
+		$results['album'] = $song ? $song['Album'] : null;
 
 		return $results;
 	}
 
+	public static function buildSongList($list)
+	{
+
+		// instantiate an array for results
+		$results = array();
+
+		// instantiate a variable for the current song
+		$current = array();
+
+		// step through the list
+		foreach($list as $l)
+		{
+			// parse the line
+			$x = explode(':',$l);
+			$tag = trim(array_shift($x));
+			$value = trim(implode(':',$x));
+
+			// is it a "file" tag?
+			if($tag=='file')
+			{
+				// Yes! add the current song to the results (if it exists)
+				if(count($current))
+					$results[] = $current;
+
+				// and reset the current song
+				$current = array();
+			}
+
+			$current[$tag] = $value;
+		}
+
+		// add the last "current" song to the results
+		if(count($current))
+			$results[] = $current;
+
+		// and return the results
+		return $results;
+	}
+
+	public static function shuffle($state)
+	{
+		static::send('random', $state ? 1 : 0 );
+	}
 }
