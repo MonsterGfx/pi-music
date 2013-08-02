@@ -81,8 +81,9 @@ function refreshPage()
 		else
 			$('a#play span.ui-icon').removeClass('ui-icon-msx-pause').addClass('ui-icon-msx-play');
 
-		// schedule another refresh
-		setTimeout(refreshPage, 200);
+		// schedule another refresh if we're on the "now playing" page
+		if($('a.playback-control').length)
+			setTimeout(refreshPage, 200);
 	});
 }
 
