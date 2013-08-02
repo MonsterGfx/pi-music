@@ -92,6 +92,19 @@ $klein->respond('GET', '/album/[:album]/song/[:song]', function($request, $respo
 			$pos = $i;
 	}
 
+	// turn off "shuffle"
+	Music::shuffle(false);
+
+	// is the current song "shuffle"
+	if($song=='shuffle')
+	{
+		// choose a random song
+		$pos = rand(0,count($songs));
+
+		// turn on shuffle
+		Music::shuffle(true);
+	}
+
 	// start playing the selected song
 	Music::send('play', $pos);
 
