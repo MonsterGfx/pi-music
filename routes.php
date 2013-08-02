@@ -76,9 +76,13 @@
  *
  * * ******************** bump version 0.0.15-alpha
  *
- * @todo playlist editor
+ * @todo fix "previous" button/route on now playing page
  *
  * @todo ******************** bump version 0.0.16-alpha
+ *
+ * @todo playlist editor
+ *
+ * @todo ******************** bump version 0.0.17-alpha
  *
  * @todo testing
  *
