@@ -22,9 +22,9 @@ $(document).on('pageinit', function(){
 		$.get('/action-volume/'+$('input#volume-slider').val() );
 	});
 
-	// start page refresh event
-	refreshPage();
-
+	// start page refresh event if we're on the "now playing" page
+	if($('a.playback-control').length)
+		refreshPage();
 });
 
 function clickControlButton(action)
