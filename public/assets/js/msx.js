@@ -44,7 +44,7 @@ function clickControlButton(action)
 	{
 		// submit request for "play" action
 		$.get('/action-toggle-play', { }, function(data){
-			// @todo update the play button toggle to use custom icons
+			// update the play button toggle (with my custom icons)
 			if(data=='play')
 				$('a#play span.ui-icon').removeClass('ui-icon-msx-play').addClass('ui-icon-msx-pause');
 			else
