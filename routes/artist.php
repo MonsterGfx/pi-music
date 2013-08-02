@@ -60,7 +60,13 @@ $klein->respond('GET', '/artist/[:artist]/album', function($request, $response){
 		);
 	});
 
-	return ListPage::render($artist, null, null, $list);
+	// build the "previous" link data
+	$previous = array(
+		'path' => '/artist',
+		'text' => 'Artists',
+	);
+
+	return ListPage::render($artist, $previous, null, $list);
 });
 
 
@@ -85,8 +91,13 @@ $klein->respond('GET', '/artist/[:artist]/album/[:album]/song', function($reques
 		);
 	});
 
-	// render($page_title, $previous, $album_stats, $list)
-	return ListPage::render($album, null, null, $list);
+	// build the "previous" link data
+	$previous = array(
+		'path' => '/artist/'.$request->param('artist').'/album',
+		'text' => $artist,
+	);
+
+	return ListPage::render($album, $previous, null, $list);
 });
 
 
@@ -144,6 +155,11 @@ $klein->respond('GET', '/artist/[:artist]/song', function($request, $response){
 		);
 	});
 
-	// render($page_title, $previous, $album_stats, $list)
-	return ListPage::render($artist, null, null, $list);
+	// build the "previous" link data
+	$previous = array(
+		'path' => '/artist',
+		'text' => 'Artists',
+	);
+
+	return ListPage::render($artist, $previous, null, $list);
 });

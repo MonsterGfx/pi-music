@@ -58,7 +58,13 @@ $klein->respond('GET', '/genre/[:genre]/artist', function($request, $response){
 		);
 	});
 
-	return ListPage::render($genre, null, null, $list);
+	// build the "previous" link data
+	$previous = array(
+		'path' => '/genre',
+		'text' => 'Genres',
+	);
+
+	return ListPage::render($genre, $previous, null, $list);
 });
 
 
@@ -82,7 +88,13 @@ $klein->respond('GET', '/genre/[:genre]/artist/[:artist]/album', function($reque
 		);
 	});
 
-	return ListPage::render($artist, null, null, $list);
+	// build the "previous" link data
+	$previous = array(
+		'path' => '/genre/'.$request->param('genre').'/artist',
+		'text' => 'Artists',
+	);
+
+	return ListPage::render($artist, $previous, null, $list);
 });
 
 
@@ -108,7 +120,13 @@ $klein->respond('GET', '/genre/[:genre]/artist/[:artist]/album/[:album]/song', f
 		);
 	});
 
-	return ListPage::render($album, null, null, $list);
+	// build the "previous" link data
+	$previous = array(
+		'path' => '/genre/'.$request->param('genre').'/artist/'.$request->param('genre').'/album',
+		'text' => $artist,
+	);
+
+	return ListPage::render($album, $previous, null, $list);
 });
 
 

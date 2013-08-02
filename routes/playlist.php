@@ -51,7 +51,13 @@ $klein->respond('GET', '/playlist/[:playlist]/song', function($request, $respons
 		);
 	});
 
-	return ListPage::render($playlist, null, null, $list);
+	// build the "previous" link data
+	$previous = array(
+		'path' => '/playlist',
+		'text' => 'Playlists',
+	);
+
+	return ListPage::render($playlist, $previous, null, $list);
 });
 
 
