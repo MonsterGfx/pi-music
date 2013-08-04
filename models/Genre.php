@@ -19,7 +19,11 @@ class Genre {
 		foreach($result['values'] as $v)
 		{
 			if(substr($v,0,6)=='Genre:')
-				$list[] = trim(substr($v,6));
+			{
+				$g = trim(substr($v,6));
+				if($g)
+					$list[] = $g;
+			}
 		}
 
 		// sort the list
