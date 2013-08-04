@@ -11,7 +11,7 @@ class Image {
 	 * @return string
 	 * The formatted data URL string
 	 */
-	public static function toDataUrl($path, $mime='image/jpg');
+	public static function toDataUrl($path, $mime='image/jpg')
 	{
 		$result = null;
 		// load the image data
