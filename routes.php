@@ -76,9 +76,17 @@
  *
  * * ******************** bump version 0.0.15-alpha
  *
+ * * add default artwork
+ *
+ * * ******************** bump version 0.0.16-alpha
+ *
+ * @todo fix "previous" button/route on now playing page
+ *
+ * @todo ******************** bump version 0.0.17-alpha
+ *
  * @todo playlist editor
  *
- * @todo ******************** bump version 0.0.16-alpha
+ * @todo ******************** bump version 0.0.18-alpha
  *
  * @todo testing
  *
@@ -188,67 +196,25 @@ $klein->respond('GET','/view-db', function($request,$response){
 
 
 
+
 $klein->respond('GET','/test-route', function($request,$response){
 
-	// queries look like this:
-	//
-	//		playlist 			- list of playlists
-	//				page head='Playlist', list head=null
-	//
-	//		playlist/1/song			- list of songs for playlist=1
-	//				page head=playlist.name, list head=null
-	//
-	//		playlist/1/song/2 	- load all songs for playlist=1, start playing song=2, go to nowplaying
-	//
-	//
-	//		artist 					- list of artists
-	//				page head='Artists', list head=null
-	//
-	//		artist/1/album			- list of albums for artist=1
-	//				page head=artist.artist, list head=null
-	//
-	//		artist/1/album/2/song	- list of songs for artist=1, album=2
-	//				page head=artist.artist, list head=album+stats
-	//
-	//		artist/1/album/2/song/3	- load all songs for artist=1, album=2, play song=3, go to nowplaying
-	//
-	// 		artist/1/song			- list of all songs for artist=1
-	//				page head=artist.artist, list head=null
-	//
-	//
-	//		song 	- list of all songs
-	//				page head='Songs', list head=null
-	//
-	//		song/1 	- load ALL songs, play song=1, go to nowplaying
-	//
-	//
-	//		album 			- list all albums
-	//				page head='Albums', list head=null
-	//
-	//		album/1/song	- list of songs for album=1
-	//				page head=album.title, list head=album+stats
-	//
-	//		album/1/song/2	- load all songs for album=1, play song=2, go to nowplaying
-	//
-	//
-	//		genre 		- list all genres
-	//				page head='Genres', list head=null
-	//
-	//		genre/1/artist 	- list of artists for genre=1
-	//				page head=genre.name, list head=null
-	//
-	//		genre/1/artist/2/album 	- list of albums for genre=1, artist=2
-	//				page head=artist.artist, list head=null
-	//
-	//		genre/1/artist/2/album/3/song	- list of songs for genre=1, artist=2, album=3
-	//				page head=artist.artist, list head=album+stats
-	//
-	//
-	//		genre/1/artist/2/album/3/song/4	- load all songs for genre=1, artist=2, album=3, play song=4, go to nowplaying
+	$files = array(
+		'/home/dave/temp/default-album-180.png',
+		'/home/dave/temp/default-album-320.png',
+		'/home/dave/temp/default-album.png',
+	);
 
-	Kint::dump(Music::send('search', 'album', 'End of the Summer', 'artist', 'Dar Williams'));
+	foreach($files as $f)
+	{
+Kint::dump($f);
+		$dataurl = Image::toDataURL($f);
+Kint::dump($dataurl);
 
-	Kint::dump(Album::getSongs('Dar Williams', 'End of the Summer'));
+		if($dataurl)
+			file_put_contents($f.'.txt', $dataurl);
+	}
+
 });
 
 

@@ -11,7 +11,7 @@ class Image {
 	 * @return string
 	 * The formatted data URL string
 	 */
-	public static function toDataUrl($path)
+	public static function toDataUrl($path, $mime='image/jpg')
 	{
 		$result = null;
 		// load the image data
@@ -22,7 +22,7 @@ class Image {
 			if($img)
 			{
 				$result = base64_encode($img);
-				$result = "data:image/jpg;base64,{$result}";
+				$result = "data:{$mime};base64,{$result}";
 			}
 		}
 
