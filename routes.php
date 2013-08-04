@@ -76,7 +76,7 @@
  *
  * * ******************** bump version 0.0.15-alpha
  *
- * @todo add default artwork
+ * * add default artwork
  *
  * @todo ******************** bump version 0.0.16-alpha
  *
