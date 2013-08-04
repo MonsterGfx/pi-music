@@ -76,13 +76,17 @@
  *
  * * ******************** bump version 0.0.15-alpha
  *
- * @todo fix "previous" button/route on now playing page
+ * @todo add default artwork
  *
  * @todo ******************** bump version 0.0.16-alpha
  *
- * @todo playlist editor
+ * @todo fix "previous" button/route on now playing page
  *
  * @todo ******************** bump version 0.0.17-alpha
+ *
+ * @todo playlist editor
+ *
+ * @todo ******************** bump version 0.0.18-alpha
  *
  * @todo testing
  *
