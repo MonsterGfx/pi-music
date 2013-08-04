@@ -78,7 +78,7 @@
  *
  * * add default artwork
  *
- * @todo ******************** bump version 0.0.16-alpha
+ * * ******************** bump version 0.0.16-alpha
  *
  * @todo fix "previous" button/route on now playing page
  *
