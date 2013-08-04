@@ -34,7 +34,7 @@
 
 	<div data-role="content">
 
-		<img src='{$image}' style='position:absolute; top:44px; left:0px;' />
+		<img id='artwork' src='{$image}' style='position:absolute; top:44px; left:0px;' />
 
 		<div style='position:absolute; top:40px; left:0px; width:320px; height:320px; z-index:10;'>
 

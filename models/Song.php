@@ -27,15 +27,19 @@ class Song {
 		// does the file exist?
 		if(file_exists($image_file))
 		{
-			// load the contents
-			$image = file_get_contents($image_file);
-
 			// convert it to a string & return it
 			return Image::toDataURL($image_file);
 		}
 
-		// couldn't find the artwork
-		// @todo return default artwork
-		return null;
+		// couldn't find the artwork, return the default artwork
+		switch($size)
+		{
+			case 180:
+				return Image::toDataURL(Config::get('app.music-artwork-path').'default-album-180.jpg');
+			case 320:
+				return Image::toDataURL(Config::get('app.music-artwork-path').'default-album-320.jpg');
+			default:
+				return Image::toDataURL(Config::get('app.music-artwork-path').'default-album.jpg');
+		}
 	}
 }

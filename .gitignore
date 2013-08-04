@@ -7,3 +7,8 @@ composer.lock
 /storage/artwork/*.gif
 /storage/artwork/*.tiff
 /storage/artwork/*.dat
+
+# include the default album artwork
+!storage/artwork/default-album-180.jpg
+!storage/artwork/default-album-320.jpg
+!storage/artwork/default-album.jpg
