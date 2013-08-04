@@ -34,7 +34,7 @@ $klein->respond('GET', '/genre', function($request, $response){
 		);
 	});
 
-	return ListPage::render('Albums', null, false, false, $list);
+	return ListPage::render('Genres', null, false, false, $list);
 });
 
 
