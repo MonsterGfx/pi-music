@@ -71,6 +71,9 @@ function refreshPage()
 		$('#title-name').text(data['title']);
 		$('#album-name').text(data['album']);
 
+		// update the artwork
+		$('#artwork').attr('src', data['artwork']);
+
 		// update the volume slider
 		$('input#volume-slider').val(data['volume']);
 		$('input#volume-slider').slider('refresh');
