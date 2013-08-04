@@ -299,6 +299,10 @@ class Music {
 		$results['artist'] = $song ? $song['Artist'] : null;
 		$results['album'] = $song ? $song['Album'] : null;
 
+		// get the image data
+		$results['artwork'] = Song::getImageData($song['Artist'], $song['Album'], 320);
+
+		// return the data
 		return $results;
 	}
 
