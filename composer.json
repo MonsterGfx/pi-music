@@ -1,7 +1,7 @@
 {
-	"name": "monstergfx/musix",
+	"name": "monstergfx/pi-music",
 	"type": "application",
-	"description": "Music Player for Raspberry Pi",
+	"description": "Music Player for Raspberry Pi with MPD",
 	"keywords": ["multimedia","music","raspberry-pi"],
 	"homepage": "",
 	"license": "BSD-3-Clause",
